@@ -54,8 +54,10 @@ class _SavedHomesScreenState extends State<SavedHomesScreen> {
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                   child: Text(
                     'Back to homes',
-                    style:
-                        GoogleFonts.nunito(color: Colors.white, fontSize: 14),
+                    style: GoogleFonts.nunito(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700),
                   ),
                 ))
           ],

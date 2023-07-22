@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pinearth/controller/main_wrapper_controller.dart';
+import 'package:pinearth/screens/auth/login_screen.dart';
 import 'package:pinearth/screens/home_screen.dart';
 import 'package:pinearth/screens/list_property_screen.dart';
 import 'package:pinearth/screens/profile_screen.dart';
@@ -85,7 +86,7 @@ class _RootScreenState extends State<RootScreen> {
           UpdatesScreen(),
           SavedHomesScreen(),
           ListPropertyScreen(),
-          ProfileScreen()
+          LoginScreen()
         ],
       ),
       bottomNavigationBar: BottomAppBar(

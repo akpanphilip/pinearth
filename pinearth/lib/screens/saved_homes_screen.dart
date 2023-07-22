@@ -34,32 +34,12 @@ class _SavedHomesScreenState extends State<SavedHomesScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image(image: AssetImage('assets/images/exploring.png')),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Text(
-                'You have no saved homes, like a home for it to appear here',
-                style: GoogleFonts.nunito(color: Colors.black, fontSize: 16),
-              ),
+            DescriptionText(
+              text:
+                  'You have no saved homes, like a home for it to appear here',
             ),
-            SizedBox(height: 70),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Color(0xff1173AB),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50))),
-                onPressed: () {},
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  child: Text(
-                    'Back to homes',
-                    style: GoogleFonts.nunito(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ))
+            SizedBox(height: 90),
+            ActionButton(text: 'Back to homes'),
           ],
         ),
       ),

@@ -35,8 +35,8 @@ class PropertyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      width: 250,
-      height: 400,
+      width: 320,
+      height: 300,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
@@ -462,6 +462,225 @@ class AgentList extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// button
+class ActionButton extends StatelessWidget {
+  final String text;
+  const ActionButton({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            elevation: 0,
+            backgroundColor: Color(0xff1173AB),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50))),
+        onPressed: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          child: Text(
+            text,
+            style: GoogleFonts.nunito(
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
+          ),
+        ));
+  }
+}
+
+// description text
+class DescriptionText extends StatelessWidget {
+  final String text;
+  const DescriptionText({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.nunito(color: Colors.black, fontSize: 16),
+      ),
+    );
+  }
+}
+
+// form title
+class FormTitle extends StatelessWidget {
+  final String text;
+  const FormTitle({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.nunito(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700)),
+      ),
+    );
+  }
+}
+
+// google auth button
+class GoogleAuth extends StatelessWidget {
+  final String text;
+  const GoogleAuth({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: SizedBox(
+          width: 280,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(color: Color(0xff1173AB), width: 2),
+                ),
+              ),
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Image(image: AssetImage('assets/images/google.png')),
+                  ),
+                  Text(
+                    text,
+                    style: GoogleFonts.nunito(
+                        color: Color(0xff1173AB),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+// label title
+class LabelTitle extends StatelessWidget {
+  final String text;
+  const LabelTitle({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        textAlign: TextAlign.left,
+        style: GoogleFonts.nunito(
+            color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700));
+  }
+}
+
+// input
+class CustomTextField extends StatelessWidget {
+  final bool obscureText;
+  final String hintText;
+
+  const CustomTextField({
+    super.key,
+    required this.obscureText,
+    required this.hintText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      obscureText: obscureText,
+      style: TextStyle(
+        color: Colors.black,
+      ),
+      decoration: InputDecoration(
+          fillColor: Color(0xffeeeeee),
+          filled: true,
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(10)),
+          hintText: hintText),
+    );
+  }
+}
+
+// auth button
+class AuthButton extends StatelessWidget {
+  final String text;
+  const AuthButton({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 200,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Color(0xff1173AB),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25))),
+            onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                text,
+                style: GoogleFonts.nunito(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700),
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+// form options
+class TextOpt extends StatelessWidget {
+  final String text;
+  const TextOpt({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(text,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.w600)),
     );
   }
 }

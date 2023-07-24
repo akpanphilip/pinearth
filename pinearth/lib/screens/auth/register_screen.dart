@@ -1,19 +1,17 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pinearth/screens/auth/register_screen.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,29 +41,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   radius: 30,
                 ),
               ),
-              FormTitle(text: 'Login to list your property'),
-              GoogleAuth(text: 'Sign in with Google'),
+              FormTitle(text: 'Sign up to list your property'),
+              GoogleAuth(text: 'Sign up with Google'),
               FormTitle(text: 'OR'),
+              LabelTitle(text: 'Name'),
+              SizedBox(height: 10),
+              CustomTextField(obscureText: false, hintText: 'Full names'),
+              SizedBox(height: 20),
               LabelTitle(text: 'Email address'),
               SizedBox(height: 10),
               CustomTextField(obscureText: false, hintText: 'Email address'),
+              SizedBox(height: 20),
+              LabelTitle(text: 'Date of birth'),
+              SizedBox(height: 10),
+              CustomTextField(obscureText: false, hintText: ''),
               SizedBox(height: 20),
               LabelTitle(text: 'Password'),
               SizedBox(height: 10),
               CustomTextField(obscureText: true, hintText: 'Password'),
               SizedBox(height: 30),
-              AuthButton(text: 'Login'),
+              AuthButton(text: 'Sign up'),
               SizedBox(height: 20),
               TextOpt(text: 'Forgot password?'),
               SizedBox(height: 10),
               GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pop(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
-                  child: TextOpt(text: 'Don\'t have an account? Sign up'))
+                  child: TextOpt(text: 'have an account? Login'))
             ],
           ),
         ),

@@ -633,39 +633,40 @@ class CustomTextField extends StatelessWidget {
 }
 
 // auth button
-class AuthButton extends StatelessWidget {
-  final String text;
-  const AuthButton({
-    super.key,
-    required this.text,
-  });
+// class AuthButton extends StatelessWidget {
+//   final String text;
+//   // final Function press;
+//   const AuthButton({
+//     super.key,
+//     required this.text
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 200,
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: Color(0xff1173AB),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25))),
-            onPressed: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                text,
-                style: GoogleFonts.nunito(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700),
-              ),
-            )),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: SizedBox(
+//         width: 200,
+//         child: ElevatedButton(
+//             style: ElevatedButton.styleFrom(
+//                 elevation: 0,
+//                 backgroundColor: Color(0xff1173AB),
+//                 shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(25))),
+//             onPressed: (){},
+//             child: Padding(
+//               padding: const EdgeInsets.all(15.0),
+//               child: Text(
+//                 text,
+//                 style: GoogleFonts.nunito(
+//                     fontSize: 16,
+//                     color: Colors.white,
+//                     fontWeight: FontWeight.w700),
+//               ),
+//             )),
+//       ),
+//     );
+//   }
+// }
 
 // form options
 class TextOpt extends StatelessWidget {

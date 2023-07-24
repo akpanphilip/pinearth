@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 10),
               CustomTextField(obscureText: true, hintText: 'Password'),
               SizedBox(height: 30),
-              AuthButton(text: 'Login'),
+              // AuthButton(text: 'Login', press: () {}),
               SizedBox(height: 20),
               TextOpt(text: 'Forgot password?'),
               SizedBox(height: 10),

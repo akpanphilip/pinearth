@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
+import '../home_address.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -60,7 +62,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 10),
               CustomTextField(obscureText: true, hintText: 'Password'),
               SizedBox(height: 30),
-              AuthButton(text: 'Sign up'),
+              // AuthButton(
+              //     text: 'Sign up',
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => HomeAddress()),
+              //       );
+              //     }),
+              Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Color(0xff1173AB),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeAddress()),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'Sign up',
+                          style: GoogleFonts.nunito(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
+                ),
+              ),
               SizedBox(height: 20),
               TextOpt(text: 'Forgot password?'),
               SizedBox(height: 10),

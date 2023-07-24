@@ -377,6 +377,7 @@ class AppbarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        textAlign: TextAlign.start,
         style: GoogleFonts.nunito(
             color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700));
   }
@@ -682,6 +683,66 @@ class TextOpt extends StatelessWidget {
       child: Text(text,
           textAlign: TextAlign.center,
           style: GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.w600)),
+    );
+  }
+}
+
+// mmid title text
+class MidTitle extends StatelessWidget {
+  final String text;
+  const MidTitle({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        text,
+        style: GoogleFonts.nunito(
+            fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
+      ),
+    );
+  }
+}
+
+// upload id
+class UploadId extends StatelessWidget {
+  final String img;
+  final String text;
+  const UploadId({
+    super.key,
+    required this.img,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 320,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: Colors.black12, // Set the color of the bottom border
+          width: 2.0, // Set the width of the bottom border
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image(image: AssetImage(img)),
+            Text(
+              text,
+              style:
+                  GoogleFonts.nunito(fontSize: 13, fontWeight: FontWeight.w700),
+            ),
+            Icon(Icons.chevron_right_rounded, size: 30)
+          ],
+        ),
+      ),
     );
   }
 }

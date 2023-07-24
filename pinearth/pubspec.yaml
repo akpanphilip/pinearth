@@ -79,6 +79,10 @@ flutter:
     - assets/images/auth_avatar.png
     - assets/images/google.png
     - assets/images/connection-lost.png
+    - assets/images/internation-passport.png
+    - assets/images/nin.png
+    - assets/images/driver-license.png
+    - assets/images/success.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

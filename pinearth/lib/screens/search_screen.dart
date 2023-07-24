@@ -157,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ),
-        // SizedBox(height: 20),
+        //  dBox(height: 20),
         SliverToBoxAdapter(
           child: Column(
             children: [

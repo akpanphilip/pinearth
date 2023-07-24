@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/auth/register_screen.dart';
+import 'package:pinearth/screens/profile_screen.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
 
@@ -55,6 +56,34 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomTextField(obscureText: true, hintText: 'Password'),
               SizedBox(height: 30),
               // AuthButton(text: 'Login', press: () {}),
+              Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Color(0xff1173AB),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'Login',
+                          style: GoogleFonts.nunito(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
+                ),
+              ),
               SizedBox(height: 20),
               TextOpt(text: 'Forgot password?'),
               SizedBox(height: 10),

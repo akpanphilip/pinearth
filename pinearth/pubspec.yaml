@@ -84,6 +84,12 @@ flutter:
     - assets/images/driver-license.png
     - assets/images/success.png
     - assets/images/list-property.png
+    - assets/images/user.png
+    - assets/images/edit.png
+    - assets/images/listed.png
+    - assets/images/security.png
+    - assets/images/how.png
+    - assets/images/customer-support.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

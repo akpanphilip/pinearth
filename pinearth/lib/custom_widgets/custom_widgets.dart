@@ -774,12 +774,51 @@ class ButtonSn extends StatelessWidget {
   }
 }
 
-
-  // ButtonSn(
-                //     text: 'Sell it yourself',
-                //     press: () {
-                      // Navigator.pop(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => ListOpt()),
-                      // );
-                //     }),
+// profile section
+class ProfileSection extends StatelessWidget {
+  final String img;
+  final String text;
+  // final String? borderTop;
+  const ProfileSection({
+    super.key,
+    required this.img,
+    required this.text,
+    // required this.borderTop,
+  });
+// AssetImage('assets/images/edit.png')
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(
+              // top: borderTop,
+              bottom:
+                  BorderSide(style: BorderStyle.solid, color: Colors.black12))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                Image(image: AssetImage(img)),
+                SizedBox(width: 20),
+                Text(
+                  text,
+                  style: GoogleFonts.nunito(
+                      fontSize: 14, fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 20,
+              color: Colors.black26,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

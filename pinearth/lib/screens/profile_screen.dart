@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/edit_profile_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 
@@ -47,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                      MaterialPageRoute(builder: (context) => EditProfile()),
                     );
                   },
                   child: Container(

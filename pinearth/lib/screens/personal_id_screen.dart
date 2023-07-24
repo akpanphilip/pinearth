@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
+import 'package:pinearth/screens/account_success_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 
@@ -67,7 +68,8 @@ class _PersonalIDState extends State<PersonalID> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PersonalID()),
+                          MaterialPageRoute(
+                              builder: (context) => AccountSuccess()),
                         );
                       },
                       child: Padding(

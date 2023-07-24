@@ -746,3 +746,40 @@ class UploadId extends StatelessWidget {
     );
   }
 }
+
+// sizedbutton
+class ButtonSn extends StatelessWidget {
+  final String text;
+  final Function press;
+  const ButtonSn({
+    super.key,
+    required this.text,
+    required this.press,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        child: ElevatedButton(
+            onPressed: press(),
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Color(0xff1173AB),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+              child: Text(text, style: GoogleFonts.nunito()),
+            )));
+  }
+}
+
+
+  // ButtonSn(
+                //     text: 'Sell it yourself',
+                //     press: () {
+                      // Navigator.pop(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => ListOpt()),
+                      // );
+                //     }),

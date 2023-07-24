@@ -17,18 +17,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: AppbarTitle(
-            text: 'Profile',
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: AppbarTitle(
+              text: 'Profile',
+            ),
           ),
+          centerTitle: false,
+          elevation: 0.5,
         ),
-        centerTitle: false,
-        elevation: 0.5,
-      ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(

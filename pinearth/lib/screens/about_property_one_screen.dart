@@ -7,16 +7,14 @@ import '../custom_widgets/custom_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
-import 'about_property_one_screen.dart';
-
-class PropertyPhoto extends StatefulWidget {
-  const PropertyPhoto({super.key});
+class AboutPropertyOne extends StatefulWidget {
+  const AboutPropertyOne({super.key});
 
   @override
-  State<PropertyPhoto> createState() => _PropertyPhotoState();
+  State<AboutPropertyOne> createState() => _AboutPropertyOneState();
 }
 
-class _PropertyPhotoState extends State<PropertyPhoto> {
+class _AboutPropertyOneState extends State<AboutPropertyOne> {
   @override
   Widget build(BuildContext context) {
     List<String> dropdownItems = ['Select your option', 'Sell property'];
@@ -33,7 +31,7 @@ class _PropertyPhotoState extends State<PropertyPhoto> {
         // automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: AppbarTitle(
-          text: 'Property photo\'s',
+          text: 'Tell us about this property',
         ),
         centerTitle: false,
         elevation: 0.5,
@@ -44,54 +42,28 @@ class _PropertyPhotoState extends State<PropertyPhoto> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: 'Detailed living room photo’s'),
-                  Text(
-                    '*10 images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
+              LabelTitle(text: 'Property Type'),
               SizedBox(height: 10),
-              UploadImg(),
+              CustomTextField(
+                  obscureText: true, hintText: 'E.g (bungalow etc)'),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: 'Detailed bedroom photo’s'),
-                  Text(
-                    '*10 images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
+              LabelTitle(text: 'Number of rooms'),
               SizedBox(height: 10),
-              UploadImg(),
+              CustomTextField(obscureText: true, hintText: 'E.g 1 room'),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: 'Detailed toilet photo\'s'),
-                  Text(
-                    '*10 images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
+              LabelTitle(text: 'number of bathroom\'s'),
               SizedBox(height: 10),
-              UploadImg(),
-              SizedBox(height: 40),
+              CustomTextField(obscureText: true, hintText: 'E.g 3 bathrooms'),
+              SizedBox(height: 20),
+              LabelTitle(text: 'Lot size(sqft)'),
+              SizedBox(height: 10),
+              CustomTextField(
+                  obscureText: true, hintText: 'E.g 173 Square feet'),
+              SizedBox(height: 20),
+              LabelTitle(text: 'Address Of Property'),
+              SizedBox(height: 10),
+              CustomTextField(obscureText: true, hintText: '2118 Thromming'),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -104,7 +76,13 @@ class _PropertyPhotoState extends State<PropertyPhoto> {
                               backgroundColor: Color.fromARGB(162, 0, 0, 0),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AboutPropertyOne()),
+                            );
+                          },
                           child: Text('Back', style: GoogleFonts.nunito()))),
                   SizedBox(
                     width: 150,

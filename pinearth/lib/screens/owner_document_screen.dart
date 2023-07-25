@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinearth/screens/owner_document_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,31 +9,25 @@ import 'package:image_cropper/image_cropper.dart';
 
 import 'about_property_one_screen.dart';
 
-class AboutPropertyTwo extends StatefulWidget {
-  const AboutPropertyTwo({super.key});
+class OwnerDocument extends StatefulWidget {
+  const OwnerDocument({super.key});
 
   @override
-  State<AboutPropertyTwo> createState() => _AboutPropertyTwoState();
+  State<OwnerDocument> createState() => _OwnerDocumentState();
 }
 
-class _AboutPropertyTwoState extends State<AboutPropertyTwo> {
+class _OwnerDocumentState extends State<OwnerDocument> {
   @override
   Widget build(BuildContext context) {
-    List<String> dropdownItems = ['Select your option', 'Sell property'];
-
-    String selectedOption =
-        dropdownItems[0]; // Set the initial selected option (if desired)
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: Colors.black, // Set the desired color here
         ),
-        // automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: AppbarTitle(
-          text: 'Tell us about this property',
+          text: 'Owner\'s documents',
         ),
         centerTitle: false,
         elevation: 0.5,
@@ -45,22 +38,54 @@ class _AboutPropertyTwoState extends State<AboutPropertyTwo> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LabelTitle(text: 'Income Per Month'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LabelTitle(text: 'Upload image of Document for house'),
+                  Text(
+                    '*60 images max',
+                    style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
               SizedBox(height: 10),
-              CustomTextField(obscureText: true, hintText: 'E.g 100,000 naira'),
+              UploadImg(),
               SizedBox(height: 20),
-              LabelTitle(text: 'Year Built, Renovated And Reconstructed'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LabelTitle(text: 'Upload image of House plan'),
+                  Text(
+                    '*60 images max',
+                    style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
               SizedBox(height: 10),
-              CustomTextField(obscureText: true, hintText: ''),
+              UploadImg(),
               SizedBox(height: 20),
-              LabelTitle(text: 'Is There Available Parking Space?'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LabelTitle(text: 'Upload image of House size & dimensions'),
+                  Text(
+                    '*60 images max',
+                    style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
               SizedBox(height: 10),
-              CustomTextField(obscureText: true, hintText: ''),
-              SizedBox(height: 20),
-              LabelTitle(text: 'Is There Available Parking Space?'),
-              SizedBox(height: 10),
-              CustomTextField(obscureText: true, hintText: ''),
-              SizedBox(height: 30),
+              UploadImg(),
+              SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -73,13 +98,7 @@ class _AboutPropertyTwoState extends State<AboutPropertyTwo> {
                               backgroundColor: Color.fromARGB(162, 0, 0, 0),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
-                          onPressed: () {
-                            Navigator.pop(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AboutPropertyTwo()),
-                            );
-                          },
+                          onPressed: () {},
                           child: Text('Back', style: GoogleFonts.nunito()))),
                   SizedBox(
                     width: 150,
@@ -94,7 +113,7 @@ class _AboutPropertyTwoState extends State<AboutPropertyTwo> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => OwnerDocument()),
+                                builder: (context) => AboutPropertyOne()),
                           );
                         },
                         child: Text('Continue', style: GoogleFonts.nunito())),

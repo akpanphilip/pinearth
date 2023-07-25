@@ -626,7 +626,7 @@ class CustomTextField extends StatelessWidget {
           fillColor: Color(0xffeeeeee),
           filled: true,
           border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black),
+              // borderSide: BorderSide(color: Colors.black),
               borderRadius: BorderRadius.circular(10)),
           hintText: hintText),
     );
@@ -819,6 +819,26 @@ class ProfileSection extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// upload picture
+class UploadImg extends StatelessWidget {
+  const UploadImg({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 200,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+              image: AssetImage('assets/images/sample-upload.png'),
+              fit: BoxFit.cover)),
     );
   }
 }

@@ -41,6 +41,8 @@ dependencies:
   iconly: ^1.0.1
   zoom_tap_animation: ^1.1.0
   get: ^4.6.5
+  image_picker: ^1.0.1
+  image_cropper: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +92,7 @@ flutter:
     - assets/images/security.png
     - assets/images/how.png
     - assets/images/customer-support.png
+    - assets/images/sample-upload.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

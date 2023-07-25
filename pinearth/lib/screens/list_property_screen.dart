@@ -19,12 +19,12 @@ class _ListPropertyScreenState extends State<ListPropertyScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black, // Set the desired color here
+          ),
           backgroundColor: Colors.white,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: AppbarTitle(
-              text: 'List property',
-            ),
+          title: AppbarTitle(
+            text: 'List property',
           ),
           centerTitle: false,
           elevation: 0.5,
@@ -48,9 +48,9 @@ class _ListPropertyScreenState extends State<ListPropertyScreen> {
                       fontSize: 16),
                 ),
                 SizedBox(height: 10),
-                  Text(
-                    'Not in a market with Pinearth’s new selling experience? Work with a real estate agent for selling support at every step, including prepping, listing and marketing your home.',
-                    style: GoogleFonts.nunito(fontSize: 14),
+                Text(
+                  'Not in a market with Pinearth’s new selling experience? Work with a real estate agent for selling support at every step, including prepping, listing and marketing your home.',
+                  style: GoogleFonts.nunito(fontSize: 14),
                 ),
                 SizedBox(height: 15),
                 // ButtonSn(text: 'Find an agent'),

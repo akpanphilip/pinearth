@@ -19,12 +19,12 @@ class _HomeAddressState extends State<HomeAddress> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black, // Set the desired color here
+          ),
           backgroundColor: Colors.white,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: AppbarTitle(
-              text: 'Home Address',
-            ),
+          title: AppbarTitle(
+            text: 'Home Address',
           ),
           centerTitle: false,
           elevation: 0.5,

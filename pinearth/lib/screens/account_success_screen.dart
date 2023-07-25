@@ -15,11 +15,9 @@ class AccountSuccess extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: AppbarTitle(
-            text: 'Personal ID',
-          ),
+        iconTheme: IconThemeData(color: Colors.black),
+        title: AppbarTitle(
+          text: 'Personal ID',
         ),
         centerTitle: false,
         elevation: 0.5,

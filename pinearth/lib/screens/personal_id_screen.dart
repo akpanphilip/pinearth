@@ -20,12 +20,13 @@ class _PersonalIDState extends State<PersonalID> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black, // Set the desired color here
+        ),
+        // automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: AppbarTitle(
-            text: 'Personal ID',
-          ),
+        title: AppbarTitle(
+          text: 'Personal ID',
         ),
         centerTitle: false,
         elevation: 0.5,

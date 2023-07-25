@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/how_it_works_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -113,7 +114,7 @@ class _OwnerDocumentState extends State<OwnerDocument> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AboutPropertyOne()),
+                                builder: (context) => HowItWorks()),
                           );
                         },
                         child: Text('Continue', style: GoogleFonts.nunito())),

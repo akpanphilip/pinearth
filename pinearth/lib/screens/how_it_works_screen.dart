@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import 'about_property_one_screen.dart';
+import 'listed_complete_screen.dart';
 
 class HowItWorks extends StatefulWidget {
   const HowItWorks({super.key});
@@ -341,7 +342,7 @@ class _HowItWorksState extends State<HowItWorks> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AccountSuccess()),
+                                builder: (context) => ListedComplete()),
                           );
                         },
                         child: Text('Continue', style: GoogleFonts.nunito())),

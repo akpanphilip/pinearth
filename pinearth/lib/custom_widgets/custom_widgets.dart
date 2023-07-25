@@ -379,7 +379,7 @@ class AppbarTitle extends StatelessWidget {
     return Text(text,
         textAlign: TextAlign.start,
         style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700));
+            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800));
   }
 }
 
@@ -533,8 +533,8 @@ class FormTitle extends StatelessWidget {
             textAlign: TextAlign.center,
             style: GoogleFonts.nunito(
                 color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w700)),
+                fontSize: 18,
+                fontWeight: FontWeight.w800)),
       ),
     );
   }

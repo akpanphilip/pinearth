@@ -616,7 +616,7 @@ class LabelTitle extends StatelessWidget {
     return Text(text,
         textAlign: TextAlign.left,
         style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700));
+            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700));
   }
 }
 

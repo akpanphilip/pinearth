@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/edit_profile_screen.dart';
+import 'package:pinearth/screens/security_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 import 'my_listed_property_screen.dart';
@@ -102,9 +103,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     text: 'My listed properties',
                   ),
                 ),
-                ProfileSection(
-                  img: 'assets/images/security.png',
-                  text: 'Security',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SecurityScreen()),
+                    );
+                  },
+                  child: ProfileSection(
+                    img: 'assets/images/security.png',
+                    text: 'Security',
+                  ),
                 ),
                 ProfileSection(
                   img: 'assets/images/how.png',

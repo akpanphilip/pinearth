@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/edit_profile_screen.dart';
+import 'package:pinearth/screens/how_to_use_screen.dart';
 import 'package:pinearth/screens/security_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
@@ -115,9 +116,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     text: 'Security',
                   ),
                 ),
-                ProfileSection(
-                  img: 'assets/images/how.png',
-                  text: 'How to use?',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HowToUse()),
+                    );
+                  },
+                  child: ProfileSection(
+                    img: 'assets/images/how.png',
+                    text: 'How to use?',
+                  ),
                 ),
                 ProfileSection(
                   img: 'assets/images/customer-support.png',

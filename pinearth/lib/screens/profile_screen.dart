@@ -7,6 +7,7 @@ import 'package:pinearth/screens/how_to_use_screen.dart';
 import 'package:pinearth/screens/security_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
+import 'customer_support_screen.dart';
 import 'my_listed_property_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -128,9 +129,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     text: 'How to use?',
                   ),
                 ),
-                ProfileSection(
-                  img: 'assets/images/customer-support.png',
-                  text: 'Customer support',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CustomerSupportScreen()));
+                  },
+                  child: ProfileSection(
+                    img: 'assets/images/customer-support.png',
+                    text: 'Customer support',
+                  ),
                 )
               ],
             ),

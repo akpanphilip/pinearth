@@ -97,6 +97,7 @@ flutter:
     - assets/images/available.png
     - assets/images/unavailable.png
     - assets/images/available-listing.png
+    - assets/images/customer-support-rocket.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

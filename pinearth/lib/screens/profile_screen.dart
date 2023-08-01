@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/edit_profile_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
+import 'my_listed_property_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -88,9 +89,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                ProfileSection(
-                  img: 'assets/images/listed.png',
-                  text: 'My listed properties',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyListedPropertyScreen()),
+                    );
+                  },
+                  child: ProfileSection(
+                    img: 'assets/images/listed.png',
+                    text: 'My listed properties',
+                  ),
                 ),
                 ProfileSection(
                   img: 'assets/images/security.png',

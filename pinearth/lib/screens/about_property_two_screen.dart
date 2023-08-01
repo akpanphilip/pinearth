@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/owner_document_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:image_cropper/image_cropper.dart';
 
 import 'about_property_one_screen.dart';
 

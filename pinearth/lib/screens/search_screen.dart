@@ -15,6 +15,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
   List<String> items = ["All", "For Rent", "For Sale", "Hotel", "Event Center"];
 
   List<String> categories = [
@@ -32,6 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
   //   Icons.feed,
   //   Icons.person,
   // ];
+  
   int current = 0;
 
   @override

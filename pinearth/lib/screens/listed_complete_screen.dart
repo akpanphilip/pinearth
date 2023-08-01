@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/search_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 import 'list_property_screen.dart';
@@ -40,10 +41,9 @@ class ListedComplete extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25))),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => ListPropertyScreen()),
+                        MaterialPageRoute(builder: (context) => SearchScreen()),
                       );
                     },
                     child: Padding(

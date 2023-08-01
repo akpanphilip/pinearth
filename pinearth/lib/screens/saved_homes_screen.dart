@@ -39,7 +39,8 @@ class _SavedHomesScreenState extends State<SavedHomesScreen> {
                   'You have no saved homes, like a home for it to appear here',
             ),
             SizedBox(height: 90),
-            ActionButton(text: 'Back to homes'),
+            GestureDetector(
+                onTap: () {}, child: ActionButton(text: 'Back to homes')),
           ],
         ),
       ),

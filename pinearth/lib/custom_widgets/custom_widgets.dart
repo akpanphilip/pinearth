@@ -475,23 +475,39 @@ class ActionButton extends StatelessWidget {
     required this.text,
   });
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return ElevatedButton(
+//         style: ElevatedButton.styleFrom(
+//             elevation: 0,
+//             backgroundColor: Color(0xff1173AB),
+//             shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(50))),
+//         onPressed: () {},
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+//           child: Text(
+//             text,
+//             style: GoogleFonts.nunito(
+//                 color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
+//           ),
+//         ));
+//   }
+// }
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            elevation: 0,
-            backgroundColor: Color(0xff1173AB),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50))),
-        onPressed: () {},
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-          child: Text(
-            text,
-            style: GoogleFonts.nunito(
-                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
-          ),
-        ));
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(0xff1173AB), borderRadius: BorderRadius.circular(50)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        child: Text(
+          text,
+          style: GoogleFonts.nunito(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
+        ),
+      ),
+    );
   }
 }
 

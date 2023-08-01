@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/screens/property_photos_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:image_cropper/image_cropper.dart';
 
 class ListOpt extends StatefulWidget {
   const ListOpt({super.key});

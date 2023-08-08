@@ -133,7 +133,7 @@ class PropertyWidget extends StatelessWidget {
                     style: GoogleFonts.nunito(
                         color: Color(0xff000000),
                         fontSize: 12,
-                        fontWeight: FontWeight.w400)),
+                        fontWeight: FontWeight.w600)),
                 SizedBox(height: 10),
                 Row(
                   children: [
@@ -157,7 +157,7 @@ class PropertyWidget extends StatelessWidget {
                               ),
                               Text('${bedroom} bedroom flat',
                                   style: GoogleFonts.nunito(
-                                      color: Color(0xff000000), fontSize: 7))
+                                      color: Color(0xff000000), fontSize: 8))
                             ],
                           ),
                         ),
@@ -184,7 +184,7 @@ class PropertyWidget extends StatelessWidget {
                               ),
                               Text('${bathroom} bathrooms',
                                   style: GoogleFonts.nunito(
-                                      color: Color(0xff000000), fontSize: 7))
+                                      color: Color(0xff000000), fontSize: 8))
                             ],
                           ),
                         ),
@@ -211,7 +211,7 @@ class PropertyWidget extends StatelessWidget {
                               ),
                               Text('${sqr} sqr feet',
                                   style: GoogleFonts.nunito(
-                                      color: Color(0xff000000), fontSize: 7))
+                                      color: Color(0xff000000), fontSize: 8))
                             ],
                           ),
                         ),
@@ -379,7 +379,7 @@ class AppbarTitle extends StatelessWidget {
     return Text(text,
         textAlign: TextAlign.start,
         style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800));
+            color: Colors.black, fontSize: 18, fontWeight: FontWeight.w800));
   }
 }
 

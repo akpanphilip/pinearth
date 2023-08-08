@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/root_screen.dart';
 import 'package:pinearth/screens/search_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
@@ -43,7 +44,7 @@ class ListedComplete extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => SearchScreen()),
+                        MaterialPageRoute(builder: (context) => RootScreen()),
                       );
                     },
                     child: Padding(

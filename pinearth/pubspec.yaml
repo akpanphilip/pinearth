@@ -98,6 +98,10 @@ flutter:
     - assets/images/unavailable.png
     - assets/images/available-listing.png
     - assets/images/customer-support-rocket.png
+    - assets/images/full_property_view.png
+    - assets/images/tag.png
+    - assets/images/call.png
+    - assets/images/map.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

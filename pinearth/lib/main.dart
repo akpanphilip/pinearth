@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pinearth',
-      theme: ThemeData(
-        primaryColor: Color(0x0f1173AB), // Set the primary color
-      ),
+      // theme: ThemeData(
+      //   primaryColor: Color(0x0f1173AB), // Set the primary color
+      // ),
       debugShowCheckedModeBanner: false,
       home: const OnboardingScreen(),
     );

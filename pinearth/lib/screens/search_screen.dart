@@ -15,7 +15,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   List<String> items = ["All", "For Rent", "For Sale", "Hotel", "Event Center"];
 
   List<String> categories = [
@@ -33,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   //   Icons.feed,
   //   Icons.person,
   // ];
-  
+
   int current = 0;
 
   @override
@@ -75,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(25)),
                               child: TextField(
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 11),
+                                    color: Colors.black, fontSize: 13),
                                 decoration: InputDecoration(
                                   hintText:
                                       'Enter an address, neighborhood or zip code',
@@ -161,35 +160,38 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         //  dBox(height: 20),
         SliverToBoxAdapter(
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  width: 104,
-                  height: 34,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffE6F1F7)),
-                  child: Center(
-                    child: Text(
-                      'Properties',
-                      style: GoogleFonts.nunito(color: Color(0xff1173AB)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 104,
+                    height: 34,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffE6F1F7)),
+                    child: Center(
+                      child: Text(
+                        'Properties',
+                        style: GoogleFonts.nunito(color: Color(0xff1173AB)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 15),
-              // main body
-              Column(
-                children: [
-                  Text(categories[current],
-                      style: GoogleFonts.nunito(
-                          fontSize: 16,
-                          color: Color(0xff000000),
-                          fontWeight: FontWeight.w700))
-                ],
-              ),
-            ],
+                SizedBox(height: 15),
+                // main body
+                Column(
+                  children: [
+                    Text(categories[current],
+                        style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                            fontWeight: FontWeight.w700))
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         SliverToBoxAdapter(
@@ -214,30 +216,30 @@ class _SearchScreenState extends State<SearchScreen> {
                 }),
           ),
         ),
-        SliverPadding(padding: EdgeInsets.all(50)),
-        SliverToBoxAdapter(
-          child: Container(
-            // height: MediaQuery.of(context).size.height,
-            height: MediaQuery.of(context).size.height / 1.9,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: properties.length,
-                itemBuilder: (context, index) {
-                  final property = properties[index];
-                  return PropertyWidget(
-                    image: property['imageUrl'] as String,
-                    price: property['price'] as String,
-                    bathroom: property['bathroom'] as String,
-                    bedroom: property['bedroom'] as String,
-                    // category: property['category'] as String,
-                    location: property['location'] as String,
-                    desc: property['desc'] as String,
-                    sqr: property['sqr'] as String,
-                    // agent: property['agent'] as String,
-                  );
-                }),
-          ),
-        ),
+        // SliverPadding(padding: EdgeInsets.all(150)),
+        //   SliverToBoxAdapter(
+        //     child: Container(
+        //       // height: MediaQuery.of(context).size.height,
+        //       height: MediaQuery.of(context).size.height / 1.9,
+        //       child: ListView.builder(
+        //           scrollDirection: Axis.horizontal,
+        //           itemCount: properties.length,
+        //           itemBuilder: (context, index) {
+        //             final property = properties[index];
+        //             return PropertyWidget(
+        //               image: property['imageUrl'] as String,
+        //               price: property['price'] as String,
+        //               bathroom: property['bathroom'] as String,
+        //               bedroom: property['bedroom'] as String,
+        //               // category: property['category'] as String,
+        //               location: property['location'] as String,
+        //               desc: property['desc'] as String,
+        //               sqr: property['sqr'] as String,
+        //               // agent: property['agent'] as String,
+        //             );
+        //           }),
+        //     ),
+        //   ),
       ]),
     );
   }

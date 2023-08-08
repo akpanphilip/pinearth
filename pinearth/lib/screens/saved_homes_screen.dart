@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
+import 'package:pinearth/screens/root_screen.dart';
+import 'package:pinearth/screens/search_screen.dart';
 
 import '../custom_widgets/custom_widgets.dart';
 
@@ -40,7 +42,18 @@ class _SavedHomesScreenState extends State<SavedHomesScreen> {
             ),
             SizedBox(height: 90),
             GestureDetector(
-                onTap: () {}, child: ActionButton(text: 'Back to homes')),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => RootScreen()),
+                  );
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => RootScreen()),
+                  // );
+                },
+                child: ActionButton(text: 'Back to homes')),
           ],
         ),
       ),

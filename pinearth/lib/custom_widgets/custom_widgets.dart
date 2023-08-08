@@ -858,3 +858,53 @@ class UploadImg extends StatelessWidget {
     );
   }
 }
+
+class Price extends StatelessWidget {
+  final String price;
+  const Price({
+    super.key,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      price,
+      style: GoogleFonts.nunito(fontSize: 20, fontWeight: FontWeight.w700),
+    );
+  }
+}
+
+class LabelProperty extends StatelessWidget {
+  final String text;
+  const LabelProperty({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.nunito(
+          color: Colors.black26, fontWeight: FontWeight.w300, fontSize: 16),
+    );
+  }
+}
+
+class PropertyFeature extends StatelessWidget {
+  final String text;
+  const PropertyFeature({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.nunito(
+          fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black),
+    );
+  }
+}

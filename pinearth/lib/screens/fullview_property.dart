@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/seller_info.dart';
+
+import '../custom_widgets/custom_widgets.dart';
 
 class FullViewProperty extends StatefulWidget {
   const FullViewProperty({super.key});
@@ -69,7 +72,7 @@ class _FullViewPropertyState extends State<FullViewProperty> {
                         onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FullViewProperty()),
+                                  builder: (context) => SellerInfo()),
                             ),
                         child: Text('Seller Info')),
                   ],
@@ -190,55 +193,5 @@ class _FullViewPropertyState extends State<FullViewProperty> {
         ),
       ),
     ));
-  }
-}
-
-class Price extends StatelessWidget {
-  final String price;
-  const Price({
-    super.key,
-    required this.price,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      price,
-      style: GoogleFonts.nunito(fontSize: 20, fontWeight: FontWeight.w700),
-    );
-  }
-}
-
-class LabelProperty extends StatelessWidget {
-  final String text;
-  const LabelProperty({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: GoogleFonts.nunito(
-          color: Colors.black26, fontWeight: FontWeight.w300, fontSize: 16),
-    );
-  }
-}
-
-class PropertyFeature extends StatelessWidget {
-  final String text;
-  const PropertyFeature({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: GoogleFonts.nunito(
-          fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black),
-    );
   }
 }

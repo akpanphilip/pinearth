@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/screens/schedule_visit.dart';
 import 'package:pinearth/screens/seller_info.dart';
 
 import '../custom_widgets/custom_widgets.dart';
@@ -167,11 +168,11 @@ class _FullViewPropertyState extends State<FullViewProperty> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25))),
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => ProfileScreen()),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ScheduleVisit()),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors
+// ignore_for_file: file_names, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,36 +39,29 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: CustomScrollView(slivers: [
-        SliverAppBar(
-          pinned: true,
-          expandedHeight: 140,
+      child: Scaffold(
+        body: CustomScrollView(slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 140,
 
-          // scrolledUnderElevation: ,
-          flexibleSpace: FlexibleSpaceBar(
-            background: Column(
-              children: [
-                Container(
-                  color: Color.fromARGB(255, 5, 113, 201),
-                  height: 140,
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
+            // scrolledUnderElevation: ,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                children: [
+                  Container(
+                    color: Color.fromARGB(255, 5, 113, 201),
+                    height: 140,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
                               // height: 45,
+                              width: 330,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(25)),
@@ -85,162 +78,240 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  // custom tab bat
-                                  SizedBox(
-                                    height: 45,
-                                    width: double.infinity,
-                                    child: ListView.builder(
-                                        physics: const BouncingScrollPhysics(),
-                                        itemCount: items.length,
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (ctx, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                current = index;
-                                              });
-                                            },
-                                            child: AnimatedContainer(
-                                              duration: const Duration(
-                                                  milliseconds: 300),
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10,
-                                                    horizontal: 15),
-                                                // margin: EdgeInsets.symmetric(
-                                                //     horizontal: 10),
-                                                margin: EdgeInsets.fromLTRB(
-                                                    0, 10, 10, 0),
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  color: current == index
-                                                      ? Colors.white70
-                                                      : Colors.white30,
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    items[index],
-                                                    style: GoogleFonts.nunito(
-                                                        color: current == index
-                                                            ? Color(0xff1173AB)
-                                                            : Colors.white,
-                                                        fontSize: 12),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    // custom tab bat
+                                    SizedBox(
+                                      height: 45,
+                                      width: double.infinity,
+                                      child: ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount: items.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (ctx, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  current = index;
+                                                });
+                                              },
+                                              child: AnimatedContainer(
+                                                duration: const Duration(
+                                                    milliseconds: 300),
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 15),
+                                                  // margin: EdgeInsets.symmetric(
+                                                  //     horizontal: 10),
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 10, 10, 0),
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                    color: current == index
+                                                        ? Colors.white70
+                                                        : Colors.white30,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      items[index],
+                                                      style: GoogleFonts.nunito(
+                                                          color: current ==
+                                                                  index
+                                                              ? Color(
+                                                                  0xff1173AB)
+                                                              : Colors.white,
+                                                          fontSize: 12),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                  // custom tab bar end
-                                ],
+                                            );
+                                          }),
+                                    ),
+                                    // custom tab bar end
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        //  dBox(height: 20),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 25),
-            child: Column(
-              children: [
-                Center(
-                  child: Container(
-                    width: 104,
-                    height: 34,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffE6F1F7)),
-                    child: Center(
-                      child: Text(
-                        'Properties',
-                        style: GoogleFonts.nunito(color: Color(0xff1173AB)),
+          //  dBox(height: 20),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Column(
+                children: [
+                  Center(
+                    child: Container(
+                      width: 104,
+                      height: 34,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xffE6F1F7)),
+                      child: Center(
+                        child: Text(
+                          'Properties',
+                          style: GoogleFonts.nunito(color: Color(0xff1173AB)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 15),
-                // main body
-                Column(
-                  children: [
-                    Text(categories[current],
-                        style: GoogleFonts.nunito(
-                            fontSize: 16,
-                            color: Color(0xff000000),
-                            fontWeight: FontWeight.w700))
-                  ],
-                ),
-              ],
+                  SizedBox(height: 15),
+                  // main body
+                  Column(
+                    children: [
+                      Text(categories[current],
+                          style: GoogleFonts.nunito(
+                              fontSize: 16,
+                              color: Color(0xff000000),
+                              fontWeight: FontWeight.w700))
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Container(
-            height: MediaQuery.of(context).size.height / 1.9,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: properties.length,
-                itemBuilder: (context, index) {
-                  final property = properties[index];
-                  return PropertyWidget(
-                    image: property['imageUrl'] as String,
-                    price: property['price'] as String,
-                    bathroom: property['bathroom'] as String,
-                    bedroom: property['bedroom'] as String,
-                    // category: property['category'] as String,
-                    location: property['location'] as String,
-                    desc: property['desc'] as String,
-                    sqr: property['sqr'] as String,
-                    // agent: property['agent'] as String,
-                  );
-                }),
+          SliverToBoxAdapter(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 1.9,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: properties.length,
+                  itemBuilder: (context, index) {
+                    final property = properties[index];
+                    return PropertyWidget(
+                      image: property['imageUrl'] as String,
+                      price: property['price'] as String,
+                      bathroom: property['bathroom'] as String,
+                      bedroom: property['bedroom'] as String,
+                      // category: property['category'] as String,
+                      location: property['location'] as String,
+                      desc: property['desc'] as String,
+                      sqr: property['sqr'] as String,
+                      // agent: property['agent'] as String,
+                    );
+                  }),
+            ),
+          ),
+          // SliverPadding(padding: EdgeInsets.all(150)),
+          //   SliverToBoxAdapter(
+          //     child: Container(
+          //       // height: MediaQuery.of(context).size.height,
+          //       height: MediaQuery.of(context).size.height / 1.9,
+          //       child: ListView.builder(
+          //           scrollDirection: Axis.horizontal,
+          //           itemCount: properties.length,
+          //           itemBuilder: (context, index) {
+          //             final property = properties[index];
+          //             return PropertyWidget(
+          //               image: property['imageUrl'] as String,
+          //               price: property['price'] as String,
+          //               bathroom: property['bathroom'] as String,
+          //               bedroom: property['bedroom'] as String,
+          //               // category: property['category'] as String,
+          //               location: property['location'] as String,
+          //               desc: property['desc'] as String,
+          //               sqr: property['sqr'] as String,
+          //               // agent: property['agent'] as String,
+          //             );
+          //           }),
+          //     ),
+          //   ),
+        ]),
+        drawer: Drawer(
+          backgroundColor: Color(0xff1173AB),
+          child: ListView(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 40, left: 14, bottom: 0),
+                  child: Text("Register business profile",
+                      style: GoogleFonts.nunito(
+                          color: Colors.white, fontSize: 20))),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as an Agent',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as a Landlord',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as a Developer',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as a Bank',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as a Hotel',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as an Event Center',
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: DrawerLinks(
+                  text: 'Register as a Short-led',
+                ),
+                onTap: () {},
+              ),
+              // ListTile(
+              //   title: Text("Shop"),
+              //   onTap: () {},
+              // ),
+            ],
           ),
         ),
-        // SliverPadding(padding: EdgeInsets.all(150)),
-        //   SliverToBoxAdapter(
-        //     child: Container(
-        //       // height: MediaQuery.of(context).size.height,
-        //       height: MediaQuery.of(context).size.height / 1.9,
-        //       child: ListView.builder(
-        //           scrollDirection: Axis.horizontal,
-        //           itemCount: properties.length,
-        //           itemBuilder: (context, index) {
-        //             final property = properties[index];
-        //             return PropertyWidget(
-        //               image: property['imageUrl'] as String,
-        //               price: property['price'] as String,
-        //               bathroom: property['bathroom'] as String,
-        //               bedroom: property['bedroom'] as String,
-        //               // category: property['category'] as String,
-        //               location: property['location'] as String,
-        //               desc: property['desc'] as String,
-        //               sqr: property['sqr'] as String,
-        //               // agent: property['agent'] as String,
-        //             );
-        //           }),
-        //     ),
-        //   ),
-      ]),
+      ),
+    );
+  }
+}
+
+class DrawerLinks extends StatelessWidget {
+  final String text;
+  const DrawerLinks({
+    super.key,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.nunito(color: Colors.white, fontSize: 16),
     );
   }
 }

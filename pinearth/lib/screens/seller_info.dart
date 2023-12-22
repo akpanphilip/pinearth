@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../custom_widgets/custom_widgets.dart';
-import 'fullview_property.dart';
 
 class SellerInfo extends StatefulWidget {
   const SellerInfo({super.key});

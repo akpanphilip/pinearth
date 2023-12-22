@@ -1,34 +1,30 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:pinearth/controller/main_wrapper_controller.dart';
-import 'package:pinearth/screens/auth/login_screen.dart';
-import 'package:pinearth/screens/fullview_property.dart';
+import 'package:pinearth/providers/user/profile_provider.dart';
 import 'package:pinearth/screens/home_screen.dart';
-import 'package:pinearth/screens/list_property_screen.dart';
-import 'package:pinearth/screens/profile_screen.dart';
+import 'package:pinearth/screens/list_property/list_property_screen.dart';
+import 'package:pinearth/screens/profile/profile_screen.dart';
 import 'package:pinearth/screens/saved_homes_screen.dart';
-import 'package:pinearth/screens/search_screen.dart';
 import 'package:pinearth/screens/updates_screen.dart';
+import 'package:pinearth/screens/widgets/side_bar_widget.dart';
+import 'package:pinearth/utils/styles/colors.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-class RootScreen extends StatefulWidget {
+class RootScreen extends ConsumerStatefulWidget {
   RootScreen({super.key});
 
   @override
-  State<RootScreen> createState() => _RootScreenState();
+  ConsumerState<RootScreen> createState() => _RootScreenState();
 }
 
-class _RootScreenState extends State<RootScreen> {
-  final MainWrapperController controller = Get.put(MainWrapperController());
+class _RootScreenState extends ConsumerState<RootScreen> {
 
   // int _bottomNavIndex = 0;
   // list of screens
   List<Widget> pages = const [
-    SearchScreen(),
+    HomeScreen(),
     UpdatesScreen(),
     SavedHomesScreen(),
     ListPropertyScreen(),
@@ -53,66 +49,44 @@ class _RootScreenState extends State<RootScreen> {
     'Profile',
   ];
 
+  int _bottomNavIndex = 0;
+
   @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: IndexedStack(
-  //       index: _bottomNavIndex,
-  //       children: pages,
-  //     ),
-  //     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-  //     bottomNavigationBar: AnimatedBottomNavigationBar(
-  //         splashColor: Colors.red,
-  //         activeColor: Colors.green,
-  //         inactiveColor: Colors.green.withOpacity(.5),
-  //         icons: iconList,
-  //         activeIndex: _bottomNavIndex,
-  //         gapLocation: GapLocation.end,
-  //         notchSmoothness: NotchSmoothness.softEdge,
-  //         onTap: (index) {
-  //           setState(() {
-  //             _bottomNavIndex = index;
-  //           });
-  //         }),
-  //   );
-  // }
   Widget build(BuildContext context) {
+    final profileP = ref.read(profileProvider);
+    final profile = profileP.profileState;
+    bool hasRole = false;
+    bool canList = false;
+    if (profile.data != null) {
+      hasRole = profile.data!.hasRole;
+      canList = profileP.canList;
+    }
     return Scaffold(
-      body: PageView(
-        onPageChanged: controller.animateToTab,
-        controller: controller.pageController,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          SearchScreen(),
-          UpdatesScreen(),
-          SavedHomesScreen(),
-          FullViewProperty(),
-          // ListPropertyScreen(),
-          LoginScreen()
-        ],
+      body: pages[_bottomNavIndex],
+      drawer: Drawer(
+        backgroundColor: appColor.primary,
+        child: SideBarWidget(),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 10,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-          child: Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _bottomAppBarItem(context,
-                    icon: IconlyLight.search, page: 0, label: "Search"),
-                _bottomAppBarItem(context,
-                    icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
-                _bottomAppBarItem(context,
-                    icon: IconlyLight.notification, page: 1, label: "Updates"),
-                _bottomAppBarItem(context,
-                    icon: IconlyLight.category,
-                    page: 3,
-                    label: "List Property"),
-                _bottomAppBarItem(context,
-                    icon: IconlyLight.profile, page: 4, label: "Profile"),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _bottomAppBarItem(context,
+                  icon: IconlyLight.home, page: 0, label: "Home"),
+              _bottomAppBarItem(context,
+                  icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
+              _bottomAppBarItem(context,
+                  icon: IconlyLight.notification, page: 1, label: "Updates"),
+                  if (canList) _bottomAppBarItem(context,
+                  icon: IconlyLight.category,
+                  page: 3,
+                  label: "List Property"),
+              _bottomAppBarItem(context,
+                  icon: IconlyLight.profile, page: 4, label: "Profile"),
+            ],
           ),
         ),
       ),
@@ -122,12 +96,14 @@ class _RootScreenState extends State<RootScreen> {
   Widget _bottomAppBarItem(BuildContext context,
       {required icon, required page, required label}) {
     return ZoomTapAnimation(
-      onTap: () => controller.goToTab(page),
+      onTap: () => setState(() {
+        _bottomNavIndex = page;
+      }),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon,
-              color: controller.currentPage.value == page
+              color: _bottomNavIndex == page
                   ? Color.fromARGB(255, 5, 113, 201)
                   : const Color.fromARGB(186, 158, 158, 158)),
           SizedBox(height: 5),
@@ -135,7 +111,7 @@ class _RootScreenState extends State<RootScreen> {
             label,
             style: TextStyle(
                 fontSize: 10,
-                color: controller.currentPage.value == page
+                color: _bottomNavIndex == page
                     ? Color.fromARGB(255, 5, 113, 201)
                     : Color.fromARGB(186, 158, 158, 158)),
           )

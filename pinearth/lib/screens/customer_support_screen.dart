@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/utils/extensions/number_extension.dart';
+import 'package:pinearth/utils/extensions/string_extension.dart';
 
 import '../custom_widgets/custom_widgets.dart';
-import 'profile_screen.dart';
+import 'profile/profile_screen.dart';
 
 class CustomerSupportScreen extends StatefulWidget {
   const CustomerSupportScreen({super.key});
@@ -40,14 +43,14 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
-              Image(
-                  image:
-                      AssetImage('assets/images/customer-support-rocket.png')),
-              SizedBox(width: 20),
-              Text(
-                textAlign: TextAlign.start,
-                'Send your complaint to \n support@pinearth.com',
-                style: GoogleFonts.nunito(color: Colors.white, fontSize: 16),
+              SvgPicture.asset('customer_support_rocket'.svg, height: 50, width: 50,),
+              20.toRowSpace(),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.start,
+                  'Send your complaint to support@pinearth.com',
+                  style: GoogleFonts.nunito(color: Colors.white, fontSize: 16),
+                ),
               )
             ],
           ),

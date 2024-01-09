@@ -29,8 +29,10 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
   @override
   initState() {
     super.initState();
-    ref.read(findAgentProvider).setAgentType(widget.type);
-    print("InitState Called");
+   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     ref.read(findAgentProvider).setAgentType(widget.type);
+
+   });
   }
 
   @override

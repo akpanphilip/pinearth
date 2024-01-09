@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pinearth/screens/list_property/property_listing_options_screen.dart';
 import 'package:pinearth/screens/widgets/custom_button_widget.dart';
@@ -23,7 +21,7 @@ class CanListPropertyWidget extends StatelessWidget {
         23.toColumnSpace(),
 
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,14 +59,14 @@ class CanListPropertyWidget extends StatelessWidget {
               47.toColumnSpace(),
 
               CustomButtonWidget(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 13, horizontal: 32),
-                  child: Text("List Property"),
-                ), 
                 onClick: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PropertyListingOptionScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PropertyListingOptionScreen()));
                 },
                 color: appColor.primary,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 32),
+                  child: const Text("List Property"),
+                ),
               )
             ],
           ),

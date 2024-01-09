@@ -11,6 +11,8 @@ import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:redacted/redacted.dart';
 
+import '../utils/styles/colors.dart';
+
 // viewLink
 class ViewLink extends StatelessWidget {
   final String text;
@@ -51,12 +53,11 @@ class UpdateWidget extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Text("$location")
-      ),
+          padding: const EdgeInsets.all(15.0), child: Text("$location")),
     );
   }
 }
+
 class LoadingUpdateWidget extends StatelessWidget {
   // final String locationImg;
   final String location;
@@ -116,17 +117,23 @@ class LoadingUpdateWidget extends StatelessWidget {
 // appbar title text
 class AppbarTitle extends StatelessWidget {
   final String text;
+  final EdgeInsetsGeometry? padding;
+
   const AppbarTitle({
     super.key,
     required this.text,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        textAlign: TextAlign.start,
-        style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 18, fontWeight: FontWeight.w800));
+    return Padding(
+      padding: padding ?? EdgeInsets.zero,
+      child: Text(text,
+          textAlign: TextAlign.start,
+          style: GoogleFonts.nunito(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w800)),
+    );
   }
 }
 
@@ -290,7 +297,7 @@ class FormTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Center(
         child: Text(text,
             textAlign: TextAlign.center,
@@ -353,9 +360,12 @@ class GoogleAuth extends StatelessWidget {
 // label title
 class LabelTitle extends StatelessWidget {
   final String text;
+  final Color color;
+
   const LabelTitle({
     super.key,
     required this.text,
+    this.color = Colors.black,
   });
 
   @override
@@ -363,9 +373,10 @@ class LabelTitle extends StatelessWidget {
     return Text(text,
         textAlign: TextAlign.left,
         style: GoogleFonts.nunito(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700));
+            color: color, fontSize: 16, fontWeight: FontWeight.w700));
   }
 }
+
 class ImportantLabelTitle extends StatelessWidget {
   final String text;
   const ImportantLabelTitle({
@@ -378,9 +389,7 @@ class ImportantLabelTitle extends StatelessWidget {
     return Text(
       '$text',
       style: GoogleFonts.nunito(
-          fontSize: 14,
-          color: Colors.red,
-          fontWeight: FontWeight.w700),
+          fontSize: 14, color: Colors.red, fontWeight: FontWeight.w700),
     );
   }
 }
@@ -389,51 +398,51 @@ class ImportantLabelTitle extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final String hintText;
-
-  const CustomTextField({
-    super.key,
-    required this.obscureText,
-    required this.hintText,
-    this.controller,
-    this.readOnly = false,
-    this.onTap,
-    this.inputType,
-    this.suffixIcon
-  });
-
+  final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
   final bool readOnly;
   final Function? onTap;
   final TextInputType? inputType;
   final Widget? suffixIcon;
+  final double maxHeight;
+
+  const CustomTextField(
+      {super.key,
+      required this.obscureText,
+      required this.hintText,
+      this.controller,
+      this.readOnly = false,
+      this.onTap,
+      this.validator,
+      this.inputType,
+      this.maxHeight = 48,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obscureText,
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 16.toFontSize()
-      ),
+      style: TextStyle(color: Colors.black, fontSize: 16.toFontSize()),
       controller: controller,
       readOnly: readOnly,
       textAlignVertical: TextAlignVertical.center,
-      onTap: () => onTap!(),
+      validator: validator,
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        }
+      },
       keyboardType: inputType,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 19),
-        fillColor: Color(0xffeeeeee),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide.none
-        ),
-        hintText: hintText,
-        constraints: BoxConstraints(
-          maxHeight: 48, minHeight: 48
-        ),
-        suffixIcon: suffixIcon
-      ),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 19),
+          fillColor: Color(0xffeeeeee),
+          filled: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          hintText: hintText,
+          constraints: BoxConstraints(maxHeight: maxHeight, minHeight: 48),
+          suffixIcon: suffixIcon),
     );
   }
 }
@@ -538,7 +547,11 @@ class UploadId extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image(image: AssetImage(img), height: 30, width: 30,),
+            Image(
+              image: AssetImage(img),
+              height: 30,
+              width: 30,
+            ),
             Text(
               text,
               style:
@@ -607,7 +620,12 @@ class ProfileSection extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image(image: AssetImage(img), errorBuilder: (c, r, s) => SizedBox.shrink(), height: 30, width: 30,),
+                Image(
+                  image: AssetImage(img),
+                  errorBuilder: (c, r, s) => SizedBox.shrink(),
+                  height: 30,
+                  width: 30,
+                ),
                 SizedBox(width: 20),
                 Text(
                   text,
@@ -630,10 +648,7 @@ class ProfileSection extends StatelessWidget {
 
 // upload picture
 class UploadImg extends StatelessWidget {
-  const UploadImg({
-    super.key,
-    this.height = 200
-  });
+  const UploadImg({super.key, this.height = 200});
   final double height;
 
   @override
@@ -642,9 +657,7 @@ class UploadImg extends StatelessWidget {
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: Color(0xFFEEEEEE),
-        borderRadius: BorderRadius.circular(10)
-      ),
+          color: Color(0xFFEEEEEE), borderRadius: BorderRadius.circular(10)),
       child: Center(
         child: SvgPicture.asset('sample_upload'.svg),
       ),
@@ -653,11 +666,8 @@ class UploadImg extends StatelessWidget {
 }
 
 class SelectedImagesWidget extends StatelessWidget {
-  const SelectedImagesWidget({
-    super.key,
-    required this.images,
-    this.height = 200
-  });
+  const SelectedImagesWidget(
+      {super.key, required this.images, this.height = 200});
 
   final List images;
   final double height;
@@ -667,34 +677,37 @@ class SelectedImagesWidget extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey.shade300
-      ),
+          borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300),
       child: Row(
         children: [
           ...images.take(3).map((e) => Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Builder(
-                builder: (context) {
-                  print(e.runtimeType == File);
-                  if (e.runtimeType == String) {
-                    if (e.toString().startsWith('http')) {
-                      return CachedNetworkImage(
-                        imageUrl: e, fit: BoxFit.cover, height: 200,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Builder(builder: (context) {
+                    print(e.runtimeType == File);
+                    if (e.runtimeType == String) {
+                      if (e.toString().startsWith('http')) {
+                        return CachedNetworkImage(
+                          imageUrl: e,
+                          fit: BoxFit.cover,
+                          height: 200,
+                        );
+                      }
+                      return Image.file(
+                        File(e),
+                        fit: BoxFit.cover,
+                        height: 200,
                       );
                     }
-                    return Image.file(File(e), fit: BoxFit.cover, height: 200,);
-                  }
-                  // if (e.runtimeType == File) {
-                  // }
-                  return Image.file(e, fit: BoxFit.cover, height: 200,);
-                  // return SizedBox.shrink();
-                }
-              )).animate().fadeIn(
-                duration: Duration(milliseconds: 500)
-              )
-          ))
+                    // if (e.runtimeType == File) {
+                    // }
+                    return Image.file(
+                      e,
+                      fit: BoxFit.cover,
+                      height: 200,
+                    );
+                    // return SizedBox.shrink();
+                  })).animate().fadeIn(duration: Duration(milliseconds: 500))))
         ],
       ),
     );
@@ -749,4 +762,49 @@ class PropertyFeature extends StatelessWidget {
           fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black),
     );
   }
+}
+
+class HelpButton extends StatelessWidget {
+  const HelpButton({super.key, required this.text, required this.helpIcon});
+
+  final String text;
+  final Widget helpIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          color: appColor.inputBackground,
+          borderRadius: BorderRadius.circular(5)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            text,
+            style: GoogleFonts.nunitoSans(
+                fontWeight: FontWeight.w600, fontSize: 14, color: Colors.white),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Icon(
+            Icons.help_outline_rounded,
+            color: Colors.white,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+PreferredSize pageProgressWidget({required double progress}) {
+  return PreferredSize(
+      preferredSize: Size(double.infinity, 20),
+      child: LinearProgressIndicator(
+        value: progress,
+        color: appColor.inputBackground,
+        backgroundColor: appColor.inactiveColor,
+      ));
 }

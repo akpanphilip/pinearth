@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -19,9 +18,11 @@ class ListPropertyProvider extends BaseProvider {
   final IPropertyRepo propertyRepo;
   final ProfileProvider profileProvider;
   ListPropertyProvider(this.alert, this.propertyRepo, this.profileProvider);
-  
 
-  String listingOption = "";
+  String listingOption = "sale";
+  String rentDuration = "month";
+  String? hasALivingRoom;
+  String? hasWifi = "yes";
   final propertyNameController = TextEditingController();
   final propertyPriceController = TextEditingController();
   final propertyDescriptionController = TextEditingController();
@@ -30,6 +31,7 @@ class ListPropertyProvider extends BaseProvider {
   List<String> bedRoomImages = [];
   List<String> toiletImages = [];
   List<String> kitchenImages = [];
+  List<String> appliances = [];
   final propertyTypeController = TextEditingController();
   final numberOfRoomsController = TextEditingController();
   final numberOfBathroomController = TextEditingController();
@@ -43,6 +45,7 @@ class ListPropertyProvider extends BaseProvider {
   final propertyHasAppliancesController = TextEditingController();
   final propertyGoogleMapController = TextEditingController();
   final ownerController = TextEditingController();
+  final appliancesController = TextEditingController();
   List<String> documentFiles = [];
   List<String> housePlanImages = [];
   List<String> propertySizeImages = [];
@@ -54,7 +57,11 @@ class ListPropertyProvider extends BaseProvider {
     toiletImages = [];
     bedRoomImages = [];
     kitchenImages = [];
-    listingOption = "";
+    appliances = [];
+    listingOption = "sale";
+    rentDuration = "month";
+    hasWifi = "yes";
+    hasALivingRoom = null;
     propertyNameController.clear();
     propertyPriceController.clear();
     propertyDescriptionController.clear();
@@ -77,66 +84,110 @@ class ListPropertyProvider extends BaseProvider {
     owner = null;
   }
 
+  void addAppliance(String appliance) {
+    appliances.add(appliance);
+    notifyListeners();
+  }
+
+  void removeAppliance(String appliance) {
+    appliances.removeWhere(
+      (element) => element == appliance,
+    );
+    notifyListeners();
+  }
+
+  void setHasWifi(String status) {
+    hasWifi = status;
+    notifyListeners();
+  }
+
+  void setHasALivingRoom(String status) {
+    hasALivingRoom = status;
+    notifyListeners();
+  }
+
+  void setRentDuration(String duration) {
+    rentDuration = duration;
+    notifyListeners();
+  }
+
   void setLisingOption(String option) {
     listingOption = option;
     notifyListeners();
   }
+
   void setOwner(UserSearchResultModel selectedUser) async {
     owner = selectedUser;
     ownerController.text = "${selectedUser.firstName} ${selectedUser.lastName}";
     notifyListeners();
   }
-  void selectPropertyDocuments() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectPropertyDocuments({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       documentFiles = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectHousePlanDocuments() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectHousePlanDocuments({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       housePlanImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectPropertySize() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectPropertySize({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       propertySizeImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectPropertyImages() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectPropertyImages({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       propertyImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectLivingRoomImages() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectLivingRoomImages({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       livingRoomImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectBedRoomImages() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectBedRoomImages({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       bedRoomImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectToiletImages() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectToiletImages({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       toiletImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
     }
   }
-  void selectKitchenImages() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+  void selectKitchenImages({FileType fileType = FileType.any}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: fileType);
     if (res != null) {
       kitchenImages = res.files.map((e) => (e.path!)).toList();
       notifyListeners();
@@ -144,13 +195,70 @@ class ListPropertyProvider extends BaseProvider {
   }
 
   void listProperty(BuildContext context) async {
+    // final profile = profileProvider.profileState.data!;
+    // //TODO check this code properly to see if commenting it out breaks the app.
+    // // String status = "Sale";
+    // // if (profile.role == "Landlord") {
+    // //   status = "Rent";
+    // // }
+
+    // String status = listingOption;
+
+    // final json = {
+    //   'title': propertyNameController.text,
+    //   'desc': propertyDescriptionController.text,
+    //   'property_type': propertyTypeController.text,
+    //   'no_of_rooms': numberOfRoomsController.text,
+    //   'no_of_bathrooms': numberOfBathroomController.text,
+    //   'lot_size': propertyLotSizeController.text,
+    //   'address': propertyAddressController.text,
+    //   'property_status': "For $status",
+    //   'property_price': propertyPriceController.text,
+    //   'income_per_month': propertyIncomePerYearController.text,
+    //   'years_built': propertyYearBuiltController.text,
+    //   'years_renovated': propertyYearRenovatedController.text,
+    //   'years_reconstructed': propertyYearReconstructedController.text,
+    //   'parking_space': propertyHasPackingSpaceController.text,
+    //   'appliance': propertyHasAppliancesController.text,
+    //   'location': propertyGoogleMapController.text.addHttp(),
+    //   'role': profile.role.toLowerCase(),
+    //   'available': true,
+    //   'uhouse_view': await Future.wait(
+    //       propertyImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'uliving_room': await Future.wait(
+    //       livingRoomImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'ubed_room': await Future.wait(
+    //       bedRoomImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'utoilet': await Future.wait(
+    //       toiletImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'ukitchen': await Future.wait(
+    //       kitchenImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'udocuments': await Future.wait(
+    //       documentFiles.map((e) async => await MultipartFile.fromFile(e))),
+    //   'uhouse_plan': await Future.wait(
+    //       housePlanImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'usize': await Future.wait(
+    //       propertySizeImages.map((e) async => await MultipartFile.fromFile(e))),
+    //   'owner_name':
+    //       owner == null ? "" : "${owner!.firstName} ${owner!.lastName}",
+    //   "owner_email": owner == null ? "" : "${owner!.email}",
+    // };
+
+    // print("json is $json");
+
+    // return;
+
     try {
       alert.showLoadingAlert("");
       final profile = profileProvider.profileState.data!;
-      String status = "Sale";
-      if (profile.role == "Landlord") {
-        status = "Rent";
-      }
+      //TODO check this code properly
+      // String status = "Sale";
+      // if (profile.role == "Landlord") {
+      //   status = "Rent";
+      // }
+
+      String status = listingOption;
+
       final res = await propertyRepo.listProperty(FormData.fromMap({
         'title': propertyNameController.text,
         'desc': propertyDescriptionController.text,
@@ -170,17 +278,30 @@ class ListPropertyProvider extends BaseProvider {
         'location': propertyGoogleMapController.text.addHttp(),
         'role': profile.role.toLowerCase(),
         'available': true,
-        'uhouse_view': await Future.wait(propertyImages.map((e) async => await MultipartFile.fromFile(e))),
-        'uliving_room': await Future.wait(livingRoomImages.map((e) async => await MultipartFile.fromFile(e))),
-        'ubed_room': await Future.wait(bedRoomImages.map((e) async => await MultipartFile.fromFile(e))),
-        'utoilet': await Future.wait(toiletImages.map((e) async => await MultipartFile.fromFile(e))),
-        'ukitchen': await Future.wait(kitchenImages.map((e) async => await MultipartFile.fromFile(e))),
-        'udocuments': await Future.wait(documentFiles.map((e) async => await MultipartFile.fromFile(e))),
-        'uhouse_plan': await Future.wait(housePlanImages.map((e) async => await MultipartFile.fromFile(e))),
-        'usize': await Future.wait(propertySizeImages.map((e) async => await MultipartFile.fromFile(e))),
-        'owner_name': owner == null ? "" : "${owner!.firstName} ${owner!.lastName}",
+        'uappliances': appliancesController.text.trim() == ""
+            ? ["none"]
+            : appliancesController.text.split(","),
+        'uhouse_view': await Future.wait(
+            propertyImages.map((e) async => await MultipartFile.fromFile(e))),
+        'uliving_room': await Future.wait(
+            livingRoomImages.map((e) async => await MultipartFile.fromFile(e))),
+        'ubed_room': await Future.wait(
+            bedRoomImages.map((e) async => await MultipartFile.fromFile(e))),
+        'utoilet': await Future.wait(
+            toiletImages.map((e) async => await MultipartFile.fromFile(e))),
+        'ukitchen': await Future.wait(
+            kitchenImages.map((e) async => await MultipartFile.fromFile(e))),
+        'udocuments': await Future.wait(
+            documentFiles.map((e) async => await MultipartFile.fromFile(e))),
+        'uhouse_plan': await Future.wait(
+            housePlanImages.map((e) async => await MultipartFile.fromFile(e))),
+        'usize': await Future.wait(propertySizeImages
+            .map((e) async => await MultipartFile.fromFile(e))),
+        'owner_name':
+            owner == null ? "" : "${owner!.firstName} ${owner!.lastName}",
         "owner_email": owner == null ? "" : "${owner!.email}",
       }));
+
       alert.closeAlert();
       res.fold((l) {
         alert.showErrorAlert(l.message);
@@ -197,13 +318,9 @@ class ListPropertyProvider extends BaseProvider {
       alert.showErrorAlert("Unable to list property");
     }
   }
-
 }
 
 final listPropertyProvider = ChangeNotifierProvider.autoDispose((ref) {
-  return ListPropertyProvider(
-    getIt<IAlertInteraction>(),
-    getIt<IPropertyRepo>(),
-    ref.watch(profileProvider)
-  );
+  return ListPropertyProvider(getIt<IAlertInteraction>(),
+      getIt<IPropertyRepo>(), ref.watch(profileProvider));
 });

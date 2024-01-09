@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:pinearth/custom_widgets/custom_widgets.dart';
 import 'package:pinearth/locator.dart';
 import 'package:pinearth/providers/user/register_an_agent_provider.dart';
@@ -16,18 +17,19 @@ class AgentRegistrationContactScreen extends ConsumerStatefulWidget {
   const AgentRegistrationContactScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AgentRegistrationContactScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AgentRegistrationContactScreenState();
 }
 
-class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrationContactScreen> {
-
+class _AgentRegistrationContactScreenState
+    extends ConsumerState<AgentRegistrationContactScreen> {
   String nameTitle = "Business Name";
   String buttonText = "Next";
 
   @override
   void initState() {
     super.initState();
-    
+
     if (ref.read(registerAsAgentProvider).agentType == bankAgentType) {
       nameTitle = "Bank Name";
       buttonText = "Finish";
@@ -41,7 +43,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
   @override
   Widget build(BuildContext context) {
     final registerasagentprovider = ref.watch(registerAsAgentProvider);
-    bool requireName = [bankAgentType, hotelAgentType].contains(registerasagentprovider.agentType);
+    bool requireName = [bankAgentType, hotelAgentType]
+        .contains(registerasagentprovider.agentType);
     final agentType = registerasagentprovider.agentType;
     final isEdit = registerasagentprovider.isEdit;
     return Scaffold(
@@ -70,7 +73,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                     LabelTitle(text: "$nameTitle"),
                     10.toColumnSpace(),
                     CustomTextField(
-                      obscureText: false, hintText: "Kola enterprice/Oceanic bank",
+                      obscureText: false,
+                      hintText: "Kola enterprice/Oceanic bank",
                       controller: registerasagentprovider.nameController,
                     ),
                   ],
@@ -78,7 +82,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
               ),
               22.toColumnSpace(),
             ],
-            if (agentType != bankAgentType) ...[
+            if (agentType != bankAgentType &&
+                agentType != eventCenterAgentType) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -87,34 +92,56 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                     const LabelTitle(text: "Email address"),
                     10.toColumnSpace(),
                     CustomTextField(
-                      obscureText: false, hintText: "example@domain.com",
-                      controller: registerasagentprovider.emailAddressController,
+                      obscureText: false,
+                      hintText: "example@domain.com",
+                      controller:
+                          registerasagentprovider.emailAddressController,
                     ),
                   ],
                 ),
               ),
               22.toColumnSpace(),
             ],
-
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const LabelTitle(text: "Phone number"),
-                  10.toColumnSpace(),
-                  CustomTextField(
-                    obscureText: false, hintText: "08088888888",
-                    controller: registerasagentprovider.phoneNumberController,
-                    inputType: TextInputType.number,
-                  ),
-                ],
+            if (agentType == eventCenterAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(text: "Property address"),
+                    10.toColumnSpace(),
+                    CustomTextField(
+                      obscureText: false,
+                      hintText: "6391 Elgin St. Celina, Delaware 10299",
+                      controller:
+                          registerasagentprovider.propertyAddressController,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            22.toColumnSpace(),
-
-            if ([shortletAgentType].contains(registerasagentprovider.agentType)) ...[
+              22.toColumnSpace(),
+            ],
+            if (agentType != eventCenterAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(text: "Phone number"),
+                    10.toColumnSpace(),
+                    CustomTextField(
+                      obscureText: false,
+                      hintText: "08088888888",
+                      controller: registerasagentprovider.phoneNumberController,
+                      inputType: TextInputType.number,
+                    ),
+                  ],
+                ),
+              ),
+              22.toColumnSpace(),
+            ],
+            if ([shortletAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -123,7 +150,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                     const LabelTitle(text: "Shortlet Address"),
                     10.toColumnSpace(),
                     CustomTextField(
-                      obscureText: false, hintText: "13 ejirin road",
+                      obscureText: false,
+                      hintText: "13 ejirin road",
                       controller: registerasagentprovider.addressController,
                       inputType: TextInputType.text,
                     ),
@@ -132,7 +160,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
               ),
               22.toColumnSpace(),
             ],
-            if ([bankAgentType].contains(registerasagentprovider.agentType)) ...[
+            if ([bankAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -141,7 +170,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                     const LabelTitle(text: "Office Address"),
                     10.toColumnSpace(),
                     CustomTextField(
-                      obscureText: false, hintText: "13 ejirin road",
+                      obscureText: false,
+                      hintText: "13 ejirin road",
                       controller: registerasagentprovider.addressController,
                       inputType: TextInputType.text,
                     ),
@@ -150,9 +180,12 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
               ),
               22.toColumnSpace(),
             ],
-
-
-            if (![agentAgentType, landlordAgentType, bankAgentType, developerAgentType].contains(registerasagentprovider.agentType)) ...[
+            if (![
+              agentAgentType,
+              landlordAgentType,
+              bankAgentType,
+              developerAgentType
+            ].contains(registerasagentprovider.agentType)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -161,7 +194,8 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                     const LabelTitle(text: "State"),
                     10.toColumnSpace(),
                     CustomTextField(
-                      obscureText: false, hintText: "Ondo",
+                      obscureText: false,
+                      hintText: "E.g Rivers State",
                       controller: registerasagentprovider.stateController,
                       inputType: TextInputType.text,
                     ),
@@ -170,8 +204,91 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
               ),
               22.toColumnSpace(),
             ],
+            if (agentType == eventCenterAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(text: "Hall Capacity"),
+                    10.toColumnSpace(),
+                    CustomTextField(
+                        obscureText: false,
+                        hintText: "E.g 173 Square feet",
+                        controller:
+                            registerasagentprovider.hallCapacityController,
+                        inputType: TextInputType.number,
+                        suffixIcon: const HelpButton(
+                          text: "Sqft",
+                          helpIcon: Icon(
+                            Icons.help_outline_rounded,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              22.toColumnSpace(),
+            ],
+            if (agentType == eventCenterAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(text: "Parking space"),
+                    10.toColumnSpace(),
+                    CustomTextField(
+                        obscureText: false,
+                        hintText: "E.g 173 Square feet",
+                        controller:
+                            registerasagentprovider.parkingSpaceController,
+                        inputType: TextInputType.number,
+                        suffixIcon: const HelpButton(
+                          text: "Sqft",
+                          helpIcon: Icon(
+                            Icons.help_outline_rounded,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              22.toColumnSpace(),
+            ],
+            if (agentType == eventCenterAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(
+                        text: "What appliances are on the property"),
+                    10.toColumnSpace(),
+                    // const LabelTitle(text: "What appliances are on the property"),
+                    // 10.toColumnSpace(),
 
-            if (![landlordAgentType, shortletAgentType].contains(registerasagentprovider.agentType)) ...[
+                    CustomTextField(
+                      obscureText: false,
+                      hintText: "E.g A fridge",
+                      controller:
+                          registerasagentprovider.parkingSpaceController,
+                      inputType: TextInputType.number,
+                      // suffixIcon: const HelpButton(
+                      //   text: "Sqft",
+                      //   helpIcon: Icon(
+                      //     Icons.help_outline_rounded,
+                      //     color: Colors.white,
+                      //   ),
+                      // )
+                    ),
+                  ],
+                ),
+              ),
+              22.toColumnSpace(),
+            ],
+            if (![landlordAgentType, shortletAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -179,24 +296,58 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                   children: [
                     const LabelTitle(text: "Company ID"),
                     10.toColumnSpace(),
+                    LabelTitle(
+                        text: "*Image must be clear", color: appColor.red),
+                    10.toColumnSpace(),
                     GestureDetector(
-                      onTap: () => registerasagentprovider.selectCompanyId(),
-                      child: Builder(
-                        builder: (context) {
-                          if (registerasagentprovider.companyId.isEmpty) {
-                            return const UploadImg();
-                          }
-                          return SelectedImagesWidget(images: registerasagentprovider.companyId);
-                        },
-                      )
-                    ),
+                        onTap: () => registerasagentprovider.selectCompanyId(),
+                        child: Builder(
+                          builder: (context) {
+                            if (registerasagentprovider.companyId.isEmpty) {
+                              return const UploadImg();
+                            }
+                            return SelectedImagesWidget(
+                                images: registerasagentprovider.companyId);
+                          },
+                        )),
                   ],
                 ),
               ),
               22.toColumnSpace(),
-
+              if (registerasagentprovider.agentType ==
+                  eventCenterAgentType) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const LabelTitle(text: "Images of the Event center"),
+                      10.toColumnSpace(),
+                      LabelTitle(
+                          text: "*Image must be clear", color: appColor.red),
+                      10.toColumnSpace(),
+                      GestureDetector(
+                          onTap: () =>
+                              registerasagentprovider.selectCompanyId(),
+                          child: Builder(
+                            builder: (context) {
+                              if (registerasagentprovider
+                                  .eventCenterImages.isEmpty) {
+                                return const UploadImg();
+                              }
+                              return SelectedImagesWidget(
+                                  images: registerasagentprovider
+                                      .eventCenterImages);
+                            },
+                          )),
+                    ],
+                  ),
+                ),
+                22.toColumnSpace(),
+              ],
               ...[
-                if (![bankAgentType].contains(registerasagentprovider.agentType)) ...[
+                if (![bankAgentType, eventCenterAgentType]
+                    .contains(registerasagentprovider.agentType)) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
@@ -205,8 +356,10 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                         const LabelTitle(text: "Company name"),
                         10.toColumnSpace(),
                         CustomTextField(
-                          obscureText: false, hintText: "E.g XYZ Corporation",
-                          controller: registerasagentprovider.companyNameController,
+                          obscureText: false,
+                          hintText: "E.g XYZ Corporation",
+                          controller:
+                              registerasagentprovider.companyNameController,
                           inputType: TextInputType.text,
                         ),
                       ],
@@ -214,68 +367,140 @@ class _AgentRegistrationContactScreenState extends ConsumerState<AgentRegistrati
                   ),
                   22.toColumnSpace(),
                 ],
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const LabelTitle(text: "Company Reg. Number"),
-                      10.toColumnSpace(),
-                      CustomTextField(
-                        obscureText: false, hintText: "E.g CRN1234567890",
-                        controller: registerasagentprovider.companyRegNoController,
-                        inputType: TextInputType.text,
-                      ),
-                    ],
-                  ),
-                ),
+                if (registerasagentprovider.agentType !=
+                    eventCenterAgentType) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const LabelTitle(text: "Company Reg. Number"),
+                        10.toColumnSpace(),
+                        CustomTextField(
+                          obscureText: false,
+                          hintText: "E.g CRN1234567890",
+                          controller:
+                              registerasagentprovider.companyRegNoController,
+                          inputType: TextInputType.text,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ],
             ],
-
-            if ([landlordAgentType].contains(registerasagentprovider.agentType)) ...[
+            if ([landlordAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               350.toColumnSpace(),
             ],
-            if (![landlordAgentType, shortletAgentType].contains(registerasagentprovider.agentType)) ...[
+            if (![landlordAgentType, shortletAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               120.toColumnSpace(),
             ],
-            if ([shortletAgentType].contains(registerasagentprovider.agentType)) ...[
+            if ([shortletAgentType]
+                .contains(registerasagentprovider.agentType)) ...[
               120.toColumnSpace(),
             ],
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
-                  children: [
-                    const Expanded(child: PropertyListingBackButton()),
-                    40.toRowSpace(),
-                    Expanded(child: CustomButtonWidget(
-                      onClick: () {
-                        if ([bankAgentType, hotelAgentType, shortletAgentType].contains(registerasagentprovider.agentType)) {
+                children: [
+                  const Expanded(child: PropertyListingBackButton()),
+                  40.toRowSpace(),
+                  Expanded(
+                      child: CustomButtonWidget(
+                    onClick: () {
+                      if ([bankAgentType, hotelAgentType, shortletAgentType]
+                          .contains(registerasagentprovider.agentType)) {
+                        registerasagentprovider.register(context);
+                      } else {
+                        if (registerasagentprovider.agentType ==
+                            eventCenterAgentType) {
+                          if (registerasagentprovider
+                              .propertyAddressController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide an address");
+                            return;
+                          }
+                          if (registerasagentprovider.stateController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide a state");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .hallCapacityController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide hall capacity");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .parkingSpaceController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide parking space capacity");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .eventCenterImages.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide image of the event center");
+                            return;
+                          }
+                          // if (registerasagentprovider.eventCenterImages.isEmpty){
+                          //   getIt<IAlertInteraction>()
+                          //       .showErrorAlert("Please provide image of the event center");
+                          //   return;
+                          // }
+                        } else {
+                          if (requireName &&
+                              registerasagentprovider
+                                  .nameController.text.isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide a name");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .emailAddressController.text.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide an email address");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .phoneNumberController.text.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide a phone number.");
+                            return;
+                          }
+                        }
+
+                        if (registerasagentprovider.agentType ==
+                            eventCenterAgentType) {
                           registerasagentprovider.register(context);
                         } else {
-                          if (requireName && registerasagentprovider.nameController.text.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert("Please provide a name");
-                            return;
-                          }
-                          if (registerasagentprovider.emailAddressController.text.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert("Please provide an email address");
-                            return;
-                          }
-                          if (registerasagentprovider.phoneNumberController.text.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert("Please provide a phone number.");
-                            return;
-                          }
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AgentRegistrationAddressScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AgentRegistrationAddressScreen()));
                         }
-                      },
-                      color: appColor.primary,
-                      child: Center(child: Text(buttonText),),
-                    )),
-                  ],
-                ),
+                      }
+                    },
+                    color: appColor.primary,
+                    child: Center(
+                      child: Text(buttonText),
+                    ),
+                  )),
+                ],
+              ),
             ),
-              20.toColumnSpace(),
+            20.toColumnSpace(),
           ],
         ),
       ),

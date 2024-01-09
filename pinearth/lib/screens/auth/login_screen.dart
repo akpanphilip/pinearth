@@ -7,9 +7,11 @@ import 'package:pinearth/providers/auth/login_provider.dart';
 import 'package:pinearth/screens/auth/forgot_password/forgot_password_screen.dart';
 import 'package:pinearth/screens/auth/register/register_screen.dart';
 import 'package:pinearth/screens/root_screen.dart';
+import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
+import 'widgets/social_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -19,13 +21,14 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => RootScreen()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (ctx) => RootScreen()),
+            (route) => false);
         return false;
       },
       child: Scaffold(
@@ -41,9 +44,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           centerTitle: false,
           elevation: 0.5,
           leading: InkWell(
-            onTap: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) => RootScreen()), (route) => false),
-            child: Icon(Icons.arrow_back, color: Colors.black,)
-          ),
+              onTap: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (ctx) => RootScreen()),
+                  (route) => false),
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              )),
         ),
         body: SafeArea(
             child: SingleChildScrollView(
@@ -53,19 +61,50 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/auth_avatar.png'),
-                    radius: 30,
-                  ),
+                // Center(
+                //   child: CircleAvatar(
+                //     backgroundImage:
+                //         AssetImage('assets/images/auth_avatar.png'),
+                //     radius: 30,
+                //   ),
+                // ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: FormTitle(
+                      text: 'Login to begin selling and renting properties'),
                 ),
-                FormTitle(text: 'Login to list your property'),
+
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                SocialProvider(
+                  title: "Sign up with Google",
+                  onTap: () {
+                    //TODO sign up with google
+                  },
+                  image: "google".png,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SocialProvider(
+                  title: "Sign up with Apple",
+                  onTap: () {
+                    //TODO sign up with apple
+                  },
+                  image: "apple".png,
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
                 // GoogleAuth(text: 'Sign in with Google'),
                 // FormTitle(text: 'OR'),
                 LabelTitle(text: 'Email address'),
                 SizedBox(height: 10),
                 CustomTextField(
-                  obscureText: false, 
+                  obscureText: false,
                   hintText: 'Email address',
                   controller: ref.read(loginProvider).emailController,
                 ),
@@ -73,13 +112,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 LabelTitle(text: 'Password'),
                 SizedBox(height: 10),
                 CustomTextField(
-                  obscureText: !ref.watch(loginProvider).passwordIsVisible, 
+                  obscureText: !ref.watch(loginProvider).passwordIsVisible,
                   hintText: 'Password',
                   controller: ref.read(loginProvider).passwordController,
                   suffixIcon: InkWell(
-                    onTap: () => ref.read(loginProvider).togglePasswordVisibility(),
+                    onTap: () =>
+                        ref.read(loginProvider).togglePasswordVisibility(),
                     child: Icon(
-                      ref.watch(loginProvider).passwordIsVisible ? Icons.visibility_off : Icons.remove_red_eye,
+                      ref.watch(loginProvider).passwordIsVisible
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
                       color: appColor.primary,
                     ),
                   ),
@@ -93,7 +135,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: Color(0xff1173AB),
-                            shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(25))),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25))),
                         onPressed: () {
                           ref.read(loginProvider).login(context);
                         },
@@ -111,19 +154,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 InkWell(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen())),
-                  child: TextOpt(text: 'Forgot password?')
-                ),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen())),
+                    child: TextOpt(text: 'Forgot password?')),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
-                  child: TextOpt(text: 'Don\'t have an account? Sign up')
-                )
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()),
+                      );
+                    },
+                    child: TextOpt(text: 'Don\'t have an account? Sign up'))
               ],
             ),
           ),

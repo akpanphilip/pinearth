@@ -53,7 +53,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profileP = ref.read(profileProvider);
+    final profileP = ref.watch(profileProvider);
     final profile = profileP.profileState;
     bool hasRole = false;
     bool canList = false;
@@ -61,6 +61,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       hasRole = profile.data!.hasRole;
       canList = profileP.canList;
     }
+    print("user can list $canList");
     return Scaffold(
       body: pages[_bottomNavIndex],
       drawer: Drawer(
@@ -80,10 +81,11 @@ class _RootScreenState extends ConsumerState<RootScreen> {
                   icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
               _bottomAppBarItem(context,
                   icon: IconlyLight.notification, page: 1, label: "Updates"),
-                  if (canList) _bottomAppBarItem(context,
-                  icon: IconlyLight.category,
-                  page: 3,
-                  label: "List Property"),
+              if (canList)
+                _bottomAppBarItem(context,
+                    icon: IconlyLight.category,
+                    page: 3,
+                    label: "List Property"),
               _bottomAppBarItem(context,
                   icon: IconlyLight.profile, page: 4, label: "Profile"),
             ],

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 
 class PropertyDetailWidget extends StatelessWidget {
-  const PropertyDetailWidget({
-    super.key,
-    required this.property
-  });
+  const PropertyDetailWidget({super.key, required this.property});
 
   final PropertyModel property;
 
@@ -25,74 +23,92 @@ class PropertyDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text("${property.owner.firstName} ${property.owner.lastName}", style: TextStyle(
-                    fontSize: 16.toFontSize(),
-                    fontWeight: FontWeight.w500, color: Colors.black
-                  ),),
+                  child: Text(
+                    "${property.owner.firstName} ${property.owner.lastName}",
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-      
                 SvgPicture.asset("call_seller_icon".svg)
               ],
             ),
-      
             14.toColumnSpace(),
-      
-            PropertyFeatureTitle(title: "Property features",),
+            const PropertyFeatureTitle(
+              title: "Property description",
+            ),
+            Text(
+              property.desc,
+              style: GoogleFonts.nunito(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+            ),
+            14.toColumnSpace(),
+            const PropertyFeatureTitle(
+              title: "Property features",
+            ),
             10.toColumnSpace(),
             Row(
               children: [
-                Text("2 story building", style: TextStyle(
-                  fontSize: 16.toFontSize(),
-                  color: Colors.black
-                ),),
+                Text(
+                  property.propertyType,
+                  style:
+                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
+                ),
                 24.toRowSpace(),
-                Text("3 bedrooms", style: TextStyle(
-                  fontSize: 16.toFontSize(),
-                  color: Colors.black
-                ),),
+                Text(
+                  "${property.noOfRooms} bedrooms",
+                  style:
+                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
+                ),
               ],
             ),
             14.toColumnSpace(),
             Row(
               children: [
-                Text("200 sqr feet", style: TextStyle(
-                  fontSize: 16.toFontSize(),
-                  color: Colors.black
-                ),),
+                Text(
+                  "${property.lotSize} sqr feet",
+                  style:
+                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
+                ),
                 24.toRowSpace(),
-                Text("3 Bathrooms", style: TextStyle(
-                  fontSize: 16.toFontSize(),
-                  color: Colors.black
-                ),),
+                Text(
+                  "${property.noOfBathrooms} Bathrooms",
+                  style:
+                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
+                ),
               ],
             ),
-      
             14.toColumnSpace(),
-            PropertyFeatureTitle(title: "Address",),
+            const PropertyFeatureTitle(
+              title: "Address",
+            ),
             10.toColumnSpace(),
-            Text("${property.address}", style: TextStyle(
-              fontSize: 16.toFontSize(),
-              color: Colors.black
-            ),),
-      
+            Text(
+              property.address,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.toFontSize(),
+                  color: Colors.black),
+            ),
             14.toColumnSpace(),
-            PropertyFeatureTitle(
+            const PropertyFeatureTitle(
               title: "Price",
             ),
             10.toColumnSpace(),
-            Text("${num.parse(property.propertyPrice).formattedMoney(currency: "NGN")}", style: TextStyle(
-              fontSize: 16.toFontSize(),
-              color: Colors.black
-            ),),
-      
+            Text(
+              num.parse(property.propertyPrice).formattedMoney(currency: "NGN"),
+              style: TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
+            ),
             14.toColumnSpace(),
-            PropertyFeatureTitle(
+            const PropertyFeatureTitle(
               title: "Map",
             ),
             10.toColumnSpace(),
-            Container(
-              child: Image.asset('assets/images/map.png'),
-            ),
+            Image.asset('assets/images/map.png'),
             20.toColumnSpace(),
           ],
         ),
@@ -102,19 +118,18 @@ class PropertyDetailWidget extends StatelessWidget {
 }
 
 class PropertyFeatureTitle extends StatelessWidget {
-  const PropertyFeatureTitle({
-    super.key,
-    this.title = "Feature"
-  });
+  const PropertyFeatureTitle({super.key, this.title = "Feature"});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: TextStyle(
-      fontSize: 14.toFontSize(),
-      color: Colors.black.withOpacity(.5),
-      fontWeight: FontWeight.w500
-    ),);
+    return Text(
+      title,
+      style: TextStyle(
+          fontSize: 14.toFontSize(),
+          color: Colors.black.withOpacity(.5),
+          fontWeight: FontWeight.w500),
+    );
   }
 }

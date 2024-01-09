@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinearth/utils/extensions/string_extension.dart';
 
-import '../custom_widgets/custom_widgets.dart';
-import 'profile/profile_screen.dart';
+import '../../custom_widgets/custom_widgets.dart';
+import 'how_to_use_video_tutorials_screen.dart';
 
 class HowToUse extends StatefulWidget {
   const HowToUse({super.key});
@@ -18,10 +19,10 @@ class _HowToUseState extends State<HowToUse> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black, // Set the desired color here
         ),
-        title: AppbarTitle(
+        title: const AppbarTitle(
           text: 'How to use',
         ),
         centerTitle: false,
@@ -30,9 +31,74 @@ class _HowToUseState extends State<HowToUse> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          child: Column(
+            children: [
+              ActionCard(forUser: true, image: "undraw_user_flow".png),
+              const SizedBox(
+                height: 50,
+              ),
+              ActionCard(
+                  forUser: false, image: "undraw_businessman".png),
+            ],
+          ),
         ),
       )),
+    );
+  }
+}
+
+class ActionCard extends StatelessWidget {
+  const ActionCard({super.key, required this.forUser, required this.image});
+
+  final bool forUser;
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HowToUseVideoTutorialScreen(
+                      forUser: forUser,
+                    )));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black.withOpacity(.2))),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(alignment: Alignment.center, child: Image.asset(image)),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              (forUser) ? '"I am a user"' : '"I am a business"',
+              style:
+                  GoogleFonts.nunito(fontWeight: FontWeight.w800, fontSize: 20),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "View how-to-use",
+                  style: GoogleFonts.nunito(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

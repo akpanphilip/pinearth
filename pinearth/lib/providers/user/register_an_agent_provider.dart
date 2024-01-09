@@ -54,6 +54,7 @@ class RegisterAsAgentProvider extends BaseProvider {
   List<String> professionalProfilePhoto = [];
   List<String> companyId = [];
   List<String> idCard = [];
+  List<String> eventCenterImages = [];
 
   final emailAddressController = TextEditingController();
   final phoneNumberController = TextEditingController();
@@ -62,12 +63,22 @@ class RegisterAsAgentProvider extends BaseProvider {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final stateController = TextEditingController();
+  final hallCapacityController = TextEditingController();
+  final parkingSpaceController = TextEditingController();
   final websiteController = TextEditingController();
   final companyIdController = TextEditingController();
   final companyNameController = TextEditingController();
   final companyRegNoController = TextEditingController();
+  final pricePerDayController = TextEditingController();
+  final propertyAddressController = TextEditingController();
 
   String agentType = "Agent";
+  String hasSecurity = "no";
+
+  set updateHasSecurityStatus(String status) {
+    hasSecurity = status;
+    notifyListeners();
+  }
 
   void selectProfessionalPictures() async {
     final res = await FilePicker.platform.pickFiles(allowMultiple: false);

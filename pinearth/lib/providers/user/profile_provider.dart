@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/backend/domain/models/entities/notification_model.dart';
@@ -26,14 +25,16 @@ class ProfileProvider extends BaseProvider {
     profileState.toSuccess(res);
   }
 
-  void initialize(BuildContext context) async {
+  void initialize(BuildContext context, {bool failSilently = false}) async {
     try {
       profileState.toLoading();
       notifyListeners();
       // final email = await localStorage.getItem(userDataBoxKey, userEmailKey, defaultValue: null);
       final res = await userRepo.profile();
       res.fold((l) {
-        toLogin(context);
+        if (!failSilently) {
+          toLogin(context);
+        }
       }, (r) {
         loadAgentProfile(context);
         profileState.toSuccess(r);
@@ -41,9 +42,12 @@ class ProfileProvider extends BaseProvider {
         notifyListeners();
       });
     } catch (error) {
-      toLogin(context);
+      if (!failSilently) {
+        toLogin(context);
+      }
     }
   }
+
   void loadAgentProfile(BuildContext context) async {
     try {
       agentProfileState.toLoading();
@@ -60,6 +64,7 @@ class ProfileProvider extends BaseProvider {
       rethrow;
     }
   }
+
   void loadNotifications(BuildContext context) async {
     try {
       notificationState.toLoading();
@@ -86,12 +91,11 @@ class ProfileProvider extends BaseProvider {
 
   void toLogin(BuildContext context) {
     Future.delayed(Duration.zero, () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 }
 
-final profileProvider = ChangeNotifierProvider((ref) => ProfileProvider(
-  getIt<IUserRepo>(),
-  getIt<ILocalStorageService>()
-));
+final profileProvider = ChangeNotifierProvider((ref) =>
+    ProfileProvider(getIt<IUserRepo>(), getIt<ILocalStorageService>()));

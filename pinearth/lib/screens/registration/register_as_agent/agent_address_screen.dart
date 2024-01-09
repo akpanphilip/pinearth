@@ -14,11 +14,12 @@ class AgentRegistrationAddressScreen extends ConsumerStatefulWidget {
   const AgentRegistrationAddressScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AgentRegistrationAddressScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AgentRegistrationAddressScreenState();
 }
 
-class _AgentRegistrationAddressScreenState extends ConsumerState<AgentRegistrationAddressScreen> {
-
+class _AgentRegistrationAddressScreenState
+    extends ConsumerState<AgentRegistrationAddressScreen> {
   String addressTitle = "Office address";
 
   @override
@@ -53,143 +54,174 @@ class _AgentRegistrationAddressScreenState extends ConsumerState<AgentRegistrati
         centerTitle: false,
         elevation: 0.5,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            32.toColumnSpace(),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: addressTitle),
-                  10.toColumnSpace(),
-                  CustomTextField(
-                    obscureText: false, hintText: "6391 Elgin St. Celina, Delaware 10299",
-                    controller: registerasagentprovider.addressController,
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      32.toColumnSpace(),
+                      LabelTitle(text: addressTitle),
+                      10.toColumnSpace(),
+                      CustomTextField(
+                        obscureText: false,
+                        hintText: "6391 Elgin St. Celina, Delaware 10299",
+                        controller: registerasagentprovider.addressController,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Column(
+                  children: [
+                    if ([eventCenterAgentType]
+                        .contains(registerasagentprovider.agentType)) ...[
+                      22.toColumnSpace(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const LabelTitle(text: "Company ID"),
+                            10.toColumnSpace(),
+                            GestureDetector(
+                                onTap: () =>
+                                    registerasagentprovider.selectCompanyId(),
+                                child: Builder(
+                                  builder: (context) {
+                                    if (registerasagentprovider
+                                        .companyId.isEmpty) {
+                                      return const UploadImg();
+                                    }
+                                    return SelectedImagesWidget(
+                                        images:
+                                            registerasagentprovider.companyId);
+                                  },
+                                )),
+                          ],
+                        ),
+                      ),
+                      22.toColumnSpace(),
+                    ],
+                    if ([agentAgentType]
+                        .contains(registerasagentprovider.agentType)) ...[
+                      22.toColumnSpace(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const LabelTitle(text: "Website"),
+                                10.toRowSpace(),
+                                const Text('optional')
+                              ],
+                            ),
+                            10.toColumnSpace(),
+                            CustomTextField(
+                              obscureText: false,
+                              hintText: "Johndoe.com",
+                              controller:
+                                  registerasagentprovider.websiteController,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    if (![
+                      developerAgentType,
+                      eventCenterAgentType,
+                      shortletAgentType
+                    ].contains(agentType)) ...[
+                      22.toColumnSpace(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                LabelTitle(text: 'ID Card'),
+                                ImportantLabelTitle(
+                                    text: ' *Image must be clear')
+                              ],
+                            ),
+                            10.toColumnSpace(),
+                            GestureDetector(
+                                onTap: () =>
+                                    registerasagentprovider.selectIdCard(),
+                                child: Builder(
+                                  builder: (context) {
+                                    if (registerasagentprovider
+                                        .idCard.isEmpty) {
+                                      return const UploadImg();
+                                    }
+                                    return SelectedImagesWidget(
+                                        images: registerasagentprovider.idCard);
+                                  },
+                                )),
+                          ],
+                        ),
+                      ),
+                    ],
+                    if (![
+                      developerAgentType,
+                      eventCenterAgentType,
+                      shortletAgentType
+                    ].contains(agentType)) ...[
+                      124.toColumnSpace(),
+                    ],
+                    if ([
+                      developerAgentType,
+                      eventCenterAgentType,
+                      shortletAgentType
+                    ].contains(agentType))
+                      350.toColumnSpace(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          const Expanded(child: PropertyListingBackButton()),
+                          40.toRowSpace(),
+                          Expanded(
+                              child: CustomButtonWidget(
+                            onClick: () {
+                              if (registerasagentprovider
+                                  .addressController.text.isEmpty) {
+                                getIt<IAlertInteraction>().showErrorAlert(
+                                    "Please provide an address");
+                                return;
+                              }
+                              // if (registerasagentprovider.agentType == agentAgentType) {
+                              //   if (registerasagentprovider.websiteController.text.isEmpty) {
+                              //     getIt<IAlertInteraction>().showErrorAlert("Please provide a link to your website");
+                              //     return;
+                              //   }
+                              // }
+                              registerasagentprovider.register(context);
+                            },
+                            color: appColor.primary,
+                            child: const Center(
+                              child: Text("Finish"),
+                            ),
+                          )),
+                        ],
+                      ),
+                    ),
+                    20.toColumnSpace(),
+                  ],
+                )
+              ],
             ),
-
-            if ([eventCenterAgentType].contains(registerasagentprovider.agentType)) ...[
-              22.toColumnSpace(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const LabelTitle(text: "Company ID"),
-                    10.toColumnSpace(),
-                    GestureDetector(
-                      onTap: () => registerasagentprovider.selectCompanyId(),
-                      child: Builder(
-                        builder: (context) {
-                          if (registerasagentprovider.companyId.isEmpty) {
-                            return const UploadImg();
-                          }
-                          return SelectedImagesWidget(images: registerasagentprovider.companyId);
-                        },
-                      )
-                    ),
-                  ],
-                ),
-              ),
-              22.toColumnSpace(),
-            ],
-
-            if ([agentAgentType].contains(registerasagentprovider.agentType)) ...[
-              22.toColumnSpace(),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const LabelTitle(text: "Website"),
-                        10.toRowSpace(),
-                        const Text('optional')
-                      ],
-                    ),
-                    10.toColumnSpace(),
-                    CustomTextField(
-                      obscureText: false, hintText: "Johndoe.com",
-                      controller: registerasagentprovider.websiteController,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-
-            if (![developerAgentType, eventCenterAgentType, shortletAgentType].contains(agentType)) ...[
-              22.toColumnSpace(),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LabelTitle(text: 'ID Card'),
-                        ImportantLabelTitle(text: ' *Image must be clear')
-                      ],
-                    ),
-                    10.toColumnSpace(),
-                    GestureDetector(
-                      onTap: () => registerasagentprovider.selectIdCard(),
-                      child: Builder(
-                        builder: (context) {
-                          if (registerasagentprovider.idCard.isEmpty) {
-                            return const UploadImg();
-                          }
-                          return SelectedImagesWidget(images: registerasagentprovider.idCard);
-                        },
-                      )
-                    ),
-                  ],
-                ),
-              ),
-            ],
-
-            if (![developerAgentType, eventCenterAgentType, shortletAgentType].contains(agentType)) ...[
-              124.toColumnSpace(),
-            ],
-            if ([developerAgentType, eventCenterAgentType, shortletAgentType].contains(agentType)) 350.toColumnSpace(),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                  children: [
-                    const Expanded(child: PropertyListingBackButton()),
-                    40.toRowSpace(),
-                    Expanded(child: CustomButtonWidget(
-                      onClick: () {
-                        if (registerasagentprovider.addressController.text.isEmpty) {
-                          getIt<IAlertInteraction>().showErrorAlert("Please provide an address");
-                          return;
-                        }
-                        // if (registerasagentprovider.agentType == agentAgentType) {
-                        //   if (registerasagentprovider.websiteController.text.isEmpty) {
-                        //     getIt<IAlertInteraction>().showErrorAlert("Please provide a link to your website");
-                        //     return;
-                        //   }
-                        // }
-                        registerasagentprovider.register(context);
-                      },
-                      color: appColor.primary,
-                      child: const Center(child: Text("Finish"),),
-                    )),
-                  ],
-                ),
-            ),
-              20.toColumnSpace(),
-          ],
+          ),
         ),
       ),
     );

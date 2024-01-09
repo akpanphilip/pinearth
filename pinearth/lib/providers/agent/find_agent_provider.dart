@@ -27,7 +27,7 @@ class FindAgentProvider extends BaseProvider {
 
   void initialize() async {
     if (agentType == agentAgentType) {
-      _loadAgents();
+      loadAgents();
     }
     if (agentType == landlordAgentType) {
       _loadLandLoord();
@@ -43,7 +43,7 @@ class FindAgentProvider extends BaseProvider {
     }
   }
 
-  void _loadAgents() async {
+  void loadAgents() async {
     try {
       agentsState.toLoading();
       notifyListeners();

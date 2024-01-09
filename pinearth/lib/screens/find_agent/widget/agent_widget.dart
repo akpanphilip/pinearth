@@ -69,10 +69,14 @@ class AgentWidget extends StatelessWidget {
             children: [
               SvgPicture.asset('telephone'.svg),
               8.toRowSpace(),
-              Text("${agent.phoneNo}", style: TextStyle(
-                fontSize: 18.toFontSize(), fontWeight: FontWeight.w500,
-                color: Colors.black.withOpacity(.5)
-              ),),
+              Expanded(
+                child: Text("${agent.phoneNo}",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                  fontSize: 18.toFontSize(), fontWeight: FontWeight.w500,
+                  color: Colors.black.withOpacity(.5)
+                ),),
+              ),
             ],
           ),
           10.toColumnSpace(),

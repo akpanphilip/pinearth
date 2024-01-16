@@ -59,6 +59,7 @@ dependencies:
   flutter_animate: ^4.2.0+1
   firebase_core: ^2.24.2
   google_sign_in: ^6.1.6
+  url_launcher: ^6.2.3
   # image_picker: ^1.0.1
   # image_cropper: ^5.0.0
 

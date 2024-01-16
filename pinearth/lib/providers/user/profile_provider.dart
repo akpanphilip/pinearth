@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/backend/domain/models/entities/notification_model.dart';
@@ -20,9 +21,19 @@ class ProfileProvider extends BaseProvider {
   final notificationState = ProviderActionState<List<NotificationModel>>();
 
   bool canList = false;
+  String newProfilePic = "";
 
   void setProfileState(UserModel res) {
     profileState.toSuccess(res);
+  }
+
+  void updateProfilePicture() async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: false, type: FileType.image);
+    if (res != null) {
+      newProfilePic = res.files[0].path ?? "";
+      notifyListeners();
+    }
   }
 
   void initialize(BuildContext context, {bool failSilently = false}) async {
@@ -36,8 +47,7 @@ class ProfileProvider extends BaseProvider {
           toLogin(context);
         }
       }, (r) {
-        //TODO check it again
-        // loadAgentProfile(context);
+        loadAgentProfile(context);
         profileState.toSuccess(r);
         canList = ['Agent', 'Developer', 'Short let'].contains(r.role);
         notifyListeners();

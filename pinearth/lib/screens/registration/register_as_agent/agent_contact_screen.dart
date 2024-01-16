@@ -294,8 +294,7 @@ class _AgentRegistrationContactScreenState
                   children: [
                     const LabelTitle(text: "Company ID"),
                     10.toColumnSpace(),
-                    LabelTitle(
-                        text: "*Image must be clear", color: appColor.red),
+                    LabelTitle(text: "*20 images max", color: appColor.red),
                     10.toColumnSpace(),
                     GestureDetector(
                         onTap: () => registerasagentprovider.selectCompanyId(),

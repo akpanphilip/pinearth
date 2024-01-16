@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/backend/domain/models/dtos/auth/update_profile_request.dart';
@@ -12,17 +11,14 @@ class EditProfileProvider extends BaseProvider {
   final IUserRepo userRepo;
   final IAlertInteraction alert;
   final ProfileProvider profileProvider;
-  EditProfileProvider(
-    this.userRepo,
-    this.alert,
-    this.profileProvider
-  ) {
+  EditProfileProvider(this.userRepo, this.alert, this.profileProvider) {
     final profile = profileProvider.profileState.data;
-    firstNameController.text = profile!.firstName!;
-    lastNameController.text = profile.lastName!;
-    middleNameController.text = profile.middleName!;
-    emailController.text = profile.email!;
-    addressController.text = profile.profile == null ? "" : profile.profile!.address ?? "";
+    firstNameController.text = profile?.firstName ?? "";
+    lastNameController.text = profile?.lastName ?? "";
+    middleNameController.text = profile?.middleName ?? "";
+    emailController.text = profile?.email ?? "";
+    addressController.text =
+        profile?.profile == null ? "" : profile?.profile?.address ?? "";
   }
 
   final firstNameController = TextEditingController();
@@ -47,13 +43,14 @@ class EditProfileProvider extends BaseProvider {
       }
       alert.showLoadingAlert("");
       final profile = profileProvider.profileState.data!;
-      final res = await userRepo.updateProfile(profile.id.toString(), UpdateProfileRequest(
-        email: emailController.text, 
-        firstName: firstNameController.text, 
-        lastName: lastNameController.text,
-        middleName: middleNameController.text,
-        address: addressController.text
-      ));
+      final res = await userRepo.updateProfile(
+          profile.id.toString(),
+          UpdateProfileRequest(
+              email: emailController.text,
+              firstName: firstNameController.text,
+              lastName: lastNameController.text,
+              middleName: middleNameController.text,
+              address: addressController.text));
       alert.closeAlert();
       res.fold((l) {
         alert.showErrorAlert(l.message);
@@ -70,7 +67,4 @@ class EditProfileProvider extends BaseProvider {
 }
 
 final editProfileProvider = ChangeNotifierProvider((ref) => EditProfileProvider(
-  getIt<IUserRepo>(),
-  getIt<IAlertInteraction>(),
-  ref.read(profileProvider)
-));
+    getIt<IUserRepo>(), getIt<IAlertInteraction>(), ref.read(profileProvider)));

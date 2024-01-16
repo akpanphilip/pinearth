@@ -146,7 +146,8 @@ class _AgentRegistrationDetailScreenState
                     CustomTextField(
                       obscureText: false,
                       hintText: "E.g xyz@gmail.com",
-                      controller: registerasagentprovider.emailAddressController,
+                      controller:
+                          registerasagentprovider.emailAddressController,
                       inputType: TextInputType.text,
                     ),
                   ],
@@ -190,8 +191,7 @@ class _AgentRegistrationDetailScreenState
               ],
               20.toColumnSpace(),
               if ([eventCenterAgentType]
-                  .contains(registerasagentprovider.agentType))
-              ...[
+                  .contains(registerasagentprovider.agentType)) ...[
                 const LabelTitle(text: "Is there security?"),
                 10.toColumnSpace(),
                 SizedBox(
@@ -199,20 +199,15 @@ class _AgentRegistrationDetailScreenState
                   child: CustomDropdownWidget<String>(
                     items: _hasSecurity,
                     onSelect: (v) {
-                      registerasagentprovider
-                          .updateHasSecurityStatus = v.value;
+                      registerasagentprovider.updateHasSecurityStatus = v.value;
                     },
                     hintText: "Select desired option",
-                    selected: _hasSecurity.firstWhere(
-                            (element) =>
+                    selected: _hasSecurity.firstWhere((element) =>
                         element.value.toLowerCase() ==
-                            registerasagentprovider
-                                .hasSecurity
-                                .toLowerCase()),
+                        registerasagentprovider.hasSecurity.toLowerCase()),
                   ),
                 ),
               ],
-
               22.toColumnSpace(),
               if (![eventCenterAgentType, shortletAgentType]
                   .contains(registerasagentprovider.agentType)) ...[
@@ -249,11 +244,12 @@ class _AgentRegistrationDetailScreenState
                       child: CustomButtonWidget(
                     onClick: () {
                       if ([eventCenterAgentType]
-                          .contains(registerasagentprovider.agentType)){
-                        if (registerasagentprovider
-                            .companyNameController.text.trim().isEmpty) {
-                          getIt<IAlertInteraction>().showErrorAlert(
-                              "Please provide a company name");
+                          .contains(registerasagentprovider.agentType)) {
+                        if (registerasagentprovider.companyNameController.text
+                            .trim()
+                            .isEmpty) {
+                          getIt<IAlertInteraction>()
+                              .showErrorAlert("Please provide a company name");
                           return;
                         }
                         if (registerasagentprovider
@@ -262,26 +258,28 @@ class _AgentRegistrationDetailScreenState
                               "Please provide a picture/logo to continue");
                           return;
                         }
-                        if (registerasagentprovider
-                            .phoneNumberController.text.trim().isEmpty) {
-                          getIt<IAlertInteraction>().showErrorAlert(
-                              "Please provide a phone number");
+                        if (registerasagentprovider.phoneNumberController.text
+                            .trim()
+                            .isEmpty) {
+                          getIt<IAlertInteraction>()
+                              .showErrorAlert("Please provide a phone number");
                           return;
                         }
-                        if (registerasagentprovider
-                            .emailAddressController.text.trim().isEmpty) {
+                        if (registerasagentprovider.emailAddressController.text
+                            .trim()
+                            .isEmpty) {
                           getIt<IAlertInteraction>().showErrorAlert(
                               "Please provide an email address");
                           return;
                         }
-                        if (registerasagentprovider
-                            .pricePerDayController.text.trim().isEmpty) {
+                        if (registerasagentprovider.pricePerDayController.text
+                            .trim()
+                            .isEmpty) {
                           getIt<IAlertInteraction>().showErrorAlert(
                               "Please provide the price per day");
                           return;
                         }
                       }
-
 
                       if ([eventCenterAgentType, shortletAgentType]
                           .contains(registerasagentprovider.agentType)) {

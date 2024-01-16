@@ -14,7 +14,6 @@ class SearchPropertyProvider extends BaseProvider {
   SearchPropertyProvider(
     this.propertyRepo
   ) {
-    print("Initialized");
     searchParamController.addListener(() {
       if (searchTimer != null) searchTimer!.cancel();
       final searchParam = searchParamController.text;

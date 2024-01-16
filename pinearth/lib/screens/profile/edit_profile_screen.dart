@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/providers/user/edit_profile_provider.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
-import 'profile_screen.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
@@ -42,35 +41,40 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               LabelTitle(text: 'First name'),
               SizedBox(height: 10),
               CustomTextField(
-                obscureText: false, hintText: 'Guy',
+                obscureText: false,
+                hintText: 'Guy',
                 controller: editProfileP.firstNameController,
               ),
               SizedBox(height: 20),
               LabelTitle(text: 'Last name'),
               SizedBox(height: 10),
               CustomTextField(
-                obscureText: false, hintText: 'Hawkins',
+                obscureText: false,
+                hintText: 'Hawkins',
                 controller: editProfileP.lastNameController,
               ),
               SizedBox(height: 20),
               LabelTitle(text: 'Middle name'),
               SizedBox(height: 10),
               CustomTextField(
-                obscureText: false, hintText: 'Hawkins',
+                obscureText: false,
+                hintText: 'Hawkins',
                 controller: editProfileP.middleNameController,
               ),
               SizedBox(height: 20),
               LabelTitle(text: 'Email'),
               SizedBox(height: 10),
               CustomTextField(
-                obscureText: false, hintText: '',
+                obscureText: false,
+                hintText: '',
                 controller: editProfileP.emailController,
               ),
               SizedBox(height: 10),
               LabelTitle(text: 'Address'),
               SizedBox(height: 10),
               CustomTextField(
-                obscureText: false, hintText: '',
+                obscureText: false,
+                hintText: '',
                 controller: editProfileP.addressController,
               ),
               SizedBox(height: 80),

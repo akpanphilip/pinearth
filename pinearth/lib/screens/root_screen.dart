@@ -20,7 +20,6 @@ class RootScreen extends ConsumerStatefulWidget {
 }
 
 class _RootScreenState extends ConsumerState<RootScreen> {
-
   // int _bottomNavIndex = 0;
   // list of screens
   List<Widget> pages = const [
@@ -66,34 +65,37 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       // hasRole = profile.data!.hasRole!;
       canList = profileP.canList;
     }
-    print("user can list $canList");
-    return Scaffold(
-      body: pages[_bottomNavIndex],
-      drawer: Drawer(
-        backgroundColor: appColor.primary,
-        child: SideBarWidget(),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 10,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _bottomAppBarItem(context,
-                  icon: IconlyLight.home, page: 0, label: "Home"),
-              _bottomAppBarItem(context,
-                  icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
-              _bottomAppBarItem(context,
-                  icon: IconlyLight.notification, page: 1, label: "Updates"),
-              if (canList)
+
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Scaffold(
+        body: pages[_bottomNavIndex],
+        drawer: Drawer(
+          backgroundColor: appColor.primary,
+          child: SideBarWidget(),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          notchMargin: 10,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 _bottomAppBarItem(context,
-                    icon: IconlyLight.category,
-                    page: 3,
-                    label: "List Property"),
-              _bottomAppBarItem(context,
-                  icon: IconlyLight.profile, page: 4, label: "Profile"),
-            ],
+                    icon: IconlyLight.home, page: 0, label: "Home"),
+                _bottomAppBarItem(context,
+                    icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
+                _bottomAppBarItem(context,
+                    icon: IconlyLight.notification, page: 1, label: "Updates"),
+                if (canList)
+                  _bottomAppBarItem(context,
+                      icon: IconlyLight.category,
+                      page: 3,
+                      label: "List Property"),
+                _bottomAppBarItem(context,
+                    icon: IconlyLight.profile, page: 4, label: "Profile"),
+              ],
+            ),
           ),
         ),
       ),

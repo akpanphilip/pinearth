@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailWidget extends StatelessWidget {
   const PropertyDetailWidget({super.key, required this.property});
@@ -32,7 +33,14 @@ class PropertyDetailWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                SvgPicture.asset("call_seller_icon".svg)
+                if (property.owner.profile?.phoneNo != null &&
+                    property.owner.profile?.phoneNo?.trim() != "")
+                  GestureDetector(
+                      onTap: () {
+                        launchUrl(Uri.parse(
+                            "tel:${property.owner.profile?.phoneNo}"));
+                      },
+                      child: SvgPicture.asset("call_seller_icon".svg))
               ],
             ),
             14.toColumnSpace(),
@@ -100,7 +108,8 @@ class PropertyDetailWidget extends StatelessWidget {
             ),
             10.toColumnSpace(),
             Text(
-              num.parse(property.propertyPrice!).formattedMoney(currency: "NGN"),
+              num.parse(property.propertyPrice!)
+                  .formattedMoney(currency: "NGN"),
               style: TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
             ),
             14.toColumnSpace(),

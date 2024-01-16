@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,14 +47,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       // hasRole = profileState.data!.hasRole!;
       canList = profileP.canList;
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black, // Set the desired color here
         ),
-        title: AppbarTitle(
+        title: const AppbarTitle(
           text: 'Profile',
         ),
         centerTitle: false,
@@ -62,11 +65,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         child: SingleChildScrollView(
           child: Builder(builder: (context) {
             if (profileState.isLoading()) {
-              return LoadingProfileWidget();
+              return const LoadingProfileWidget();
             }
             if (profileState.isError()) {
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 alignment: Alignment.center,
                 child: CustomErrorWidget(
                     message: profileState.message,
@@ -80,59 +83,97 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Column(
                 children: [
-                  if (!profile.hasRole!)
-                    Image(image: AssetImage('assets/images/user.png')),
-                  if (profile.hasRole!)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10000),
-                      child: Builder(builder: (context) {
-                        final agentProfileState =
-                            ref.watch(profileProvider).agentProfileState;
-                        if (agentProfileState.isLoading()) {
-                          return SizedBox(
-                            height: 100,
-                            width: 100,
-                          );
-                        }
-                        if (agentProfileState.isError()) {
-                          return SizedBox(
-                            height: 100,
-                            width: 100,
-                          );
-                        }
-                        return Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                    ref
-                                        .read(profileProvider)
-                                        .agentProfileState
-                                        .data['profile_photo'],
-                                    maxWidth: 100,
-                                    maxHeight: 100,
-                                  ),
-                                  fit: BoxFit.cover)),
-                        );
-                      }),
+                  GestureDetector(
+                    onTap: () {
+                      profileP.updateProfilePicture();
+                    },
+                    child: Column(
+                      children: [
+                        (profileP.newProfilePic != "")
+                            ? SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10000),
+                                    child: Image.file(
+                                        File(profileP.newProfilePic))),
+                              )
+                            : Column(
+                                children: [
+                                  if (!profile.hasRole!)
+                                    const Image(
+                                        image: AssetImage(
+                                            'assets/images/user.png')),
+                                  if (profile.hasRole!)
+                                    ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(10000),
+                                      child: Builder(builder: (context) {
+                                        final agentProfileState = ref
+                                            .watch(profileProvider)
+                                            .agentProfileState;
+
+                                        if (agentProfileState.isLoading()) {
+                                          return const SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                          );
+                                        }
+                                        if (agentProfileState.isError()) {
+                                          return const SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                          );
+                                        }
+
+                                        return (ref
+                                                    .read(profileProvider)
+                                                    .agentProfileState
+                                                    .data?['profile_photo'] ==
+                                                null)
+                                            ? const Image(
+                                                image: AssetImage(
+                                                    'assets/images/user.png'))
+                                            : Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image:
+                                                            CachedNetworkImageProvider(
+                                                          ref
+                                                              .read(
+                                                                  profileProvider)
+                                                              .agentProfileState
+                                                              .data['profile_photo'],
+                                                          maxWidth: 100,
+                                                          maxHeight: 100,
+                                                        ),
+                                                        fit: BoxFit.cover)),
+                                              );
+                                      }),
+                                    ),
+                                ],
+                              )
+                      ],
                     ),
-                  SizedBox(height: 10),
+                  ),
+                  const SizedBox(height: 10),
                   Center(
                     child: Text('${profile.firstName} ${profile.lastName}',
                         style: GoogleFonts.nunito(
                             fontWeight: FontWeight.w700, fontSize: 18)),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditProfileScreen()),
+                            builder: (context) => const EditProfileScreen()),
                       );
                     },
-                    child: ProfileSection(
+                    child: const ProfileSection(
                       img: 'assets/images/edit.png',
                       text: 'Edit profile',
                     ),
@@ -145,10 +186,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    MyListedPropertiesScreen()),
+                                    const MyListedPropertiesScreen()),
                           );
                         },
-                        child: ProfileSection(
+                        child: const ProfileSection(
                           img: 'assets/images/listed.png',
                           text: 'My listed properties',
                         ),
@@ -161,10 +202,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  EditBusinessProfileScreen()),
+                                  const EditBusinessProfileScreen()),
                         );
                       },
-                      child: ProfileSection(
+                      child: const ProfileSection(
                         img: 'assets/images/edit.png',
                         text: 'Edit business profile',
                       ),
@@ -175,10 +216,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SecurityScreen()),
+                            builder: (context) => const SecurityScreen()),
                       );
                     },
-                    child: ProfileSection(
+                    child: const ProfileSection(
                       img: 'assets/images/security.png',
                       text: 'Security',
                     ),
@@ -187,10 +228,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HowToUse()),
+                        MaterialPageRoute(
+                            builder: (context) => const HowToUse()),
                       );
                     },
-                    child: ProfileSection(
+                    child: const ProfileSection(
                       img: 'assets/images/how.png',
                       text: 'How to use?',
                     ),
@@ -200,9 +242,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CustomerSupportScreen()));
+                              builder: (context) =>
+                                  const CustomerSupportScreen()));
                     },
-                    child: ProfileSection(
+                    child: const ProfileSection(
                       img: 'assets/images/customer-support.png',
                       text: 'Customer support',
                     ),
@@ -211,7 +254,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     onTap: () {
                       ref.read(profileProvider).logout(context);
                     },
-                    child: ProfileSection(
+                    child: const ProfileSection(
                       img: '',
                       text: 'Logout',
                     ),

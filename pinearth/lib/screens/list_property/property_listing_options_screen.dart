@@ -29,9 +29,9 @@ class PropertyListingOptionScreen extends ConsumerStatefulWidget {
 class _PropertyListingOptionScreenState
     extends ConsumerState<PropertyListingOptionScreen> {
   final _items = [
-    CustomDropDownItem(label: "Rent property", value: 'rent'),
+    CustomDropDownItem(label: "For Rent", value: 'rent'),
     CustomDropDownItem(label: "For sale", value: 'sale'),
-    CustomDropDownItem(label: "List for shortlet", value: 'shortlet'),
+    CustomDropDownItem(label: "shortlet", value: 'shortlet'),
   ];
   final _rentDurations = [
     CustomDropDownItem(label: "Month", value: 'month'),

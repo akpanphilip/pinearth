@@ -149,7 +149,7 @@ class _AgentRegistrationAddressScreenState
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                LabelTitle(text: 'ID Card'),
+                                LabelTitle(text: 'Goverment issued ID'),
                                 ImportantLabelTitle(
                                     text: ' *Image must be clear')
                               ],
@@ -200,12 +200,14 @@ class _AgentRegistrationAddressScreenState
                                     "Please provide an address");
                                 return;
                               }
-                              // if (registerasagentprovider.agentType == agentAgentType) {
-                              //   if (registerasagentprovider.websiteController.text.isEmpty) {
-                              //     getIt<IAlertInteraction>().showErrorAlert("Please provide a link to your website");
-                              //     return;
-                              //   }
-                              // }
+                              if (registerasagentprovider.agentType ==
+                                  agentAgentType) {
+                                if (registerasagentprovider.idCard.isEmpty) {
+                                  getIt<IAlertInteraction>().showErrorAlert(
+                                      "Please provide an id card");
+                                  return;
+                                }
+                              }
                               registerasagentprovider.register(context);
                             },
                             color: appColor.primary,

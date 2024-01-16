@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "27835784169",
+    "project_id": "my-projects-ed284",
+    "storage_bucket": "my-projects-ed284.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27835784169:android:6e7a1b866a6277ec2a0978",
+        "android_client_info": {
+          "package_name": "com.example.pinearth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27835784169-bpp6t0fo05mmdtbno1e7j6imq437o5k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb_2aBkJQ6BTyArAcxiOP3oqEV52Hr7J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27835784169-bpp6t0fo05mmdtbno1e7j6imq437o5k1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "27835784169-b88vladikc3r9agae338pto48v575ani.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gymnogene.coolMusicPlayer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27835784169:android:0120b0e81b47f41c2a0978",
+        "android_client_info": {
+          "package_name": "com.gymnogene.cool_music_player"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27835784169-mm7oth94kppord03d692bohga2r2a35q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gymnogene.cool_music_player",
+            "certificate_hash": "0850dae982520e93495a518275f34ac76f7fb398"
+          }
+        },
+        {
+          "client_id": "27835784169-bpp6t0fo05mmdtbno1e7j6imq437o5k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb_2aBkJQ6BTyArAcxiOP3oqEV52Hr7J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27835784169-bpp6t0fo05mmdtbno1e7j6imq437o5k1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "27835784169-b88vladikc3r9agae338pto48v575ani.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gymnogene.coolMusicPlayer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

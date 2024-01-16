@@ -40,7 +40,7 @@ class PropertyDetailWidget extends StatelessWidget {
               title: "Property description",
             ),
             Text(
-              property.desc,
+              property.desc!,
               style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
@@ -54,7 +54,7 @@ class PropertyDetailWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  property.propertyType,
+                  property.propertyType!,
                   style:
                       TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
                 ),
@@ -88,7 +88,7 @@ class PropertyDetailWidget extends StatelessWidget {
             ),
             10.toColumnSpace(),
             Text(
-              property.address,
+              property.address!,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16.toFontSize(),
@@ -100,7 +100,7 @@ class PropertyDetailWidget extends StatelessWidget {
             ),
             10.toColumnSpace(),
             Text(
-              num.parse(property.propertyPrice).formattedMoney(currency: "NGN"),
+              num.parse(property.propertyPrice!).formattedMoney(currency: "NGN"),
               style: TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
             ),
             14.toColumnSpace(),

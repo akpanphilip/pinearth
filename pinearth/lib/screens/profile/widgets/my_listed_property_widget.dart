@@ -8,10 +8,7 @@ import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 
 class MyListedPropertyWidget extends ConsumerWidget {
-  MyListedPropertyWidget({
-    super.key,
-    required this.property
-  });
+  MyListedPropertyWidget({super.key, required this.property});
 
   final PropertyModel property;
 
@@ -30,7 +27,8 @@ class MyListedPropertyWidget extends ConsumerWidget {
             height: 60,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(property.houseView.first.houseView.addRemotePath),
+                    image: NetworkImage(
+                        property.houseView.first.houseView.addRemotePath),
                     fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(50)),
           ),
@@ -60,9 +58,12 @@ class MyListedPropertyWidget extends ConsumerWidget {
               //   image: AssetImage('assets/images/available.png'),
               // ),
               FlutterSwitch(
-                value: property.available, 
-                onToggle: (v) => ref.read(myPropertyListingProvider).togglePropertyAvailability(property.id.toString(), v),
-                height: 18, width: 30,
+                value: property.available!,
+                onToggle: (v) => ref
+                    .read(myPropertyListingProvider)
+                    .togglePropertyAvailability(property.id.toString(), v),
+                height: 18,
+                width: 30,
                 padding: 2,
                 toggleSize: 14,
                 activeColor: Colors.green,
@@ -70,8 +71,9 @@ class MyListedPropertyWidget extends ConsumerWidget {
               ),
               5.toColumnSpace(),
               Text(
-                property.available ?'Available' : 'Not Availble',
-                style: GoogleFonts.nunito(fontSize: 12, fontWeight: FontWeight.w300),
+                property.available! ? 'Available' : 'Not Availble',
+                style: GoogleFonts.nunito(
+                    fontSize: 12, fontWeight: FontWeight.w300),
               )
             ],
           ),
@@ -84,7 +86,7 @@ class MyListedPropertyWidget extends ConsumerWidget {
           // Row(
           //   children: [
           //     const SizedBox(width: 10),
-          
+
           //   ],
           // )
         ],

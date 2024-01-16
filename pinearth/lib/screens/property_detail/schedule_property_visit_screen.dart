@@ -123,7 +123,7 @@ class _SchedulePropertyVisitScreenState extends ConsumerState<SchedulePropertyVi
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                   ),
                   onPressed: () {
-                    scheduleAVisitP.scheduleVisit(context, widget.property.owner.email, widget.property.owner.role);
+                    scheduleAVisitP.scheduleVisit(context, widget.property.owner.email, widget.property.owner.role!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),

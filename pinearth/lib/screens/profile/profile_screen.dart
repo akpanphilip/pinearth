@@ -39,10 +39,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final profileP = ref.watch(profileProvider);
     final profileState = profileP.profileState;
-    bool hasRole = false;
+    // bool hasRole = false;
     bool canList = false;
     if (profileState.data != null) {
-      hasRole = profileState.data!.hasRole;
+      // hasRole = profileState.data!.hasRole!;
       canList = profileP.canList;
     }
     return Scaffold(
@@ -80,9 +80,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Column(
                 children: [
-                  if (!profile.hasRole)
+                  if (!profile.hasRole!)
                     Image(image: AssetImage('assets/images/user.png')),
-                  if (profile.hasRole)
+                  if (profile.hasRole!)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10000),
                       child: Builder(builder: (context) {
@@ -137,7 +137,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       text: 'Edit profile',
                     ),
                   ),
-                  if (profile.hasRole) ...[
+                  if (profile.hasRole!) ...[
                     if (canList)
                       GestureDetector(
                         onTap: () {
@@ -156,7 +156,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     GestureDetector(
                       onTap: () {
                         ref.read(registerAsAgentProvider).agentType =
-                            profile.role;
+                            profile.role!;
                         Navigator.push(
                           context,
                           MaterialPageRoute(

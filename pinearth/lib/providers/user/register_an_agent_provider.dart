@@ -71,6 +71,8 @@ class RegisterAsAgentProvider extends BaseProvider {
   final companyRegNoController = TextEditingController();
   final pricePerDayController = TextEditingController();
   final propertyAddressController = TextEditingController();
+  final additionalServices = TextEditingController();
+  final appliancesController = TextEditingController();
 
   String agentType = "Agent";
   String hasSecurity = "no";
@@ -98,6 +100,14 @@ class RegisterAsAgentProvider extends BaseProvider {
     final res = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (res != null) {
       idCard = res.files.map((e) => e.path!).toList();
+      notifyListeners();
+    }
+  }
+
+  void selectEventCenter() async {
+    final res = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (res != null) {
+      eventCenterImages = res.files.map((e) => e.path!).toList();
       notifyListeners();
     }
   }
@@ -133,6 +143,7 @@ class RegisterAsAgentProvider extends BaseProvider {
         final agentProfile = profileProvider.agentProfileState.data!;
         res = await userRepo.agentProfileUpdate(agentProfile['id'].toString(),  type, profile!.id.toString(), FormData.fromMap({
           'name': nameController.text,
+          'iname': "",
           'about_you': aboutController.text,
           'specialties': specialityController.text,
           'email': emailAddressController.text,
@@ -144,12 +155,17 @@ class RegisterAsAgentProvider extends BaseProvider {
           'company_reg': companyRegNoController.text,
           'company_name': companyNameController.text,
           'state': stateController.text,
+          'hall_capacity': hallCapacityController.text,
+          'is_security': hasSecurity,
+          'additional_services': additionalServices.text,
+          'price_per_day': pricePerDayController.text,
           'id_upload': idCard.isNotEmpty ? idCard.first.startsWith('http') ? null : await MultipartFile.fromFile(idCard.first) : null,
         }));
       } else {
         res = await userRepo.agentRegistration(type, profile!.id.toString(), FormData.fromMap({
           'name': nameController.text,
           'about_you': aboutController.text,
+          'iname': "s",
           'specialties': specialityController.text,
           'email': emailAddressController.text,
           'phone_no': phoneNumberController.text.addCountryCode,
@@ -161,6 +177,10 @@ class RegisterAsAgentProvider extends BaseProvider {
           'company_name': companyNameController.text,
           'state': stateController.text,
           'id_upload': idCard.isNotEmpty ? await MultipartFile.fromFile(idCard.first) : null,
+          'hall_capacity': hallCapacityController.text,
+          'is_security': hasSecurity,
+          'additional_services': additionalServices.text,
+          'price_per_day': pricePerDayController.text,
         }));
       }
       alert.closeAlert();

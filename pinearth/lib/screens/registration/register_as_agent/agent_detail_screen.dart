@@ -182,7 +182,7 @@ class _AgentRegistrationDetailScreenState
                     CustomTextField(
                       obscureText: false,
                       hintText: "",
-                      controller: registerasagentprovider.pricePerDayController,
+                      controller: registerasagentprovider.additionalServices,
                       inputType: TextInputType.text,
                     ),
                   ],

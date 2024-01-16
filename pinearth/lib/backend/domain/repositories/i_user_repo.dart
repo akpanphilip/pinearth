@@ -8,13 +8,16 @@ import 'package:pinearth/backend/domain/models/entities/user_model.dart';
 import 'package:pinearth/backend/domain/models/entities/user_search_result_model.dart';
 
 import '../models/dtos/auth/register_request.dart';
+import '../models/dtos/auth/register_with_social_provider.dart';
 import '../models/entities/notification_model.dart';
 
 abstract class IUserRepo {
   // Login 
   Future<Either<IFailure, LoginResponse>> login(LoginRequest request);
   // Register
-  Future<Either<IFailure, UserModel>> register(RegisterRequest request);
+  Future<Either<IFailure, bool>> register(RegisterRequest request);
+  Future<Either<IFailure, UserModel>> registerWithSocialProvider(Map<String,dynamic> request);
+  Future<Either<IFailure, bool>> uploadId(String file);
   Future<Either<IFailure, dynamic>> changePassword(String id, String oldPass, String newPass);
   // Get user profile
   Future<Either<IFailure, UserModel>> profile();

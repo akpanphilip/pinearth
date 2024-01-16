@@ -125,7 +125,7 @@ class _ListPropertyScreenState extends ConsumerState<ListPropertyScreen> {
                 SizedBox(
                     child: CustomButtonWidget(
                       onClick: () {
-                        if (profile != null && profile.hasRole) {
+                        if (profile != null && profile.hasRole!) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => PropertyListingOptionScreen()),

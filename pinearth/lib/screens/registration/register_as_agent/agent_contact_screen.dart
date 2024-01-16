@@ -113,8 +113,7 @@ class _AgentRegistrationContactScreenState
                     CustomTextField(
                       obscureText: false,
                       hintText: "6391 Elgin St. Celina, Delaware 10299",
-                      controller:
-                          registerasagentprovider.propertyAddressController,
+                      controller: registerasagentprovider.addressController,
                     ),
                   ],
                 ),
@@ -271,9 +270,8 @@ class _AgentRegistrationContactScreenState
                     CustomTextField(
                       obscureText: false,
                       hintText: "E.g A fridge",
-                      controller:
-                          registerasagentprovider.parkingSpaceController,
-                      inputType: TextInputType.number,
+                      controller: registerasagentprovider.appliancesController,
+                      // inputType: TextInputType.number,
                       // suffixIcon: const HelpButton(
                       //   text: "Sqft",
                       //   helpIcon: Icon(
@@ -328,7 +326,7 @@ class _AgentRegistrationContactScreenState
                       10.toColumnSpace(),
                       GestureDetector(
                           onTap: () =>
-                              registerasagentprovider.selectCompanyId(),
+                              registerasagentprovider.selectEventCenter(),
                           child: Builder(
                             builder: (context) {
                               if (registerasagentprovider
@@ -416,8 +414,7 @@ class _AgentRegistrationContactScreenState
                       } else {
                         if (registerasagentprovider.agentType ==
                             eventCenterAgentType) {
-                          if (registerasagentprovider
-                              .propertyAddressController.text
+                          if (registerasagentprovider.addressController.text
                               .trim()
                               .isEmpty) {
                             getIt<IAlertInteraction>()

@@ -16,6 +16,7 @@ import 'package:pinearth/utils/styles/colors.dart';
 import '../backend/domain/models/entities/agent_model.dart';
 import '../providers/agent/find_agent_provider.dart';
 import '../providers/base_provider.dart';
+import 'auth/register/personal_id_screen.dart';
 import 'find_agent/widget/agent_widget.dart';
 import 'widgets/custom_button_widget.dart';
 import 'widgets/empty_state_widget.dart';
@@ -44,6 +45,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       final user = ref.watch(profileProvider).profileState.data;
       ref.read(propertyListProvider).loadProperties();
       if (user != null) {
+        if (user.profile?.uploadId == null ||
+            user.profile?.uploadId!.trim() == "") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PersonalID(
+                      uploadId: true,
+                    )),
+          );
+        }
         ref.read(findAgentProvider).loadAgents();
       }
     });
@@ -155,7 +166,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ...[1, 2, 3].map((e) {
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 15.0),
-
                                   child: LoadingPropertyWidget(),
                                 );
                               })
@@ -168,8 +178,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         return Center(
                             child: CustomErrorWidget(
                                 message: propertyListState.message,
-                                onReload: () =>
-                                    propertyListP.loadProperties()));
+                                onReload: () {
+                                  final user = ref
+                                      .watch(profileProvider)
+                                      .profileState
+                                      .data;
+                                  ref
+                                      .read(propertyListProvider)
+                                      .loadProperties();
+                                  if (user != null) {
+                                    ref.read(findAgentProvider).loadAgents();
+                                  }
+                                  // propertyListP.loadProperties();
+                                }));
                       }
 
                       //on success
@@ -180,7 +201,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       if (currentClass != 'All') {
                         data = data
                             .where((element) =>
-                                element.propertyStatus.toLowerCase() ==
+                                element.propertyStatus?.toLowerCase() ==
                                 currentClass.toLowerCase())
                             .toList();
                       }
@@ -242,7 +263,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     children: [
                                       ...List.generate(
                                           agents.length,
-                                          (index) => SizedBox(
+                                          (index) => Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 10),
                                                 width: 300,
                                                 child: AgentWidget(
                                                   agent: agents[index],

@@ -2,23 +2,25 @@ class UserModel {
     final int id;
     final String email;
     final String firstName;
-    final String lastName;
-    final String middleName;
-    final DateTime dOB;
-    final bool hasRole;
-    final String role;
+    final String? lastName;
+    final String? middleName;
+    final DateTime? dOB;
+    final bool? hasRole;
+    final String? role;
     Profile? profile;
+    Tokens? tokens;
 
     UserModel({
         required this.id,
         required this.email,
         required this.firstName,
-        required this.lastName,
-        required this.middleName,
-        required this.dOB,
-        required this.hasRole,
-        required this.role,
+        this.lastName,
+        this.middleName,
+        this.dOB,
+        this.hasRole,
+        this.role,
         this.profile,
+        this.tokens,
     });
 
     factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -29,8 +31,9 @@ class UserModel {
         firstName: json["first_name"],
         lastName: json["last_name"],
         middleName: json["middle_name"],
-        dOB: DateTime.parse(json["d_o_b"]),
+        dOB: (json["d_o_b"] == null) ? null : DateTime.parse(json["d_o_b"]),
         profile: json["profile"] == null ? null : Profile.fromJson(json["profile"]),
+        tokens : json['tokens'] != null ? Tokens.fromJson(json['tokens']) : null,
     );
 
     Map<String, dynamic> toJson() => {
@@ -41,22 +44,23 @@ class UserModel {
         "first_name": firstName,
         "last_name": lastName,
         "middle_name": middleName,
-        "d_o_b": "${dOB.year.toString().padLeft(4, '0')}-${dOB.month.toString().padLeft(2, '0')}-${dOB.day.toString().padLeft(2, '0')}",
+        "d_o_b": (dOB == null) ? null : "${dOB?.year.toString().padLeft(4, '0')}-${dOB?.month.toString().padLeft(2, '0')}-${dOB?.day.toString().padLeft(2, '0')}",
         "profile": profile?.toJson(),
+        "tokens": tokens?.toJson(),
     };
 }
 
 class Profile {
     final dynamic avatar;
-    final String phoneNo;
-    final String address;
-    final String uploadId;
+    final String? phoneNo;
+    final String? address;
+    final String? uploadId;
 
     Profile({
-        required this.avatar,
-        required this.phoneNo,
-        required this.address,
-        required this.uploadId,
+        this.avatar,
+        this.phoneNo,
+        this.address,
+        this.uploadId,
     });
 
     factory Profile.fromJson(Map<String, dynamic> json) => Profile(
@@ -72,4 +76,23 @@ class Profile {
         "address": address,
         "upload_id": uploadId,
     };
+}
+
+class Tokens {
+    String? refresh;
+    String? access;
+
+    Tokens({this.refresh, this.access});
+
+    Tokens.fromJson(Map<String, dynamic> json) {
+        refresh = json['refresh'];
+        access = json['access'];
+    }
+
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['refresh'] = this.refresh;
+        data['access'] = this.access;
+        return data;
+    }
 }

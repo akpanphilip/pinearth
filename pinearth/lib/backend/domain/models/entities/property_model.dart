@@ -4,25 +4,25 @@ import 'user_model.dart';
 class PropertyModel {
     final int id;
     final UserModel owner;
-    final String title;
-    final String desc;
-    final String propertyType;
-    final int noOfRooms;
-    final int noOfBathrooms;
-    final int lotSize;
-    final String address;
-    final String propertyStatus;
-    final String propertyPrice;
-    final String incomePerMonth;
-    final int yearsBuilt;
-    final int yearsRenovated;
-    final int yearsReconstructed;
-    final String parkingSpace;
-    final String appliance;
-    final String location;
-    final String role;
-    final bool available;
-    final DateTime createdAt;
+    final String? title;
+    final String? desc;
+    final String? propertyType;
+    final int? noOfRooms;
+    final int? noOfBathrooms;
+    final int? lotSize;
+    final String? address;
+    final String? propertyStatus;
+    final String? propertyPrice;
+    final String? incomePerMonth;
+    final int? yearsBuilt;
+    final int? yearsRenovated;
+    final int? yearsReconstructed;
+    final String? parkingSpace;
+    final String? appliance;
+    final String? location;
+    final String? role;
+    final bool? available;
+    final DateTime? createdAt;
     final List<HouseView> houseView;
     final List<LivingRoom> livingRoom;
     final List<BedRoom> bedRoom;
@@ -35,26 +35,26 @@ class PropertyModel {
 
     PropertyModel({
         required this.id,
-        required this.owner,
-        required this.title,
-        required this.desc,
-        required this.propertyType,
-        required this.noOfRooms,
-        required this.noOfBathrooms,
-        required this.lotSize,
-        required this.address,
-        required this.propertyStatus,
-        required this.propertyPrice,
-        required this.incomePerMonth,
-        required this.yearsBuilt,
-        required this.yearsRenovated,
-        required this.yearsReconstructed,
-        required this.parkingSpace,
-        required this.appliance,
-        required this.location,
-        required this.role,
-        required this.available,
-        required this.createdAt,
+         required this.owner,
+         this.title,
+         this.desc,
+         this.propertyType,
+         this.noOfRooms,
+         this.noOfBathrooms,
+         this.lotSize,
+         this.address,
+         this.propertyStatus,
+         this.propertyPrice,
+         this.incomePerMonth,
+         this.yearsBuilt,
+         this.yearsRenovated,
+         this.yearsReconstructed,
+         this.parkingSpace,
+         this.appliance,
+         this.location,
+         this.role,
+         this.available,
+         this.createdAt,
         required this.houseView,
         required this.livingRoom,
         required this.bedRoom,
@@ -120,7 +120,7 @@ class PropertyModel {
         "location": location,
         "role": role,
         "available": available,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
         "house_view": List<dynamic>.from(houseView.map((x) => x.toJson())),
         "living_room": List<dynamic>.from(livingRoom.map((x) => x.toJson())),
         "bed_room": List<dynamic>.from(bedRoom.map((x) => x.toJson())),

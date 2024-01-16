@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:pinearth/providers/auth/register_provider.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
@@ -10,6 +14,8 @@ import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
 import '../../../custom_widgets/custom_widgets.dart';
+import '../../../locator.dart';
+import '../../feedback_alert/i_feedback_alert.dart';
 import '../widgets/social_provider.dart';
 import 'home_address.dart';
 
@@ -57,27 +63,42 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               const SizedBox(
                 height: 20,
               ),
-              SocialProvider(
-                title: "Sign up with Google",
-                onTap: () {
-                  //TODO sign up with google
-                },
-                image: "google".png,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SocialProvider(
-                title: "Sign up with Apple",
-                onTap: () {
-                  //TODO sign up with apple
-                },
-                image: "apple".png,
-              ),
+              Consumer(builder: (context, ref, child) {
+                final provider = ref.watch(registerProvider);
 
-              const SizedBox(
-                height: 20,
-              ),
+                return Column(
+                  children: [
+                    SocialProvider(
+                      title: "Sign up with Google",
+                      isLoading: provider.loadingGoogleInfo,
+                      function: () {
+                        ref.read<RegisterProvider>(registerProvider).loginWithGoogle = true;
+                        ref.read<RegisterProvider>(registerProvider).registerWithGoogle(context);
+
+                        // ref
+                        //     .read<RegisterProvider>(registerProvider)
+                        //     .registerWithGoogle(context);
+                      },
+                      image: "google".png,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    if (Platform.isIOS) ...[
+                      SocialProvider(
+                        title: "Sign up with Apple",
+                        function: () {
+                          //TODO sign up with apple
+                        },
+                        image: "apple".png,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ]
+                  ],
+                );
+              }),
 
               LabelTitle(text: 'First name'),
               10.toColumnSpace(),
@@ -176,6 +197,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       onPressed: () {
                         final canGo =
                             ref.read(registerProvider).checkBeforeAddress();
+                        ref.read(registerProvider).loginWithGoogle = false;
                         if (canGo) {
                           Navigator.push(
                             context,

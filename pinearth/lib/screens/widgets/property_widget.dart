@@ -80,7 +80,7 @@ class PropertyWidget extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 3),
                       child: Text(
-                        property.propertyStatus,
+                        property.propertyStatus!,
                         style: TextStyle(
                             fontSize: 14.toFontSize(),
                             fontWeight: FontWeight.w700),
@@ -165,7 +165,7 @@ class PropertyWidget extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      '${(num.tryParse(property.propertyPrice) ?? 0).formattedMoney()} NGN/Month',
+                      '${(num.tryParse(property.propertyPrice!) ?? 0).formattedMoney()} NGN/Month',
                       style: GoogleFonts.nunito(
                           color: const Color(0xff1173AB),
                           fontSize: 12,
@@ -285,7 +285,7 @@ class PropertyWidget extends ConsumerWidget {
                         child: CircleAvatar(
                           radius: 15,
                           backgroundImage: CachedNetworkImageProvider(
-                              property.owner.profile!.uploadId,
+                              property.owner.profile!.uploadId!,
                               maxWidth: 30,
                               maxHeight: 30),
                         ),

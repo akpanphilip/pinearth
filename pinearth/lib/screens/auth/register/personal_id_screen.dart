@@ -11,7 +11,11 @@ import 'package:pinearth/utils/extensions/number_extension.dart';
 import '../../../custom_widgets/custom_widgets.dart';
 
 class PersonalID extends ConsumerStatefulWidget {
-  const PersonalID({super.key});
+  const PersonalID({super.key, this.uploadId = false});
+
+  ///If we are uploading the userid because the user signed up with social
+  ///provider, the hit the signin with google endpoint to update the user's id
+  final bool uploadId;
 
   @override
   ConsumerState<PersonalID> createState() => _PersonalIDState();
@@ -42,17 +46,20 @@ class _PersonalIDState extends ConsumerState<PersonalID> {
             children: [
               MidTitle(text: 'UPLOAD YOUR ID'),
               DescriptionText(
-                text: 'We need to verify your identity to be sure you are who you say you are',
+                text:
+                    'We need to verify your identity to be sure you are who you say you are',
               ),
               SizedBox(height: 30),
               if (registerP.idFile != null) ...[
-                SelectedImagesWidget(images: [registerP.idFile], height: 150,),
+                SelectedImagesWidget(
+                  images: [registerP.idFile],
+                  height: 150,
+                ),
                 10.toColumnSpace(),
                 Center(
                   child: InkWell(
-                    onTap: () => registerP.changeDocument(),
-                    child: Text("change document")
-                  ),
+                      onTap: () => registerP.changeDocument(),
+                      child: Text("change document")),
                 ),
               ],
               if (registerP.idFile == null) ...[
@@ -65,7 +72,7 @@ class _PersonalIDState extends ConsumerState<PersonalID> {
                 ),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () =>  registerP.selectDocument(),
+                  onTap: () => registerP.selectDocument(),
                   child: UploadId(
                     img: 'assets/images/driver-license.png',
                     text: 'DRIVERS LICENSE',
@@ -73,16 +80,14 @@ class _PersonalIDState extends ConsumerState<PersonalID> {
                 ),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () =>  registerP.selectDocument(),
+                  onTap: () => registerP.selectDocument(),
                   child: UploadId(
                     img: 'assets/images/internation-passport.png',
                     text: 'INTERNATIONAL PASSPORT',
                   ),
                 ),
               ],
-
               SizedBox(height: 40),
-
               Center(
                 child: SizedBox(
                   width: 200,
@@ -90,9 +95,22 @@ class _PersonalIDState extends ConsumerState<PersonalID> {
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
                           backgroundColor: Color(0xff1173AB),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25))),
                       onPressed: () {
-                        registerP.register(context);
+                        if (registerP.checkId()) {
+                          if (widget.uploadId) {
+                            registerP.uploadId(context);
+                          } else {
+                            if (registerP.loginWithGoogle) {
+                              registerP.registerWithSocialProvider(
+                                context,
+                              );
+                            } else {
+                              registerP.register(context);
+                            }
+                          }
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

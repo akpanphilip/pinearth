@@ -383,7 +383,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                       ),
                       onPressed: () {
-                        scheduleAVisitP.scheduleVisit(context, widget.agent.user.email, widget.agent.user.role);
+                        scheduleAVisitP.scheduleVisit(context, widget.agent.user.email, widget.agent.user.role!);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

@@ -52,13 +52,18 @@ class _RootScreenState extends ConsumerState<RootScreen> {
   int _bottomNavIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final profileP = ref.watch(profileProvider);
     final profile = profileP.profileState;
-    bool hasRole = false;
+    // bool hasRole = false;
     bool canList = false;
     if (profile.data != null) {
-      hasRole = profile.data!.hasRole;
+      // hasRole = profile.data!.hasRole!;
       canList = profileP.canList;
     }
     print("user can list $canList");

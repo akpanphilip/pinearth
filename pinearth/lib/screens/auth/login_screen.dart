@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +13,7 @@ import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
 import '../../custom_widgets/custom_widgets.dart';
+import '../../providers/auth/register_provider.dart';
 import 'widgets/social_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -79,26 +82,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 //   height: 20,
                 // ),
                 SocialProvider(
-                  title: "Sign up with Google",
-                  onTap: () {
-                    //TODO sign up with google
+                  title: "Sign in with Google",
+                  isLoading: ref.watch(registerProvider).loadingGoogleInfo,
+                  function: () {
+                    ref
+                        .read<RegisterProvider>(registerProvider)
+                        .loginWithGoogle = true;
+                    ref
+                        .read<RegisterProvider>(registerProvider)
+                        .registerWithGoogle(context);
                   },
                   image: "google".png,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                SocialProvider(
-                  title: "Sign up with Apple",
-                  onTap: () {
-                    //TODO sign up with apple
-                  },
-                  image: "apple".png,
-                ),
-
-                const SizedBox(
-                  height: 20,
-                ),
+                if (Platform.isIOS) ...[
+                  SocialProvider(
+                    title: "Sign in with Apple",
+                    function: () {
+                      //TODO sign up with apple
+                    },
+                    image: "apple".png,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
                 // GoogleAuth(text: 'Sign in with Google'),
                 // FormTitle(text: 'OR'),
                 LabelTitle(text: 'Email address'),

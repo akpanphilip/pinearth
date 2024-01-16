@@ -8,15 +8,20 @@ import 'package:pinearth/backend/domain/repositories/i_property_repo.dart';
 
 class ApiPropertyRepo implements IPropertyRepo {
   final IApiService apiService;
+
   ApiPropertyRepo(this.apiService);
 
   @override
   Future<Either<IFailure, List<PropertyModel>>> properties() async {
     try {
       final res = await apiService.get("property/view/", requireToken: false);
+
       if (res.status == true) {
-        return Right(
-            List.from(res.data).map((e) => PropertyModel.fromJson(e)).toList());
+        return Right(List.from(res.data).map((e) {
+          print("res data --------------- $e\n\n\n}");
+
+          return PropertyModel.fromJson(e);
+        }).toList());
       }
       return Left(RepoFailure(res.message!));
     } catch (error) {

@@ -36,7 +36,8 @@ class ProfileProvider extends BaseProvider {
           toLogin(context);
         }
       }, (r) {
-        loadAgentProfile(context);
+        //TODO check it again
+        // loadAgentProfile(context);
         profileState.toSuccess(r);
         canList = ['Agent', 'Developer', 'Short let'].contains(r.role);
         notifyListeners();

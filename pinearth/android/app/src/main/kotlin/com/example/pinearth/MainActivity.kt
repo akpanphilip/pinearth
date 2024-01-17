@@ -1,4 +1,4 @@
-package com.example.pinearth
+package com.app.pinearth
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -64,7 +64,7 @@ class PropertyWidget extends ConsumerWidget {
                           topRight: Radius.circular(25)),
                       child: CachedNetworkImage(
                         imageUrl:
-                            "${property.houseView.first.houseView.addRemotePath}",
+                            property.houseView.first.houseView.addRemotePath,
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -106,7 +106,7 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 13.0),
                         child: CustomChipWidget(
-                          label: "${widget.type.capitalizeFirst()}",
+                          label: widget.type.capitalizeFirst(),
                         ),
                       ),
                       22.toColumnSpace(),

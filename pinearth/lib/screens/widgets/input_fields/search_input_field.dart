@@ -22,7 +22,11 @@ class SearchPropertyFieldWidget extends StatelessWidget {
       ),
       readOnly: readOnly,
       controller: controller,
-      onTap: () => onClick!(),
+      onTap: () {
+        if (onClick != null){
+          onClick!();
+        }
+      },
       decoration: InputDecoration(
         hintText: 'Enter an address, neighborhood or zip code',
         hintStyle: TextStyle(

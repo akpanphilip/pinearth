@@ -81,9 +81,12 @@ class ApiPropertyRepo implements IPropertyRepo {
       String? propertyStatus,
       String? propertyType,
       String? propertyPrice}) async {
+
+    //property/search/?address=$address&property_status=$propertyStatus&property_type=$propertyType&property_price=$propertyPrice
+
     try {
       final res = await apiService.get(
-          "property/search/?address=$address&property_status=$propertyStatus&property_type=$propertyType&property_price=$propertyPrice",
+          "property/search/?address=$address&property_status=$propertyStatus",
           requireToken: false);
       if (res.status == true) {
         return Right(

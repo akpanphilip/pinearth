@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -11,34 +10,38 @@ import 'package:pinearth/providers/base_provider.dart';
 class SearchPropertyProvider extends BaseProvider {
   final IPropertyRepo propertyRepo;
 
-  SearchPropertyProvider(
-    this.propertyRepo
-  ) {
+  SearchPropertyProvider(this.propertyRepo) {
     searchParamController.addListener(() {
       if (searchTimer != null) searchTimer!.cancel();
       final searchParam = searchParamController.text;
       if (searchParam.isNotEmpty && searchParam != lastText) {
         lastText = searchParam;
-        searchTimer = Timer(const Duration(milliseconds: 500), () => searchProperty());
+        searchTimer =
+            Timer(const Duration(milliseconds: 500), () => searchProperty());
       }
     });
   }
 
   final searchParamController = TextEditingController();
   String lastText = "";
+  String propertyStatus = "";
   Timer? searchTimer;
   final allPropertySearchResult = ProviderActionState<List<PropertyModel>>();
+
+  set updatePropertyStatus(String status) {
+    propertyStatus = status;
+    notifyListeners();
+  }
 
   Future<void> searchProperty() async {
     try {
       allPropertySearchResult.toLoading();
       notifyListeners();
       final res = await propertyRepo.searchProperties(
-        address: searchParamController.text,
-        propertyPrice: searchParamController.text,
-        propertyStatus: searchParamController.text,
-        propertyType: searchParamController.text
-      );
+          address: searchParamController.text,
+          propertyPrice: searchParamController.text,
+          propertyStatus: propertyStatus,
+          propertyType: searchParamController.text);
       res.fold((l) {
         allPropertySearchResult.toError(l.message);
         notifyListeners();
@@ -51,11 +54,8 @@ class SearchPropertyProvider extends BaseProvider {
       notifyListeners();
     }
   }
-
 }
 
 final searchPropertyProvider = ChangeNotifierProvider.autoDispose((ref) {
-  return SearchPropertyProvider(
-    getIt<IPropertyRepo>()
-  );
+  return SearchPropertyProvider(getIt<IPropertyRepo>());
 });

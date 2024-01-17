@@ -7,10 +7,7 @@ import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 
 class PropertyDetailPhotoScreen extends StatelessWidget {
-  const PropertyDetailPhotoScreen({
-    super.key,
-    required this.property
-  });
+  const PropertyDetailPhotoScreen({super.key, required this.property});
 
   final PropertyModel property;
 
@@ -34,18 +31,15 @@ class PropertyDetailPhotoScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             27.toColumnSpace(),
-
             PropertyImageItem(
               title: "Photo of the property",
               images: property.houseView.map((e) => e.houseView).toList(),
             ),
-
             27.toColumnSpace(),
             PropertyImageItem(
               title: "Photo of the Living room",
               images: property.livingRoom.map((e) => e.livingRoom).toList(),
             ),
-
             27.toColumnSpace(),
             PropertyImageItem(
               title: "Photo of the Bedroom",
@@ -85,11 +79,8 @@ class PropertyDetailPhotoScreen extends StatelessWidget {
 }
 
 class PropertyImageItem extends StatelessWidget {
-  const PropertyImageItem({
-    super.key,
-    required this.title,
-    required this.images
-  });
+  const PropertyImageItem(
+      {super.key, required this.title, required this.images});
 
   final String title;
   final List<String> images;
@@ -101,10 +92,13 @@ class PropertyImageItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 18),
-          child: Text("$title", style: TextStyle(
-            fontSize: 16.toFontSize(),
-            fontWeight: FontWeight.w500, color: Colors.black
-          ),),
+          child: Text(
+            "$title",
+            style: TextStyle(
+                fontSize: 16.toFontSize(),
+                fontWeight: FontWeight.w500,
+                color: Colors.black),
+          ),
         ),
         27.toColumnSpace(),
         Padding(
@@ -114,22 +108,26 @@ class PropertyImageItem extends StatelessWidget {
             child: Row(
               children: [
                 ...images.map((e) => Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context, 
-                        builder: (context) => ViewImageWidget(title: title, images: images),
-                        isScrollControlled: true,
-                        isDismissible: false
-                      );
-                    },
-                    child: CachedNetworkImage(
-                      imageUrl: e.addRemotePath,
-                      height: 110, width: 110, fit: BoxFit.cover,
-                    ),
-                  ),
-                ))
+                      padding: const EdgeInsets.only(right: 12),
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                                child: ViewImageWidget(
+                                    title: title, images: images)),
+                            // isScrollControlled: true,
+                            // isDismissible: false
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: e.addRemotePath,
+                          height: 110,
+                          width: 110,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),

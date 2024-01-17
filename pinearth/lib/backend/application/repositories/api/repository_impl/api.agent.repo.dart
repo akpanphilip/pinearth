@@ -15,7 +15,7 @@ class ApiAgentRepo implements IAgentRepo {
     try {
       String url = "an agent/";
       if (searchParam.isNotEmpty) {
-        url = "search_agent?search=$searchParam";
+        url = "search_agent/?search=$searchParam";
       }
       final res = await apiService.get("/role/$url", requireToken: true);
       if (res.status == true) {
@@ -33,7 +33,7 @@ class ApiAgentRepo implements IAgentRepo {
     try {
       String url = "a landlord/";
       if (searchParam.isNotEmpty) {
-        url = "search_landlord?search=$searchParam";
+        url = "search_landlord/?search=$searchParam";
       }
       final res = await apiService.get("/role/$url", requireToken: true);
       if (res.status == true) {
@@ -51,7 +51,7 @@ class ApiAgentRepo implements IAgentRepo {
     try {
       String url = "a developer/";
       if (searchParam.isNotEmpty) {
-        url = "search_developer?search=$searchParam";
+        url = "search_developer/?search=$searchParam";
       }
       final res = await apiService.get("/role/$url", requireToken: true);
       if (res.status == true) {

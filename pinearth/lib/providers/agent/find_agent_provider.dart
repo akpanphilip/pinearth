@@ -25,6 +25,11 @@ class FindAgentProvider extends BaseProvider {
     initialize();
   }
 
+  void reset() {
+    searchParamController.clear();
+    notifyListeners();
+  }
+
   void initialize() async {
     if (agentType == agentAgentType) {
       loadAgents();

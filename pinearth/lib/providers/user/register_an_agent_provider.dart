@@ -75,7 +75,7 @@ class RegisterAsAgentProvider extends BaseProvider {
   final appliancesController = TextEditingController();
 
   String agentType = "Agent";
-  String hasSecurity = "no";
+  String hasSecurity = "No";
 
   set updateHasSecurityStatus(String status) {
     hasSecurity = status;

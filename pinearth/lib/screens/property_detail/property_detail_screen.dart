@@ -258,36 +258,38 @@ class _PropertyDetailScreenState extends ConsumerState<PropertyDetailScreen> {
               ),
             ),
             10.toColumnSpace(),
-            Center(
-              child: SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: Color(0xff1173AB),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SchedulePropertyVisitScreen(
-                                  property: property,
-                                )),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        'Schedule a visit',
-                        style: GoogleFonts.nunito(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    )),
+
+            if (pageIndex == 0)
+              Center(
+                child: SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Color(0xff1173AB),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SchedulePropertyVisitScreen(
+                                    property: property,
+                                  )),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'Schedule a visit',
+                          style: GoogleFonts.nunito(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
+                ),
               ),
-            ),
             10.toColumnSpace(),
             // Padding(
             //   padding: const EdgeInsets.all(20.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
+import 'package:pinearth/utils/extensions/string_extension.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
@@ -19,6 +21,8 @@ class EmptyStateWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SvgPicture.asset("moon_stars".svg),
+          10.toColumnSpace(),
           Text(message, style: const TextStyle(
             color: Colors.black,
           ), textAlign: TextAlign.center,),

@@ -109,11 +109,11 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                           Row(
                             children: [
                               StarRatingWidget(
-                                rating: widget.agent.review.length,
+                                rating: widget.agent.rating ?? 0,
                               ),
                               5.toRowSpace(),
                               Text(
-                                '(${widget.agent.review.isEmpty ? 'No reviews' : widget.agent.review.length})',
+                                '(${widget.agent.review.isEmpty ? 'No reviews' : "${widget.agent.review.length} reviews"})',
                                 style: TextStyle(
                                     fontSize: 12.toFontSize(),
                                     fontWeight: FontWeight.w600,

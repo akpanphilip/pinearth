@@ -14,7 +14,7 @@ class PropertyDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 22),
+      padding: const EdgeInsets.symmetric(horizontal: 22),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,13 +24,19 @@ class PropertyDetailWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
-                    "${property.owner.firstName} ${property.owner.lastName}",
-                    style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info_outlined),
+                      const SizedBox(width: 10),
+                      Text(
+                        "${property.owner.firstName} ${property.owner.lastName}",
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 if (property.owner.profile?.phoneNo != null &&
@@ -44,81 +50,131 @@ class PropertyDetailWidget extends StatelessWidget {
               ],
             ),
             14.toColumnSpace(),
-            const PropertyFeatureTitle(
-              title: "Property description",
-            ),
-            Text(
-              property.desc!,
-              style: GoogleFonts.nunito(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+            PropertyFeatureTitle(
+              title: "Description of property",
+              child: Text(
+                property.desc!,
+                style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
             ),
             14.toColumnSpace(),
-            const PropertyFeatureTitle(
+            PropertyFeatureTitle(
+              leading: SvgPicture.asset("help_clinic".svg),
               title: "Property features",
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        property.propertyType!,
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      24.toRowSpace(),
+                      Text(
+                        "${property.noOfRooms} bedrooms",
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  14.toColumnSpace(),
+                  Row(
+                    children: [
+                      Text(
+                        "${property.lotSize} sqr feet",
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      24.toRowSpace(),
+                      Text(
+                        "${property.noOfBathrooms} Bathrooms",
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             10.toColumnSpace(),
-            Row(
-              children: [
-                Text(
-                  property.propertyType!,
-                  style:
-                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
-                ),
-                24.toRowSpace(),
-                Text(
-                  "${property.noOfRooms} bedrooms",
-                  style:
-                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
-                ),
-              ],
-            ),
+            if (property.appliance?.trim() != "" &&
+                property.appliance?.trim().toLowerCase() == "yes") ...[
+              //Applicances
+              14.toColumnSpace(),
+              PropertyFeatureTitle(
+                  leading: SvgPicture.asset("blender".svg),
+                  title: "Appliances",
+                  child: Wrap(
+                    children: property.appliances
+                        .map((appliance) => Text(
+                              appliance.name ?? "",
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ))
+                        .toList(),
+                  )),
+              10.toColumnSpace(),
+            ],
             14.toColumnSpace(),
-            Row(
-              children: [
-                Text(
-                  "${property.lotSize} sqr feet",
-                  style:
-                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
-                ),
-                24.toRowSpace(),
-                Text(
-                  "${property.noOfBathrooms} Bathrooms",
-                  style:
-                      TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
-                ),
-              ],
-            ),
-            14.toColumnSpace(),
-            const PropertyFeatureTitle(
+            PropertyFeatureTitle(
               title: "Address",
+              leading: SvgPicture.asset("assistant_direction".svg),
+              child: Text(
+                property.address!,
+                style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
             ),
             10.toColumnSpace(),
-            Text(
-              property.address!,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.toFontSize(),
-                  color: Colors.black),
-            ),
+            if (property.incomePerMonth != null &&
+                property.incomePerMonth!.trim() != "")
+              PropertyFeatureTitle(
+                  leading: Image.asset("payments".png),
+                  title: "Income generated from property per month",
+                  child: Text(
+                    "NGN ${num.parse(property.incomePerMonth!).formattedMoney(currency: "NGN")}",
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
+                  )),
             14.toColumnSpace(),
-            const PropertyFeatureTitle(
+            PropertyFeatureTitle(
+              leading: Image.asset("payments".png),
               title: "Price",
+              child: Text(
+                  num.parse(property.propertyPrice!)
+                      .formattedMoney(currency: "NGN"),
+                  style: GoogleFonts.nunito(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  )),
             ),
             10.toColumnSpace(),
-            Text(
-              num.parse(property.propertyPrice!)
-                  .formattedMoney(currency: "NGN"),
-              style: TextStyle(fontSize: 16.toFontSize(), color: Colors.black),
-            ),
             14.toColumnSpace(),
-            const PropertyFeatureTitle(
+            PropertyFeatureTitle(
               title: "Map",
+              leading: SvgPicture.asset("distance".svg),
+              child: Image.asset('assets/images/map.png'),
             ),
             10.toColumnSpace(),
-            Image.asset('assets/images/map.png'),
-            20.toColumnSpace(),
           ],
         ),
       ),
@@ -127,18 +183,41 @@ class PropertyDetailWidget extends StatelessWidget {
 }
 
 class PropertyFeatureTitle extends StatelessWidget {
-  const PropertyFeatureTitle({super.key, this.title = "Feature"});
+  const PropertyFeatureTitle(
+      {super.key, this.title = "Feature", this.leading, this.child});
 
   final String title;
+  final Widget? leading;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(
-          fontSize: 14.toFontSize(),
-          color: Colors.black.withOpacity(.5),
-          fontWeight: FontWeight.w500),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (leading != null) ...[
+          leading!,
+          const SizedBox(width: 10),
+        ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    fontSize: 14.toFontSize(),
+                    color: Colors.black.withOpacity(.5),
+                    fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              child ?? Container(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

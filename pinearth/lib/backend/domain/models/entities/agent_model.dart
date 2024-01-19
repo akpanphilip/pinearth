@@ -66,7 +66,7 @@ class AgentModel {
         property: List<dynamic>.from((json["property"] ?? []).map((x) => x)),
         address: json["address"],
         website: json["website"] ?? "",
-        review: List<dynamic>.from(json["review"].map((x) => x)),
+        review: List<dynamic>.from((json["review"] ?? []).map((x) => x)),
         rating: json["rating"],
         isVerified: json["is_verified"],
       );

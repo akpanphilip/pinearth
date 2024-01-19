@@ -1,74 +1,81 @@
-
+import 'agent_model.dart';
 import 'user_model.dart';
 
 class PropertyModel {
-    final int id;
-    final UserModel owner;
-    final String? title;
-    final String? desc;
-    final String? propertyType;
-    final int? noOfRooms;
-    final int? noOfBathrooms;
-    final int? lotSize;
-    final String? address;
-    final String? propertyStatus;
-    final String? propertyPrice;
-    final String? incomePerMonth;
-    final int? yearsBuilt;
-    final int? yearsRenovated;
-    final int? yearsReconstructed;
-    final String? parkingSpace;
-    final String? appliance;
-    final String? location;
-    final String? role;
-    final bool? available;
-    final DateTime? createdAt;
-    final List<HouseView> houseView;
-    final List<LivingRoom> livingRoom;
-    final List<BedRoom> bedRoom;
-    final List<Toilet> toilet;
-    final List<Kitchen> kitchen;
-    final List<Document> documents;
-    final List<HousePlan> housePlan;
-    final List<Size> size;
-    final List<dynamic> reviews;
+  final int id;
+  final UserModel owner;
+  final AgentModel? agent;
+  final String? title;
+  final String? desc;
+  final String? propertyType;
 
-    PropertyModel({
-        required this.id,
-         required this.owner,
-         this.title,
-         this.desc,
-         this.propertyType,
-         this.noOfRooms,
-         this.noOfBathrooms,
-         this.lotSize,
-         this.address,
-         this.propertyStatus,
-         this.propertyPrice,
-         this.incomePerMonth,
-         this.yearsBuilt,
-         this.yearsRenovated,
-         this.yearsReconstructed,
-         this.parkingSpace,
-         this.appliance,
-         this.location,
-         this.role,
-         this.available,
-         this.createdAt,
-        required this.houseView,
-        required this.livingRoom,
-        required this.bedRoom,
-        required this.toilet,
-        required this.kitchen,
-        required this.documents,
-        required this.housePlan,
-        required this.size,
-        required this.reviews,
-    });
+  final int? noOfRooms;
+  final int? noOfBathrooms;
+  final int? lotSize;
+  final String? address;
+  final String? propertyStatus;
+  final String? propertyPrice;
+  final String? incomePerMonth;
+  final int? yearsBuilt;
+  final int? yearsRenovated;
+  final int? yearsReconstructed;
+  final String? parkingSpace;
+  final String? appliance;
+  final List<Appliances> appliances;
+  final String? location;
+  final String? role;
+  final bool? available;
+  final DateTime? createdAt;
+  final List<HouseView> houseView;
+  final List<LivingRoom> livingRoom;
+  final List<BedRoom> bedRoom;
+  final List<Toilet> toilet;
+  final List<Kitchen> kitchen;
+  final List<Document> documents;
+  final List<HousePlan> housePlan;
+  final List<Size> size;
+  final List<dynamic> reviews;
 
-    factory PropertyModel.fromJson(Map<String, dynamic> json) => PropertyModel(
+  PropertyModel({
+    required this.id,
+    required this.owner,
+    this.agent,
+    this.title,
+    this.desc,
+    this.propertyType,
+    this.noOfRooms,
+    this.noOfBathrooms,
+    this.lotSize,
+    this.address,
+    this.propertyStatus,
+    this.appliances = const <Appliances>[],
+    this.propertyPrice,
+    this.incomePerMonth,
+    this.yearsBuilt,
+    this.yearsRenovated,
+    this.yearsReconstructed,
+    this.parkingSpace,
+    this.appliance,
+    this.location,
+    this.role,
+    this.available,
+    this.createdAt,
+    required this.houseView,
+    required this.livingRoom,
+    required this.bedRoom,
+    required this.toilet,
+    required this.kitchen,
+    required this.documents,
+    required this.housePlan,
+    required this.size,
+    required this.reviews,
+  });
+
+  factory PropertyModel.fromJson(Map<String, dynamic> json) => PropertyModel(
         id: json["id"],
         owner: UserModel.fromJson(json["owner"]),
+        agent:
+            (json["agent"] == null) ? null : AgentModel.fromJson(json["agent"]),
         title: json["title"],
         desc: json["desc"],
         propertyType: json["property_type"],
@@ -84,22 +91,34 @@ class PropertyModel {
         yearsReconstructed: json["years_reconstructed"],
         parkingSpace: json["parking_space"],
         appliance: json["appliance"],
+        appliances: (json["appliances"] != null)
+            ? List.from((json["appliances"]))
+                .map((e) => Appliances.fromJson(e))
+                .toList()
+            : [],
         location: json["location"],
         role: json["role"],
         available: json["available"],
         createdAt: DateTime.parse(json["created_at"]),
-        houseView: List<HouseView>.from(json["house_view"].map((x) => HouseView.fromJson(x))),
-        livingRoom: List<LivingRoom>.from(json["living_room"].map((x) => LivingRoom.fromJson(x))),
-        bedRoom: List<BedRoom>.from(json["bed_room"].map((x) => BedRoom.fromJson(x))),
-        toilet: List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
-        kitchen: List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
-        documents: List<Document>.from(json["documents"].map((x) => Document.fromJson(x))),
-        housePlan: List<HousePlan>.from(json["house_plan"].map((x) => HousePlan.fromJson(x))),
+        houseView: List<HouseView>.from(
+            json["house_view"].map((x) => HouseView.fromJson(x))),
+        livingRoom: List<LivingRoom>.from(
+            json["living_room"].map((x) => LivingRoom.fromJson(x))),
+        bedRoom: List<BedRoom>.from(
+            json["bed_room"].map((x) => BedRoom.fromJson(x))),
+        toilet:
+            List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
+        kitchen:
+            List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
+        documents: List<Document>.from(
+            json["documents"].map((x) => Document.fromJson(x))),
+        housePlan: List<HousePlan>.from(
+            json["house_plan"].map((x) => HousePlan.fromJson(x))),
         size: List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
         reviews: List<dynamic>.from(json["reviews"].map((x) => x)),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "owner": owner.toJson(),
         "title": title,
@@ -119,6 +138,8 @@ class PropertyModel {
         "appliance": appliance,
         "location": location,
         "role": role,
+        "appliances": appliances.map((e) => e.toJson()).toList(),
+        "agent": (agent == null) ? null : agent!.toJson(),
         "available": available,
         "created_at": createdAt?.toIso8601String(),
         "house_view": List<dynamic>.from(houseView.map((x) => x.toJson())),
@@ -130,133 +151,146 @@ class PropertyModel {
         "house_plan": List<dynamic>.from(housePlan.map((x) => x.toJson())),
         "size": List<dynamic>.from(size.map((x) => x.toJson())),
         "reviews": List<dynamic>.from(reviews.map((x) => x)),
-    };
+      };
+}
+
+class Appliances {
+  final int? id;
+  final String? name;
+
+  const Appliances({this.id, this.name});
+
+  Appliances.fromJson(dynamic json)
+      : id = json['id'],
+        name = json['name'];
+
+  Map<String, dynamic> toJson() => {"id": id, "name": name};
 }
 
 class BedRoom {
-    final String bedRoom;
+  final String bedRoom;
 
-    BedRoom({
-        required this.bedRoom,
-    });
+  BedRoom({
+    required this.bedRoom,
+  });
 
-    factory BedRoom.fromJson(Map<String, dynamic> json) => BedRoom(
+  factory BedRoom.fromJson(Map<String, dynamic> json) => BedRoom(
         bedRoom: json["bed_room"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "bed_room": bedRoom,
-    };
+      };
 }
 
 class Document {
-    final String documents;
+  final String documents;
 
-    Document({
-        required this.documents,
-    });
+  Document({
+    required this.documents,
+  });
 
-    factory Document.fromJson(Map<String, dynamic> json) => Document(
+  factory Document.fromJson(Map<String, dynamic> json) => Document(
         documents: json["documents"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "documents": documents,
-    };
+      };
 }
 
 class HousePlan {
-    final String housePlan;
+  final String housePlan;
 
-    HousePlan({
-        required this.housePlan,
-    });
+  HousePlan({
+    required this.housePlan,
+  });
 
-    factory HousePlan.fromJson(Map<String, dynamic> json) => HousePlan(
+  factory HousePlan.fromJson(Map<String, dynamic> json) => HousePlan(
         housePlan: json["house_plan"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "house_plan": housePlan,
-    };
+      };
 }
 
 class HouseView {
-    final String houseView;
+  final String houseView;
 
-    HouseView({
-        required this.houseView,
-    });
+  HouseView({
+    required this.houseView,
+  });
 
-    factory HouseView.fromJson(Map<String, dynamic> json) => HouseView(
+  factory HouseView.fromJson(Map<String, dynamic> json) => HouseView(
         houseView: json["house_view"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "house_view": houseView,
-    };
+      };
 }
 
 class Kitchen {
-    final String kitchen;
+  final String kitchen;
 
-    Kitchen({
-        required this.kitchen,
-    });
+  Kitchen({
+    required this.kitchen,
+  });
 
-    factory Kitchen.fromJson(Map<String, dynamic> json) => Kitchen(
+  factory Kitchen.fromJson(Map<String, dynamic> json) => Kitchen(
         kitchen: json["kitchen"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "kitchen": kitchen,
-    };
+      };
 }
 
 class LivingRoom {
-    final String livingRoom;
+  final String livingRoom;
 
-    LivingRoom({
-        required this.livingRoom,
-    });
+  LivingRoom({
+    required this.livingRoom,
+  });
 
-    factory LivingRoom.fromJson(Map<String, dynamic> json) => LivingRoom(
+  factory LivingRoom.fromJson(Map<String, dynamic> json) => LivingRoom(
         livingRoom: json["living_room"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "living_room": livingRoom,
-    };
+      };
 }
 
 class Size {
-    final String size;
+  final String size;
 
-    Size({
-        required this.size,
-    });
+  Size({
+    required this.size,
+  });
 
-    factory Size.fromJson(Map<String, dynamic> json) => Size(
+  factory Size.fromJson(Map<String, dynamic> json) => Size(
         size: json["size"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "size": size,
-    };
+      };
 }
 
 class Toilet {
-    final String toilet;
+  final String toilet;
 
-    Toilet({
-        required this.toilet,
-    });
+  Toilet({
+    required this.toilet,
+  });
 
-    factory Toilet.fromJson(Map<String, dynamic> json) => Toilet(
+  factory Toilet.fromJson(Map<String, dynamic> json) => Toilet(
         toilet: json["toilet"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "toilet": toilet,
-    };
+      };
 }

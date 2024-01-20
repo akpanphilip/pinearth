@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
+import 'package:pinearth/custom_widgets/custom_widgets.dart';
 import 'package:pinearth/locator.dart';
 import 'package:pinearth/providers/user/my_listing_provider.dart';
 import 'package:pinearth/providers/user/profile_provider.dart';
@@ -14,6 +15,7 @@ import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:redacted/redacted.dart';
 
 import '../../utils/styles/colors.dart';
+import 'comment_bottom_sheet.dart';
 
 class PropertyWidget extends ConsumerWidget {
   const PropertyWidget({super.key, required this.property});
@@ -159,178 +161,226 @@ class PropertyWidget extends ConsumerWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      '${(num.tryParse(property.propertyPrice!) ?? 0).formattedMoney()} NGN/Month',
-                      style: GoogleFonts.nunito(
-                          color: const Color(0xff1173AB),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700)),
-                  5.toColumnSpace(),
-                  Text(
-                    '${property.title} in ${property.address}',
-                    style: GoogleFonts.nunito(
-                        color: const Color(0xff000000),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(children: [
+                      Text(
+                          '${(num.tryParse(property.propertyPrice!) ?? 0).formattedMoney()} NGN/Month',
+                          style: GoogleFonts.nunito(
+                              color: const Color(0xff1173AB),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700)),
+                      5.toColumnSpace(),
+                      Text(
+                        '${property.title} in ${property.address}',
+                        style: GoogleFonts.nunito(
+                            color: const Color(0xff000000),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      5.toColumnSpace(),
+                      Text('${property.desc}',
+                          style: GoogleFonts.nunito(
+                              color: const Color(0xff000000),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400)),
+                      10.toColumnSpace(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 25,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: const Color(0xff000000), width: 1),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/house.svg',
+                                      // Replace with the path to your SVG file
+                                      width: 13,
+                                      height: 13,
+                                    ),
+                                    Text(
+                                        '${property.bedRoom.length} bedroom flat',
+                                        style: GoogleFonts.nunito(
+                                            color: const Color(0xff000000),
+                                            fontSize: 7))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Container(
+                              height: 25,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: const Color(0xff000000), width: 1),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/bathroom.svg',
+                                      // Replace with the path to your SVG file
+                                      width: 13,
+                                      height: 13,
+                                    ),
+                                    Text('${property.noOfBathrooms} bathrooms',
+                                        style: GoogleFonts.nunito(
+                                            color: const Color(0xff000000),
+                                            fontSize: 7))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Container(
+                              height: 25,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: const Color(0xff000000), width: 1),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/feet.svg',
+                                      // Replace with the path to your SVG file
+                                      width: 13,
+                                      height: 13,
+                                    ),
+                                    Text('${property.lotSize} sqr feet',
+                                        style: GoogleFonts.nunito(
+                                            color: const Color(0xff000000),
+                                            fontSize: 7))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      21.toColumnSpace(),
+                      Row(
+                        children: [
+                          InkWell(
+                            // onTap: () => context.router,
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundImage: CachedNetworkImageProvider(
+                                  property.owner.profile!.uploadId!,
+                                  maxWidth: 30,
+                                  maxHeight: 30),
+                            ),
+                          ),
+                          6.toRowSpace(),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${property.owner.lastName} ${property.owner.firstName}",
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 12.toFontSize(),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "${property.owner.role}",
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 10.toFontSize(),
+                                      fontWeight: FontWeight.w600,
+                                      color: appColor.primary),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: appColor.primary,
+                                borderRadius: BorderRadius.circular(5)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 7),
+                            child: Center(
+                              child: Text(
+                                "View",
+                                style: TextStyle(
+                                    fontSize: 12.toFontSize(),
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ])),
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return CommentBottomSheet(
+                            property: property,
+                          );
+                        });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                        color: appColor.primary,
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25))),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.sms_outlined, color: Colors.white),
+                          const SizedBox(width: 20),
+                          (property.reviews.isEmpty)
+                              ? Text("Comment",
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white))
+                              : Text(
+                                  "View (${property.reviews.length}) comments",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white))
+                        ]),
                   ),
-                  5.toColumnSpace(),
-                  Text('${property.desc}',
-                      style: GoogleFonts.nunito(
-                          color: const Color(0xff000000),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400)),
-                  10.toColumnSpace(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xff000000), width: 1),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/house.svg',
-                                  // Replace with the path to your SVG file
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                Text('${property.bedRoom.length} bedroom flat',
-                                    style: GoogleFonts.nunito(
-                                        color: const Color(0xff000000),
-                                        fontSize: 7))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Container(
-                          height: 25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xff000000), width: 1),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/bathroom.svg',
-                                  // Replace with the path to your SVG file
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                Text('${property.noOfBathrooms} bathrooms',
-                                    style: GoogleFonts.nunito(
-                                        color: const Color(0xff000000),
-                                        fontSize: 7))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Container(
-                          height: 25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xff000000), width: 1),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/feet.svg',
-                                  // Replace with the path to your SVG file
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                Text('${property.lotSize} sqr feet',
-                                    style: GoogleFonts.nunito(
-                                        color: const Color(0xff000000),
-                                        fontSize: 7))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  21.toColumnSpace(),
-                  Row(
-                    children: [
-                      InkWell(
-                        // onTap: () => context.router,
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundImage: CachedNetworkImageProvider(
-                              property.owner.profile!.uploadId!,
-                              maxWidth: 30,
-                              maxHeight: 30),
-                        ),
-                      ),
-                      6.toRowSpace(),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${property.owner.lastName} ${property.owner.firstName}",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 12.toFontSize(),
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "${property.owner.role}",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 10.toFontSize(),
-                                  fontWeight: FontWeight.w600,
-                                  color: appColor.primary),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: appColor.primary,
-                            borderRadius: BorderRadius.circular(5)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 7),
-                        child: Center(
-                          child: Text(
-                            "View",
-                            style: TextStyle(
-                                fontSize: 12.toFontSize(),
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                )
+              ],
             )
           ],
         ),
@@ -439,7 +489,7 @@ class LoadingPropertyWidget extends StatelessWidget {
                 10.toColumnSpace(),
                 Container(
                   width: double.infinity,
-                  child: Text("----------"),
+                  child: const Text("----------"),
                 ),
               ],
             )),

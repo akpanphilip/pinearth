@@ -405,6 +405,9 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? inputType;
   final Widget? suffixIcon;
   final double maxHeight;
+  final bool isFilled;
+  final Color fillColor;
+  final InputBorder? border;
 
   const CustomTextField(
       {super.key,
@@ -412,6 +415,9 @@ class CustomTextField extends StatelessWidget {
       required this.hintText,
       this.controller,
       this.readOnly = false,
+      this.isFilled = true,
+      this.fillColor = const Color(0xffeeeeee),
+      this.border,
       this.onTap,
       this.validator,
       this.inputType,
@@ -435,9 +441,9 @@ class CustomTextField extends StatelessWidget {
       keyboardType: inputType,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 19),
-          fillColor: Color(0xffeeeeee),
-          filled: true,
-          border: OutlineInputBorder(
+          fillColor: fillColor,
+          filled: isFilled,
+          border: border ?? OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none),
           hintText: hintText,

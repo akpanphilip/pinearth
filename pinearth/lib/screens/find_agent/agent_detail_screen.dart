@@ -211,11 +211,12 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
 
                           final data = agentProperties.data ?? [];
 
-                          if (data.isEmpty)
+                          if (data.isEmpty) {
                             return EmptyStateWidget(
                               onReload: () => loadAgentProperty(),
                               message: "This agent does not have any property",
                             );
+                          }
 
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -250,28 +251,29 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                           color: Colors.black),
                     ),
                     17.toColumnSpace(),
-                    Container(
-                      child: Column(
-                        children: [
-                          Text(
-                            "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
-                            style: TextStyle(
-                              fontSize: 13.toFontSize(),
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          10.toColumnSpace(),
-                          Text(
-                            "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
-                            style: TextStyle(
-                              fontSize: 13.toFontSize(),
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        ...widget.agent.review
+                            .map((review) => const Text("review"))
+                            .toList(),
+                        // Text(
+                        //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
+                        //   style: TextStyle(
+                        //     fontSize: 13.toFontSize(),
+                        //     color: Colors.black,
+                        //     fontWeight: FontWeight.w400,
+                        //   ),
+                        // ),
+                        // 10.toColumnSpace(),
+                        // Text(
+                        //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
+                        //   style: TextStyle(
+                        //     fontSize: 13.toFontSize(),
+                        //     color: Colors.black,
+                        //     fontWeight: FontWeight.w400,
+                        //   ),
+                        // ),
+                      ],
                     )
                   ],
                 ),
@@ -327,7 +329,10 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                     ),
                     24.toColumnSpace(),
                     CustomButtonWidget(
-                      onClick: () {},
+                      onClick: () {
+                        launchUrl(Uri.parse(
+                            "mailto:support@pinearth.com?subject=Report%20${widget.agent.companyName},%20id%20${widget.agent.id}"));
+                      },
                       color: appColor.red,
                       child: Center(
                         child: Padding(

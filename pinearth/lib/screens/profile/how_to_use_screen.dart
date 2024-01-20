@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 
@@ -34,12 +35,11 @@ class _HowToUseState extends State<HowToUse> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Column(
             children: [
-              ActionCard(forUser: true, image: "undraw_user_flow".png),
+              ActionCard(forUser: true, svgImage: "a_user".svg),
               const SizedBox(
                 height: 50,
               ),
-              ActionCard(
-                  forUser: false, image: "undraw_businessman".png),
+              ActionCard(forUser: false, svgImage: "a_business".svg),
             ],
           ),
         ),
@@ -49,10 +49,12 @@ class _HowToUseState extends State<HowToUse> {
 }
 
 class ActionCard extends StatelessWidget {
-  const ActionCard({super.key, required this.forUser, required this.image});
+  const ActionCard(
+      {super.key, required this.forUser, this.image, this.svgImage});
 
   final bool forUser;
-  final String image;
+  final String? image;
+  final String? svgImage;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,11 @@ class ActionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(alignment: Alignment.center, child: Image.asset(image)),
+            Align(
+                alignment: Alignment.center,
+                child: (svgImage != null)
+                    ? SvgPicture.asset(svgImage!)
+                    : Image.asset(image!)),
             const SizedBox(
               height: 10,
             ),

@@ -190,6 +190,11 @@ class _PropertySectionPictureScreenState
                                 "Please provide at least 1 toilet image");
                             return;
                           }
+                          if (listPropertyP.kitchenImages.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide at least 1 toilet image");
+                            return;
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute(

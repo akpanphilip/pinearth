@@ -409,6 +409,40 @@ class _AgentRegistrationContactScreenState
                     onClick: () {
                       if ([bankAgentType, hotelAgentType, shortletAgentType]
                           .contains(registerasagentprovider.agentType)) {
+                        if (agentType == bankAgentType) {
+                          if (registerasagentprovider.nameController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide a name");
+                            return;
+                          }
+                          if (registerasagentprovider.addressController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide an address");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .phoneNumberController.text.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide a phone number.");
+                            return;
+                          }
+                          if (registerasagentprovider
+                              .companyRegNoController.text.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide a company reg number.");
+                            return;
+                          }
+                          if (registerasagentprovider.companyId.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide an image of company id.");
+                            return;
+                          }
+                        }
+
                         registerasagentprovider.register(context);
                       } else {
                         if (registerasagentprovider.agentType ==

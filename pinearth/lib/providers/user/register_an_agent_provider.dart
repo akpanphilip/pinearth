@@ -26,21 +26,28 @@ class RegisterAsAgentProvider extends BaseProvider {
   void setIsEdit(bool edit) {
     isEdit = edit;
     if (isEdit == true) {
-      final agentProfile = profileProvider.agentProfileState.data!;
-      print("AgentProfile $agentProfile");
-      nameController.text = agentProfile['name'] ?? '';
-      emailAddressController.text = agentProfile['email'] ?? '';
-      companyNameController.text = agentProfile['company_name'] ?? '';
-      companyRegNoController.text = agentProfile['company_reg'] ?? '';
-      phoneNumberController.text = agentProfile['phone_no'] ?? '';
-      addressController.text = agentProfile['address'] ?? '';
-      websiteController.text = agentProfile['website'] ?? '';
-      aboutController.text = agentProfile['about_you'] ?? '';
-      specialityController.text = agentProfile['specialties'] ?? '';
-      professionalProfilePhoto = [null, ''].contains(agentProfile['profile_photo'])? [] : [agentProfile['profile_photo']];
-      idCard = [null, ''].contains(agentProfile['upload_id'])? [] : [agentProfile['upload_id']];
-      companyId = [null, ''].contains(agentProfile['company_id'])? [] : [agentProfile['company_id']];
-      // companyId = 
+      if (agentType == bankAgentType){
+        // nameController.text = profileProvider.profileState.data!.;
+      }else{
+        final agentProfile = profileProvider.agentProfileState.data!;
+        print("AgentProfile $agentProfile");
+        nameController.text = agentProfile['name'] ?? '';
+        emailAddressController.text = agentProfile['email'] ?? '';
+        companyNameController.text = agentProfile['company_name'] ?? '';
+        companyRegNoController.text = agentProfile['company_reg'] ?? '';
+        phoneNumberController.text = agentProfile['phone_no'] ?? '';
+        addressController.text = agentProfile['address'] ?? '';
+        websiteController.text = agentProfile['website'] ?? '';
+        aboutController.text = agentProfile['about_you'] ?? '';
+        specialityController.text = agentProfile['specialties'] ?? '';
+        professionalProfilePhoto = [null, ''].contains(agentProfile['profile_photo'])? [] : [agentProfile['profile_photo']];
+        idCard = [null, ''].contains(agentProfile['upload_id'])? [] : [agentProfile['upload_id']];
+        companyId = [null, ''].contains(agentProfile['company_id'])? [] : [agentProfile['company_id']];
+        // companyId =
+      }
+
+
+
     }
     notifyListeners();
   }
@@ -153,7 +160,7 @@ class RegisterAsAgentProvider extends BaseProvider {
           'profile_photo': professionalProfilePhoto.first.startsWith('http') ? null : await MultipartFile.fromFile(professionalProfilePhoto.first),
           'company_id': companyId.first.startsWith('http') ? null : await MultipartFile.fromFile(companyId.first),
           'company_reg': companyRegNoController.text,
-          'company_name': companyNameController.text,
+          'company_name': nameController.text, //companyNameController.text
           'state': stateController.text,
           'hall_capacity': hallCapacityController.text,
           'is_security': hasSecurity,
@@ -174,7 +181,7 @@ class RegisterAsAgentProvider extends BaseProvider {
           'profile_photo':  await MultipartFile.fromFile(professionalProfilePhoto.first),
           'company_id': companyId.isEmpty ? null : companyId.first.startsWith('http') ? null : await MultipartFile.fromFile(companyId.first),
           'company_reg': companyRegNoController.text,
-          'company_name': companyNameController.text,
+          'company_name': nameController.text, //companyNameController.text
           'state': stateController.text,
           'id_upload': idCard.isNotEmpty ? await MultipartFile.fromFile(idCard.first) : null,
           'hall_capacity': hallCapacityController.text,

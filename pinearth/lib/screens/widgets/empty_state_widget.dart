@@ -19,7 +19,7 @@ class EmptyStateWidget extends StatelessWidget {
       height: 300,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SvgPicture.asset("moon_stars".svg),
           10.toColumnSpace(),
@@ -27,11 +27,13 @@ class EmptyStateWidget extends StatelessWidget {
             color: Colors.black,
           ), textAlign: TextAlign.center,),
           10.toColumnSpace(),
-          InkWell(
-            onTap: () => onReload(),
-            child: const Text('Tap to reload', style: TextStyle(
-              color: Colors.black
-            ),)
+          Center(
+            child: InkWell(
+              onTap: () => onReload(),
+              child: const Text('Tap to reload', style: TextStyle(
+                color: Colors.black
+              ),)
+            ),
           )
         ],
       ),

@@ -119,11 +119,15 @@ class PropertyDetailWidget extends StatelessWidget {
                   title: "Appliances",
                   child: Wrap(
                     children: property.appliances
-                        .map((appliance) => Text(
-                              appliance.name ?? "",
-                              style: GoogleFonts.nunito(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                        .map((appliance) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(
+                                appliance.name ?? "",
+                                style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
                               ),
                             ))
                         .toList(),
@@ -149,7 +153,8 @@ class PropertyDetailWidget extends StatelessWidget {
                   leading: Image.asset("payments".png),
                   title: "Income generated from property per month",
                   child: Text(
-                    "NGN ${num.parse(property.incomePerMonth!).formattedMoney(currency: "NGN")}",
+                    num.parse(property.incomePerMonth!)
+                        .formattedMoney(currency: "NGN"),
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w700,
                       fontSize: 20,

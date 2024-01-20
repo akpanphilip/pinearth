@@ -20,93 +20,102 @@ class SelletInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-          child: Column(
-            children: [
-              Row(children: [
-                CircleAvatar(
-                    radius: 40,
-                    backgroundImage:
-                        NetworkImage(property.agent!.profilePhoto)),
-                50.toRowSpace(),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        property.agent!.companyName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.toFontSize()),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      6.toColumnSpace(),
-                      StarRatingWidget(
-                        rating: property.agent!.rating ?? 0,
-                      ),
-                      3.toColumnSpace(),
-                      Text(
-                        "${property.reviews.length}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.toFontSize(),
-                            color: Colors.black.withOpacity(.5)),
-                      )
-                    ],
-                  ),
-                )
-              ]),
-              const SizedBox(
-                height: 40,
-              ),
-              Row(
-                children: [
-                  10.toColumnSpace(),
-                  SizedBox(
-                    height: 40,
-                    child: CustomButtonWidget(
-                        color: appColor.primary,
-                        onClick: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AgentDetailScreen(
-                                      agent: property.agent!)));
-                        },
-                        child: Center(
-                          child: Text(
-                            "Book now",
-                            style: TextStyle(
-                                fontSize: 20.toFontSize(),
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        )),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      AgentDetailScreen(agent: property.agent!)));
+        },
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+            child: Column(
+              children: [
+                Row(children: [
+                  CircleAvatar(
+                      radius: 40,
+                      backgroundImage:
+                          NetworkImage(property.agent!.profilePhoto)),
+                  50.toRowSpace(),
                   Expanded(
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset('telephone'.svg),
-                        8.toRowSpace(),
                         Text(
-                          property.agent!.phoneNo,
-                          overflow: TextOverflow.ellipsis,
+                          property.agent!.companyName,
                           style: TextStyle(
-                              fontSize: 18.toFontSize(),
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black.withOpacity(.5)),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.toFontSize()),
+                          overflow: TextOverflow.ellipsis,
                         ),
+                        6.toColumnSpace(),
+                        StarRatingWidget(
+                          rating: property.agent!.rating ?? 0,
+                        ),
+                        3.toColumnSpace(),
+                        Text(
+                          "${property.reviews.length}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.toFontSize(),
+                              color: Colors.black.withOpacity(.5)),
+                        )
                       ],
                     ),
-                  ),
-                ],
-              )
-            ],
-          )),
+                  )
+                ]),
+                const SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  children: [
+                    10.toColumnSpace(),
+                    SizedBox(
+                      height: 40,
+                      child: CustomButtonWidget(
+                          color: appColor.primary,
+                          onClick: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AgentDetailScreen(
+                                        agent: property.agent!)));
+                          },
+                          child: Center(
+                            child: Text(
+                              "Book now",
+                              style: TextStyle(
+                                  fontSize: 20.toFontSize(),
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('telephone'.svg),
+                          8.toRowSpace(),
+                          Text(
+                            property.agent!.phoneNo,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 18.toFontSize(),
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black.withOpacity(.5)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )),
+      ),
     );
   }
 }

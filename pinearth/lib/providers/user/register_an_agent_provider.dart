@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -26,9 +24,9 @@ class RegisterAsAgentProvider extends BaseProvider {
   void setIsEdit(bool edit) {
     isEdit = edit;
     if (isEdit == true) {
-      if (agentType == bankAgentType){
+      if (agentType == bankAgentType) {
         // nameController.text = profileProvider.profileState.data!.;
-      }else{
+      } else {
         final agentProfile = profileProvider.agentProfileState.data!;
         print("AgentProfile $agentProfile");
         nameController.text = agentProfile['name'] ?? '';
@@ -40,18 +38,22 @@ class RegisterAsAgentProvider extends BaseProvider {
         websiteController.text = agentProfile['website'] ?? '';
         aboutController.text = agentProfile['about_you'] ?? '';
         specialityController.text = agentProfile['specialties'] ?? '';
-        professionalProfilePhoto = [null, ''].contains(agentProfile['profile_photo'])? [] : [agentProfile['profile_photo']];
-        idCard = [null, ''].contains(agentProfile['upload_id'])? [] : [agentProfile['upload_id']];
-        companyId = [null, ''].contains(agentProfile['company_id'])? [] : [agentProfile['company_id']];
+        professionalProfilePhoto =
+            [null, ''].contains(agentProfile['profile_photo'])
+                ? []
+                : [agentProfile['profile_photo']];
+        idCard = [null, ''].contains(agentProfile['upload_id'])
+            ? []
+            : [agentProfile['upload_id']];
+        companyId = [null, ''].contains(agentProfile['company_id'])
+            ? []
+            : [agentProfile['company_id']];
         // companyId =
       }
-
-
-
     }
     notifyListeners();
   }
-  
+
   RegisterAsAgentProvider(
     this.userRepo,
     this.alert,
@@ -96,6 +98,7 @@ class RegisterAsAgentProvider extends BaseProvider {
       notifyListeners();
     }
   }
+
   void selectCompanyId() async {
     final res = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (res != null) {
@@ -103,6 +106,7 @@ class RegisterAsAgentProvider extends BaseProvider {
       notifyListeners();
     }
   }
+
   void selectIdCard() async {
     final res = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (res != null) {
@@ -118,8 +122,8 @@ class RegisterAsAgentProvider extends BaseProvider {
       notifyListeners();
     }
   }
-  
-  void register(BuildContext context) async {
+
+  void register(BuildContext context, {String? id}) async {
     try {
       alert.showLoadingAlert('');
       String type = '';
@@ -147,66 +151,104 @@ class RegisterAsAgentProvider extends BaseProvider {
       final profile = profileProvider.profileState.data;
       Either<IFailure, bool> res;
       if (isEdit) {
-        final agentProfile = profileProvider.agentProfileState.data!;
-        res = await userRepo.agentProfileUpdate(agentProfile['id'].toString(),  type, profile!.id.toString(), FormData.fromMap({
-          'name': nameController.text,
-          'iname': "",
-          'about_you': aboutController.text,
-          'specialties': specialityController.text,
-          'email': emailAddressController.text,
-          'phone_no': phoneNumberController.text.addCountryCode,
-          'address': addressController.text,
-          'website': websiteController.text.isEmpty ? null : websiteController.text.addHttp(),
-          'profile_photo': professionalProfilePhoto.first.startsWith('http') ? null : await MultipartFile.fromFile(professionalProfilePhoto.first),
-          'company_id': companyId.first.startsWith('http') ? null : await MultipartFile.fromFile(companyId.first),
-          'company_reg': companyRegNoController.text,
-          'company_name': nameController.text, //companyNameController.text
-          'state': stateController.text,
-          'hall_capacity': hallCapacityController.text,
-          'is_security': hasSecurity,
-          'additional_services': additionalServices.text,
-          'price_per_day': pricePerDayController.text,
-          'id_upload': idCard.isNotEmpty ? idCard.first.startsWith('http') ? null : await MultipartFile.fromFile(idCard.first) : null,
-        }));
+        final agentProfile = profileProvider.agentProfileState.data;
+        res = await userRepo.agentProfileUpdate(
+            id ?? agentProfile['id'].toString(),
+            type,
+            id ?? profile!.id.toString(),
+            FormData.fromMap({
+              'name': nameController.text,
+              'iname': "",
+              'about_you': aboutController.text,
+              'specialties': specialityController.text,
+              'email': emailAddressController.text,
+              'phone_no': phoneNumberController.text.addCountryCode,
+              'address': addressController.text,
+              'website': websiteController.text.isEmpty
+                  ? null
+                  : websiteController.text.addHttp(),
+              'profile_photo': professionalProfilePhoto.first.startsWith('http')
+                  ? null
+                  : await MultipartFile.fromFile(
+                      professionalProfilePhoto.first),
+              'company_id': companyId.first.startsWith('http')
+                  ? null
+                  : await MultipartFile.fromFile(companyId.first),
+              'company_reg': companyRegNoController.text,
+              'company_name': nameController.text, //companyNameController.text
+              'state': stateController.text,
+              'hall_capacity': hallCapacityController.text,
+              'is_security': hasSecurity,
+              'additional_services': additionalServices.text,
+              'price_per_day': pricePerDayController.text,
+              'id_upload': idCard.isNotEmpty
+                  ? idCard.first.startsWith('http')
+                      ? null
+                      : await MultipartFile.fromFile(idCard.first)
+                  : null,
+            }));
       } else {
-        res = await userRepo.agentRegistration(type, profile!.id.toString(), FormData.fromMap({
-          'name': nameController.text,
-          'about_you': aboutController.text,
-          'iname': "s",
-          'specialties': specialityController.text,
-          'email': emailAddressController.text,
-          'phone_no': phoneNumberController.text.addCountryCode,
-          'address': addressController.text,
-          'website': websiteController.text.isEmpty ? null : websiteController.text.addHttp(),
-          'profile_photo':  await MultipartFile.fromFile(professionalProfilePhoto.first),
-          'company_id': companyId.isEmpty ? null : companyId.first.startsWith('http') ? null : await MultipartFile.fromFile(companyId.first),
-          'company_reg': companyRegNoController.text,
-          'company_name': nameController.text, //companyNameController.text
-          'state': stateController.text,
-          'id_upload': idCard.isNotEmpty ? await MultipartFile.fromFile(idCard.first) : null,
-          'hall_capacity': hallCapacityController.text,
-          'is_security': hasSecurity,
-          'additional_services': additionalServices.text,
-          'price_per_day': pricePerDayController.text,
-        }));
+        res = await userRepo.agentRegistration(
+            type,
+            profile!.id.toString(),
+            FormData.fromMap({
+              'name': nameController.text,
+              'about_you': aboutController.text,
+              'iname': "s",
+              'specialties': specialityController.text,
+              'email': emailAddressController.text,
+              'phone_no': phoneNumberController.text.addCountryCode,
+              'address': addressController.text,
+              'website': websiteController.text.isEmpty
+                  ? null
+                  : websiteController.text.addHttp(),
+              'profile_photo':
+                  await MultipartFile.fromFile(professionalProfilePhoto.first),
+              'company_id': companyId.isEmpty
+                  ? null
+                  : companyId.first.startsWith('http')
+                      ? null
+                      : await MultipartFile.fromFile(companyId.first),
+              'company_reg': companyRegNoController.text,
+              'company_name': nameController.text, //companyNameController.text
+              'state': stateController.text,
+              'id_upload': idCard.isNotEmpty
+                  ? await MultipartFile.fromFile(idCard.first)
+                  : null,
+              'hall_capacity': hallCapacityController.text,
+              'is_security': hasSecurity,
+              'additional_services': additionalServices.text,
+              'price_per_day': pricePerDayController.text,
+            }));
       }
       alert.closeAlert();
       res.fold((l) {
         if (l.message.toLowerCase().contains('unauthorized')) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+              (route) => false);
         } else {
           alert.showErrorAlert(l.message);
         }
       }, (r) {
-        profileProvider.initialize(context);
-        alert.showSuccessAlert(isEdit ? 'Update successful' : 'Registration successful');
-        clear();
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const AgentRegistrationCompleteScreen()), (r) => false);
+        profileProvider.initialize(context, failSilently: true);
+        alert.showSuccessAlert(
+            isEdit ? 'Update successful' : 'Registration successful');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const AgentRegistrationCompleteScreen()),
+            (r) => false);
+        // clear();
       });
     } catch (error) {
       alert.closeAlert();
       alert.showErrorAlert("Error: $error");
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (route) => false);
       rethrow;
     }
   }
@@ -227,11 +269,11 @@ class RegisterAsAgentProvider extends BaseProvider {
     isEdit = false;
     notifyListeners();
   }
-
 }
 
-final registerAsAgentProvider = ChangeNotifierProvider((ref) => RegisterAsAgentProvider(
-  getIt<IUserRepo>(),
-  getIt<IAlertInteraction>(),
-  ref.read(profileProvider),
-));
+final registerAsAgentProvider =
+    ChangeNotifierProvider((ref) => RegisterAsAgentProvider(
+          getIt<IUserRepo>(),
+          getIt<IAlertInteraction>(),
+          ref.read(profileProvider),
+        ));

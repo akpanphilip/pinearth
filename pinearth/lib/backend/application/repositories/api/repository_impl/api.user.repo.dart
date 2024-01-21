@@ -14,6 +14,7 @@ import 'package:pinearth/backend/domain/repositories/i_user_repo.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../domain/models/dtos/auth/register_with_social_provider.dart';
+import '../../../../domain/models/entities/agent_model.dart';
 
 class ApiUserRepo implements IUserRepo {
   final IApiService apiService;
@@ -248,6 +249,20 @@ class ApiUserRepo implements IUserRepo {
       return Left(RepoFailure(res.message!));
     } catch (error) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<Either<IFailure, AgentModel>> getBusinessProfile() async {
+    try {
+      final res = await apiService.get("/property/a developer", requireToken: true);
+      if (res.status == true) {
+        return Right(AgentModel.fromJson(res.data));
+      }
+      return Left(RepoFailure(res.message!));
+    } catch (error) {
+      // rethrow;
+      return Left(RepoFailure('Error: $error'));
     }
   }
 }

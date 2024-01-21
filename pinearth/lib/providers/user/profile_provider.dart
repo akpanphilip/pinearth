@@ -10,6 +10,8 @@ import 'package:pinearth/providers/base_provider.dart';
 import 'package:pinearth/screens/auth/login_screen.dart';
 import 'package:pinearth/utils/constants/local_storage_keys.dart';
 
+import '../../backend/domain/models/entities/agent_model.dart';
+
 class ProfileProvider extends BaseProvider {
   final IUserRepo userRepo;
   final ILocalStorageService localStorage;
@@ -18,6 +20,7 @@ class ProfileProvider extends BaseProvider {
 
   final profileState = ProviderActionState<UserModel>();
   final agentProfileState = ProviderActionState<dynamic>();
+  final developerProfileState = ProviderActionState<AgentModel>();
   final notificationState = ProviderActionState<List<NotificationModel>>();
 
   bool canList = false;
@@ -47,9 +50,13 @@ class ProfileProvider extends BaseProvider {
           toLogin(context);
         }
       }, (r) {
-        loadAgentProfile(context);
-        profileState.toSuccess(r);
         canList = ['Agent', 'Developer', 'Short let'].contains(r.role);
+        loadAgentProfile(context);
+        if (r.role != null && r.role!.contains("Developer")) {
+          loadDeveloperProfile(context);
+        }
+        profileState.toSuccess(r);
+
         notifyListeners();
       });
     } catch (error) {
@@ -69,6 +76,22 @@ class ProfileProvider extends BaseProvider {
         // toLogin(context);
       }, (r) {
         agentProfileState.toSuccess(r);
+        notifyListeners();
+      });
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  void loadDeveloperProfile(BuildContext context) async {
+    try {
+      developerProfileState.toLoading();
+      notifyListeners();
+      final res = await userRepo.getBusinessProfile();
+      res.fold((l) {
+        // toLogin(context);
+      }, (r) {
+        developerProfileState.toSuccess(r);
         notifyListeners();
       });
     } catch (error) {

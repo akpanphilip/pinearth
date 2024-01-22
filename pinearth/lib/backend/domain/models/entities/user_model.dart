@@ -10,6 +10,7 @@ class UserModel {
     Profile? profile;
     Tokens? tokens;
 
+
     UserModel({
         required this.id,
         required this.email,
@@ -21,6 +22,7 @@ class UserModel {
         this.role,
         this.profile,
         this.tokens,
+
     });
 
     factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -34,6 +36,7 @@ class UserModel {
         dOB: (json["d_o_b"] == null) ? null : DateTime.parse(json["d_o_b"]),
         profile: json["profile"] == null ? null : Profile.fromJson(json["profile"]),
         tokens : json['tokens'] != null ? Tokens.fromJson(json['tokens']) : null,
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -47,6 +50,7 @@ class UserModel {
         "d_o_b": (dOB == null) ? null : "${dOB?.year.toString().padLeft(4, '0')}-${dOB?.month.toString().padLeft(2, '0')}-${dOB?.day.toString().padLeft(2, '0')}",
         "profile": profile?.toJson(),
         "tokens": tokens?.toJson(),
+
     };
 }
 

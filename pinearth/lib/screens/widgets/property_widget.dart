@@ -363,14 +363,14 @@ class PropertyWidget extends ConsumerWidget {
                         children: [
                           const Icon(Icons.sms_outlined, color: Colors.white),
                           const SizedBox(width: 20),
-                          (property.reviews.isEmpty)
+                          (property.reviews == null || property.reviews!.isEmpty)
                               ? Text("Comment",
                                   style: GoogleFonts.nunito(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white))
                               : Text(
-                                  "View (${property.reviews.length}) comments",
+                                  "View (${property.reviews!.length}) comments",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.nunito(

@@ -4,6 +4,8 @@ import 'package:pinearth/backend/domain/models/core/failure.dart';
 import 'package:pinearth/backend/domain/models/dtos/property/schedule_visit_request.dart';
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
 
+import '../models/entities/user_model.dart';
+
 abstract class IPropertyRepo {
   Future<Either<IFailure, List<PropertyModel>>> properties();
   Future<Either<IFailure, List<PropertyModel>>> searchProperties({String? address, String? propertyStatus, String? propertyType, String? propertyPrice});
@@ -16,4 +18,5 @@ abstract class IPropertyRepo {
   Future<Either<IFailure, dynamic>> unSaveProperty(String id);
   Future<Either<IFailure, dynamic>> removeProperty(String id);
   Future<Either<IFailure, PropertyModel>> getProperty(String id);
+  Future<Either<IFailure, ReviewModel>> commentOnProperty(int propertyId,String comment);
 }

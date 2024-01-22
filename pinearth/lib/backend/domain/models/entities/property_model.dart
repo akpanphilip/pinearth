@@ -8,7 +8,6 @@ class PropertyModel {
   final String? title;
   final String? desc;
   final String? propertyType;
-
   final int? noOfRooms;
   final int? noOfBathrooms;
   final int? lotSize;
@@ -34,7 +33,7 @@ class PropertyModel {
   final List<Document> documents;
   final List<HousePlan> housePlan;
   final List<Size> size;
-  final List<dynamic> reviews;
+  final List<ReviewModel>? reviews;
 
   PropertyModel({
     required this.id,
@@ -68,7 +67,7 @@ class PropertyModel {
     required this.documents,
     required this.housePlan,
     required this.size,
-    required this.reviews,
+    this.reviews,
   });
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) => PropertyModel(
@@ -115,7 +114,10 @@ class PropertyModel {
         housePlan: List<HousePlan>.from(
             json["house_plan"].map((x) => HousePlan.fromJson(x))),
         size: List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
-        reviews: List<dynamic>.from(json["reviews"].map((x) => x)),
+        reviews: (json["comments"] == null)
+            ? null
+            : List<ReviewModel>.from(
+                json["comments"].map((x) => ReviewModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -150,7 +152,9 @@ class PropertyModel {
         "documents": List<dynamic>.from(documents.map((x) => x.toJson())),
         "house_plan": List<dynamic>.from(housePlan.map((x) => x.toJson())),
         "size": List<dynamic>.from(size.map((x) => x.toJson())),
-        "reviews": List<dynamic>.from(reviews.map((x) => x)),
+        "comments": (reviews == null)
+            ? null
+            : List<UserModel>.from(reviews!.map((x) => x.toJson())),
       };
 }
 
@@ -292,5 +296,37 @@ class Toilet {
 
   Map<String, dynamic> toJson() => {
         "toilet": toilet,
+      };
+}
+
+class ReviewModel {
+  final int? id;
+  final UserModel? userModel;
+  final String? comment;
+  final int? rate;
+  final String? createdAt;
+
+  ReviewModel({
+    this.id,
+    this.userModel,
+    this.comment,
+    this.rate,
+    this.createdAt,
+  });
+
+  factory ReviewModel.fromJson(Map<String, dynamic> json) => ReviewModel(
+      id: json['id'],
+      userModel:
+          (json["user"] == null) ? null : UserModel.fromJson(json["user"]),
+      comment: json['comment'],
+      rate: json['rate'],
+      createdAt: json['created_at']);
+
+  Map<String, dynamic> toJson() => {
+        "comment": comment,
+        "rate": rate,
+        "created_at": createdAt,
+        "id": id,
+        "user": (userModel == null) ? null : userModel!.toJson()
       };
 }

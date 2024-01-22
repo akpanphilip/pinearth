@@ -6,6 +6,8 @@ import 'package:pinearth/backend/domain/models/dtos/property/schedule_visit_requ
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
 import 'package:pinearth/backend/domain/repositories/i_property_repo.dart';
 
+import '../../../../domain/models/entities/user_model.dart';
+
 class ApiPropertyRepo implements IPropertyRepo {
   final IApiService apiService;
 
@@ -178,6 +180,22 @@ class ApiPropertyRepo implements IPropertyRepo {
           await apiService.put("property/save/$id/", {}, requireToken: true);
       if (res.status == true) {
         return const Right(true);
+      }
+      return Left(RepoFailure(res.message!));
+    } catch (error) {
+      return Left(RepoFailure("Error: $error"));
+    }
+  }
+
+  @override
+  Future<Either<IFailure, ReviewModel>> commentOnProperty(int propertyId,String comment) async {
+    try {
+      final res =
+          await apiService.post("property/comment/$propertyId/", {
+            "comment": comment,
+          }, requireToken: true);
+      if (res.status == true) {
+        return Right(ReviewModel.fromJson(res.data));
       }
       return Left(RepoFailure(res.message!));
     } catch (error) {

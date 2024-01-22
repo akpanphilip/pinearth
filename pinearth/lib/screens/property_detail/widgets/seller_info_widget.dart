@@ -55,7 +55,7 @@ class SelletInfoWidget extends StatelessWidget {
                         ),
                         3.toColumnSpace(),
                         Text(
-                          "${property.reviews.length}",
+                          "${property.reviews == null ? "0" : property.reviews!.length}",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18.toFontSize(),

@@ -48,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PersonalID(
+                builder: (context) => const PersonalID(
                       uploadId: true,
                     )),
           );
@@ -76,9 +76,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         body: SafeArea(
             child: Column(children: [
           Container(
-            color: Color.fromARGB(255, 5, 113, 201),
+            color: const Color.fromARGB(255, 5, 113, 201),
             height: 125,
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,7 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       // const hasRole = false;
                       final hasRole = isLoggedIn && user.hasRole == true;
                       return !isLoggedIn
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : !hasRole
                               ? Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -98,7 +98,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     InkWell(
                                       onTap: () =>
                                           Scaffold.of(context).openDrawer(),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.menu,
                                         color: Colors.white,
                                       ),
@@ -106,7 +106,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     11.toRowSpace(),
                                   ],
                                 )
-                              : SizedBox.shrink();
+                              : const SizedBox.shrink();
                     }),
                     Expanded(
                       child: GestureDetector(
@@ -117,14 +117,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SearchScreen()));
+                                    builder: (context) => const SearchScreen()));
                           },
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 PropertyClassTileWidget(
                   onClassChange: (String propertyClass) {
                     setState(() {
@@ -136,7 +136,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
@@ -148,7 +148,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 }
               },
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(children: [
                   Builder(
                     builder: (context) {
@@ -162,8 +162,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           child: Row(
                             children: [
                               ...[1, 2, 3].map((e) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 15.0),
+                                return const Padding(
+                                  padding: EdgeInsets.only(left: 15.0),
                                   child: LoadingPropertyWidget(),
                                 );
                               })
@@ -175,7 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           agentListState.isError()) {
                         return Center(
                             child: CustomErrorWidget(
-                                message: propertyListState.message,
+                                message: propertyListState.message, //"Request time out",
                                 onReload: () {
                                   final user = ref
                                       .watch(profileProvider)
@@ -223,23 +223,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     height: 34,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xffE6F1F7)),
+                                        color: const Color(0xffE6F1F7)),
                                     child: Center(
                                       child: Text(
                                         'Properties',
                                         style: GoogleFonts.nunito(
-                                            color: Color(0xff1173AB)),
+                                            color: const Color(0xff1173AB)),
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 15),
+                                const SizedBox(height: 15),
                                 Center(
                                   child: Text(
                                     "Housing Agents",
                                     style: GoogleFonts.nunito(
                                         fontSize: 16,
-                                        color: Color(0xff000000),
+                                        color: const Color(0xff000000),
                                         fontWeight: FontWeight.w700),
                                     textAlign: TextAlign.center,
                                   ),
@@ -262,7 +262,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ...List.generate(
                                           agents.length,
                                           (index) => Container(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     horizontal: 10,
                                                     vertical: 10),
                                                 width: 300,
@@ -275,24 +275,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ),
                               ],
                             ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Center(
                             child: Container(
                               width: 104,
                               height: 34,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffE6F1F7)),
+                                  color: const Color(0xffE6F1F7)),
                               child: Center(
                                 child: Text(
                                   'Properties',
                                   style: GoogleFonts.nunito(
-                                      color: Color(0xff1173AB)),
+                                      color: const Color(0xff1173AB)),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Center(
                             child: Text(
                               currentClass == 'All'
@@ -300,7 +300,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   : currentClass,
                               style: GoogleFonts.nunito(
                                   fontSize: 16,
-                                  color: Color(0xff000000),
+                                  color: const Color(0xff000000),
                                   fontWeight: FontWeight.w700),
                               textAlign: TextAlign.center,
                             ),

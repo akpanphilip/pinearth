@@ -90,12 +90,24 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "${widget.agent.name ?? widget.agent.companyName}",
-                            style: TextStyle(
-                                fontSize: 20.toFontSize(),
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black),
+                          Row(
+                            children: [
+                              Text(
+                                "${widget.agent.name ?? widget.agent.companyName}",
+                                style: TextStyle(
+                                    fontSize: 20.toFontSize(),
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              if (widget.agent.companyName.isNotEmpty &&
+                                  widget.agent.isVerified != null &&
+                                  widget.agent.isVerified!) ...[
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SvgPicture.asset("verified".svg),
+                              ]
+                            ],
                           ),
                           2.toColumnSpace(),
                           Text(

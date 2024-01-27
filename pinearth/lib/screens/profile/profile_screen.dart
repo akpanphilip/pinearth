@@ -104,11 +104,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               )
                             : Column(
                                 children: [
-                                  if (!profile.hasRole!)
-                                    const Image(
+                                  (!profile.hasRole!)
+                                    ? const Image(
                                         image: AssetImage(
-                                            'assets/images/user.png')),
-                                  ClipRRect(
+                                            'assets/images/user.png'))
+                                  : ClipRRect(
                                     borderRadius: BorderRadius.circular(10000),
                                     child: Builder(
                                       builder: (context) {
@@ -145,7 +145,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                                             ?.profilePhoto ==
                                                         null ||
                                                     profileP.developerProfileState
-                                                            .data?.profilePhoto
+                                                            .data?.profilePhoto!
                                                             .trim() ==
                                                         "")
                                                 ? const Image(
@@ -161,7 +161,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                                               profileP
                                                                   .developerProfileState
                                                                   .data!
-                                                                  .profilePhoto,
+                                                                  .profilePhoto ?? "",
                                                               maxWidth: 100,
                                                               maxHeight: 100,
                                                             ),

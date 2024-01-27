@@ -77,13 +77,14 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
             children: [
               35.toColumnSpace(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: NetworkImage(widget.agent.profilePhoto),
+                      backgroundImage:
+                          NetworkImage(widget.agent.profilePhoto ?? ""),
                     ),
                     31.toRowSpace(),
                     Expanded(
@@ -99,7 +100,8 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                                     fontWeight: FontWeight.w700,
                                     color: Colors.black),
                               ),
-                              if (widget.agent.companyName.isNotEmpty &&
+                              if (widget.agent.companyName != null &&
+                                  widget.agent.companyName!.isNotEmpty &&
                                   widget.agent.isVerified != null &&
                                   widget.agent.isVerified!) ...[
                                 const SizedBox(
@@ -125,7 +127,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                               ),
                               5.toRowSpace(),
                               Text(
-                                '(${widget.agent.review.isEmpty ? 'No reviews' : "${widget.agent.review.length} reviews"})',
+                                '(${(widget.agent.review == null || widget.agent.review!.isEmpty) ? 'No reviews' : "${widget.agent.review!.length} reviews"})',
                                 style: TextStyle(
                                     fontSize: 12.toFontSize(),
                                     fontWeight: FontWeight.w600,
@@ -141,7 +143,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
               ),
               28.toColumnSpace(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   children: [
                     Expanded(
@@ -156,7 +158,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                                 color: Colors.black),
                           ),
                           Text(
-                            widget.agent.specialties.isEmpty
+                            widget.agent.specialties!.isEmpty
                                 ? ""
                                 : "Specialties: ${widget.agent.specialties}",
                             style: TextStyle(
@@ -176,7 +178,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: GestureDetector(
                           onTap: () {
                             launchUrl(Uri.parse("tel:${widget.agent.phoneNo}"));
@@ -208,17 +210,28 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
-                                  ...List.generate(
-                                      3, (index) => LoadingPropertyWidget())
+                                  ...List.generate(3,
+                                      (index) => const LoadingPropertyWidget())
                                 ],
                               ),
                             );
                           }
 
                           if (agentProperties.isError()) {
-                            return CustomErrorWidget(
-                                message: agentProperties.message,
-                                onReload: () => loadAgentProperty());
+                            return Center(
+                              child: CustomErrorWidget(
+                                  showErrorImage: true,
+                                  message:
+                                      (agentProperties.message.toLowerCase() ==
+                                              "unauthorized")
+                                          ? "Unauthorized, Login to view"
+                                          : agentProperties.message,
+                                  onReload:
+                                      (agentProperties.message.toLowerCase() ==
+                                              "unauthorized")
+                                          ? null
+                                          : () => loadAgentProperty()),
+                            );
                           }
 
                           final data = agentProperties.data ?? [];
@@ -256,47 +269,48 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Ratings & reviews (${widget.agent.review.length})",
+                      "Ratings & reviews (${(widget.agent.review == null) ? "0" : widget.agent.review!.length})",
                       style: TextStyle(
                           fontSize: 20.toFontSize(),
                           fontWeight: FontWeight.w700,
                           color: Colors.black),
                     ),
                     17.toColumnSpace(),
-                    Column(
-                      children: [
-                        ...widget.agent.review
-                            .map((review) => const Text("review"))
-                            .toList(),
-                        // Text(
-                        //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
-                        //   style: TextStyle(
-                        //     fontSize: 13.toFontSize(),
-                        //     color: Colors.black,
-                        //     fontWeight: FontWeight.w400,
-                        //   ),
-                        // ),
-                        // 10.toColumnSpace(),
-                        // Text(
-                        //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
-                        //   style: TextStyle(
-                        //     fontSize: 13.toFontSize(),
-                        //     color: Colors.black,
-                        //     fontWeight: FontWeight.w400,
-                        //   ),
-                        // ),
-                      ],
-                    )
+                    if (widget.agent.review != null)
+                      Column(
+                        children: [
+                          ...widget.agent.review!
+                              .map((review) => const Text("review"))
+                              .toList(),
+                          // Text(
+                          //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
+                          //   style: TextStyle(
+                          //     fontSize: 13.toFontSize(),
+                          //     color: Colors.black,
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
+                          // 10.toColumnSpace(),
+                          // Text(
+                          //   "5/25/2023 - ryantarrant8 Helped me rent a Townhouse home in Riverside, Baltimore, MD. John did an outstanding job of helping my find an apartment. He had extensive knowledge of the area and was extremely responsive. Would 10/10 recommend him!",
+                          //   style: TextStyle(
+                          //     fontSize: 13.toFontSize(),
+                          //     color: Colors.black,
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
+                        ],
+                      )
                   ],
                 ),
               ),
               45.toColumnSpace(),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 25),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.all(27),
+                padding: const EdgeInsets.all(27),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -364,11 +378,11 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
               ),
               40.toColumnSpace(),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 1),
                       borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.all(27),
+                  padding: const EdgeInsets.all(27),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -388,7 +402,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                         controller: scheduleAVisitP.nameController,
                       ),
                       20.toColumnSpace(),
-                      LabelTitle(text: 'Phone number'),
+                      const LabelTitle(text: 'Phone number'),
                       10.toColumnSpace(),
                       CustomTextField(
                         obscureText: false,
@@ -396,7 +410,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                         controller: scheduleAVisitP.phoneNumberController,
                       ),
                       20.toColumnSpace(),
-                      LabelTitle(text: 'Email'),
+                      const LabelTitle(text: 'Email'),
                       10.toColumnSpace(),
                       CustomTextField(
                         obscureText: false,
@@ -431,7 +445,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              backgroundColor: Color(0xff1173AB),
+                              backgroundColor: const Color(0xff1173AB),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           onPressed: () {
@@ -440,8 +454,8 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                                 widget.agent.user.email,
                                 widget.agent.user.role!);
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(15.0),
                             child: Text(
                               'Contact',
                               style: TextStyle(

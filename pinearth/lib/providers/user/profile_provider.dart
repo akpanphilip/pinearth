@@ -89,12 +89,16 @@ class ProfileProvider extends BaseProvider {
       notifyListeners();
       final res = await userRepo.getBusinessProfile();
       res.fold((l) {
+        developerProfileState.toError("No internet connection");
+
         // toLogin(context);
       }, (r) {
         developerProfileState.toSuccess(r);
         notifyListeners();
       });
     } catch (error) {
+      developerProfileState.toError("No internet connection");
+
       rethrow;
     }
   }

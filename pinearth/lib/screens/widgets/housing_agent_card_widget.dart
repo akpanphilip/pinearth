@@ -26,7 +26,7 @@ class HousingAgentCard extends StatelessWidget {
               children: [
                 ClipOval(
                   child: CachedNetworkImage(
-                    imageUrl: agentModel.profilePhoto,
+                    imageUrl: agentModel.profilePhoto ?? "",
                     width: 70,
                     height: 70,
                     fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class HousingAgentCard extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            if (agentModel.phoneNo.trim() != "")
+            if (agentModel.phoneNo != null && agentModel.phoneNo!.trim() != "")
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Row(
@@ -92,7 +92,7 @@ class HousingAgentCard extends StatelessWidget {
                       width: 10,
                     ),
                     Expanded(
-                      child: Text(agentModel.phoneNo,
+                      child: Text(agentModel.phoneNo ?? "",
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.nunito(
                               fontSize: 18,

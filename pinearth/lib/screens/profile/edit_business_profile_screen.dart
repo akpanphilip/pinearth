@@ -60,6 +60,7 @@ class _EditBusinessProfileScreenState
             alignment: Alignment.center,
             child: CustomErrorWidget(
                 message: businessProfileState.message,
+                showErrorImage: true,
                 onReload: () =>
                     ref.read(profileProvider).loadDeveloperProfile(context)),
           );
@@ -95,23 +96,23 @@ class _EditProfileBodyState extends ConsumerState<EditProfileBody> {
       editBusinessProviderProvider.nameController.text =
           widget.profile.name ?? '';
       editBusinessProviderProvider.emailAddressController.text =
-          widget.profile.email;
+          widget.profile.email ?? "";
       editBusinessProviderProvider.companyNameController.text =
-          widget.profile.companyName;
+          widget.profile.companyName ?? "";
       editBusinessProviderProvider.companyRegNoController.text =
-          widget.profile.companyReg;
+          widget.profile.companyReg ?? "";
       editBusinessProviderProvider.phoneNumberController.text =
-          widget.profile.phoneNo;
+          widget.profile.phoneNo ?? "";
       editBusinessProviderProvider.addressController.text =
-          widget.profile.address;
+          widget.profile.address ?? "";
       editBusinessProviderProvider.websiteController.text =
-          widget.profile.website;
+          widget.profile.website ?? "";
       editBusinessProviderProvider.aboutController.text =
-          widget.profile.aboutYou;
+          widget.profile.aboutYou ?? "";
       editBusinessProviderProvider.specialityController.text =
-          widget.profile.specialties;
+          widget.profile.specialties ?? "";
       editBusinessProviderProvider.professionalProfilePhoto = [
-        widget.profile.profilePhoto
+        widget.profile.profilePhoto ?? ""
       ];
       editBusinessProviderProvider.companyId = [
         widget.profile.user.profile?.uploadId ?? ""
@@ -141,31 +142,34 @@ class _EditProfileBodyState extends ConsumerState<EditProfileBody> {
                   width: 100,
                   child: Stack(
                     children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(10000),
-                          child: (editBusinessProviderProvider
-                                  .professionalProfilePhoto.first
-                                  .startsWith("http"))
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                            editBusinessProviderProvider
-                                                .professionalProfilePhoto.first,
-                                            maxWidth: 100,
-                                            maxHeight: 100,
-                                          ),
-                                          fit: BoxFit.cover)),
-                                )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: FileImage(File(
+                      if (editBusinessProviderProvider
+                          .professionalProfilePhoto.isNotEmpty)
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(10000),
+                            child: (editBusinessProviderProvider
+                                    .professionalProfilePhoto.first
+                                    .startsWith("http"))
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: CachedNetworkImageProvider(
                                               editBusinessProviderProvider
                                                   .professionalProfilePhoto
-                                                  .first)),
-                                          fit: BoxFit.cover)),
-                                )),
+                                                  .first,
+                                              maxWidth: 100,
+                                              maxHeight: 100,
+                                            ),
+                                            fit: BoxFit.cover)),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(File(
+                                                editBusinessProviderProvider
+                                                    .professionalProfilePhoto
+                                                    .first)),
+                                            fit: BoxFit.cover)),
+                                  )),
                       const Positioned(
                         bottom: 0,
                         right: 0,

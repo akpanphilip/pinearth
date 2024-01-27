@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pinearth/backend/domain/models/entities/property_model.dart';
-import 'package:pinearth/utils/extensions/number_extension.dart';
-import 'package:pinearth/utils/extensions/string_extension.dart';
 
+import '../../../backend/domain/models/entities/property_model.dart';
+import '../../../utils/extensions/number_extension.dart';
+import '../../../utils/extensions/string_extension.dart';
 import '../../../utils/styles/colors.dart';
 import '../../find_agent/agent_detail_screen.dart';
 import '../../find_agent/widget/start_rating_widget.dart';
@@ -36,14 +36,14 @@ class SelletInfoWidget extends StatelessWidget {
                   CircleAvatar(
                       radius: 40,
                       backgroundImage:
-                          NetworkImage(property.agent!.profilePhoto)),
+                          NetworkImage(property.agent?.profilePhoto ?? "")),
                   50.toRowSpace(),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          property.agent!.companyName,
+                          property.agent?.companyName ?? "",
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 20.toFontSize()),
@@ -51,11 +51,11 @@ class SelletInfoWidget extends StatelessWidget {
                         ),
                         6.toColumnSpace(),
                         StarRatingWidget(
-                          rating: property.agent!.rating ?? 0,
+                          rating: property.agent?.rating ?? 0,
                         ),
                         3.toColumnSpace(),
                         Text(
-                          "${property.reviews == null ? "0" : property.reviews!.length}",
+                          "(${property.reviews == null ? "0" : property.reviews!.length})",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18.toFontSize(),
@@ -101,7 +101,7 @@ class SelletInfoWidget extends StatelessWidget {
                           SvgPicture.asset('telephone'.svg),
                           8.toRowSpace(),
                           Text(
-                            property.agent!.phoneNo,
+                            property.agent?.phoneNo ?? "",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 18.toFontSize(),

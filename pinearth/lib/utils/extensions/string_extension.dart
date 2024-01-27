@@ -19,4 +19,12 @@ extension StringExtension on String {
     if (startsWith("http")) return this;
     return "http://$this";
   }
+  // String highlightTag() {
+  //   if (isEmpty) return this;
+  //   final stringList = split(",");
+  //   List<String> newStringList = [];
+  //   for(int i=0;i<=stringList.length,i++){
+  //
+  //   }
+  // }
 }

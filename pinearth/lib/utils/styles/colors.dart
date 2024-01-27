@@ -6,6 +6,7 @@ class AppColor {
   final Color chipBackground = const Color(0xFFE6F1F7);
   final Color red = const Color(0xFFDE1818);
   final Color inactiveColor = const Color(0xFFD9D9D9);
+  final Color green1 = const Color(0xFF219653);
 }
 
 final appColor = AppColor();

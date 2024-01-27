@@ -26,19 +26,25 @@ class CommentPropertyProvider extends BaseProvider {
     notifyListeners();
   }
 
-  void comment({required int propertyId, required BuildContext context,required String comment}) async {
+  Future<bool> comment({required int propertyId, required BuildContext context,required String comment}) async {
     try {
       alert.showLoadingAlert("");
       final res = await propertyRepo.commentOnProperty(propertyId,comment);
 
       alert.closeAlert();
-      res.fold((l) => alert.showErrorAlert(l.message), (r) {
+      final status = res.fold((l) {
+        alert.showErrorAlert(l.message);
+        return false;
+      }, (r) {
         addComment(r);
         alert.showSuccessAlert("Comment posted successfully");
+        return true;
       });
+      return status;
     } catch (e) {
       alert.closeAlert();
       alert.showErrorAlert("Unable to list property");
+      return false;
     }
   }
 }

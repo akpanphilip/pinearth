@@ -83,7 +83,6 @@ class ApiPropertyRepo implements IPropertyRepo {
       String? propertyStatus,
       String? propertyType,
       String? propertyPrice}) async {
-
     //property/search/?address=$address&property_status=$propertyStatus&property_type=$propertyType&property_price=$propertyPrice
 
     try {
@@ -188,12 +187,16 @@ class ApiPropertyRepo implements IPropertyRepo {
   }
 
   @override
-  Future<Either<IFailure, ReviewModel>> commentOnProperty(int propertyId,String comment) async {
+  Future<Either<IFailure, ReviewModel>> commentOnProperty(
+      int propertyId, String comment) async {
     try {
-      final res =
-          await apiService.post("property/comment/$propertyId/", {
+      final res = await apiService.post(
+          "property/comment/$propertyId/",
+          {
             "comment": comment,
-          }, requireToken: true);
+            "review": comment,
+          },
+          requireToken: true);
       if (res.status == true) {
         return Right(ReviewModel.fromJson(res.data));
       }

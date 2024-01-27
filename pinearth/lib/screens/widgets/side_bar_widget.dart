@@ -14,16 +14,18 @@ class SideBarWidget extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(top: 40, left: 14, bottom: 0),
             child: Text("Register business profile",
-                style: GoogleFonts.nunito(
-                    color: Colors.white, fontSize: 20))),
+                style: GoogleFonts.nunito(color: Colors.white, fontSize: 20))),
         ListTile(
           title: const DrawerLinks(
             text: 'Register as an Agent',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: agentAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: agentAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -31,9 +33,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as a Landlord',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: landlordAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: landlordAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -41,9 +46,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as a Developer',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: developerAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: developerAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -51,9 +59,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as a Bank',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: bankAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: bankAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -61,9 +72,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as a Hotel',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: hotelAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: hotelAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -71,9 +85,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as an Event Center',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: eventCenterAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: eventCenterAgentType,
+                        )));
           },
         ),
         ListTile(
@@ -81,9 +98,12 @@ class SideBarWidget extends StatelessWidget {
             text: 'Register as a Short-let',
           ),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutAgentRegistrationScreen(
-              agentType: shortletAgentType,
-            )));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AboutAgentRegistrationScreen(
+                          agentType: shortletAgentType,
+                        )));
           },
         ),
         // ListTile(
@@ -97,6 +117,7 @@ class SideBarWidget extends StatelessWidget {
 
 class DrawerLinks extends StatelessWidget {
   final String text;
+
   const DrawerLinks({
     super.key,
     required this.text,

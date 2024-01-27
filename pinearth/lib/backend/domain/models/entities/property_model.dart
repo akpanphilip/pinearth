@@ -5,6 +5,8 @@ class PropertyModel {
   final int id;
   final UserModel owner;
   final AgentModel? agent;
+  final AgentModel? developer;
+  final AgentModel? landlord;
   final String? title;
   final String? desc;
   final String? propertyType;
@@ -67,58 +69,78 @@ class PropertyModel {
     required this.documents,
     required this.housePlan,
     required this.size,
+    this.developer,
+    this.landlord,
     this.reviews,
   });
 
-  factory PropertyModel.fromJson(Map<String, dynamic> json) => PropertyModel(
-        id: json["id"],
-        owner: UserModel.fromJson(json["owner"]),
-        agent:
-            (json["agent"] == null) ? null : AgentModel.fromJson(json["agent"]),
-        title: json["title"],
-        desc: json["desc"],
-        propertyType: json["property_type"],
-        noOfRooms: json["no_of_rooms"],
-        noOfBathrooms: json["no_of_bathrooms"],
-        lotSize: json["lot_size"],
-        address: json["address"],
-        propertyStatus: json["property_status"],
-        propertyPrice: json["property_price"],
-        incomePerMonth: json["income_per_month"],
-        yearsBuilt: json["years_built"],
-        yearsRenovated: json["years_renovated"],
-        yearsReconstructed: json["years_reconstructed"],
-        parkingSpace: json["parking_space"],
-        appliance: json["appliance"],
-        appliances: (json["appliances"] != null)
-            ? List.from((json["appliances"]))
-                .map((e) => Appliances.fromJson(e))
-                .toList()
-            : [],
-        location: json["location"],
-        role: json["role"],
-        available: json["available"],
-        createdAt: DateTime.parse(json["created_at"]),
-        houseView: List<HouseView>.from(
-            json["house_view"].map((x) => HouseView.fromJson(x))),
-        livingRoom: List<LivingRoom>.from(
-            json["living_room"].map((x) => LivingRoom.fromJson(x))),
-        bedRoom: List<BedRoom>.from(
-            json["bed_room"].map((x) => BedRoom.fromJson(x))),
-        toilet:
-            List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
-        kitchen:
-            List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
-        documents: List<Document>.from(
-            json["documents"].map((x) => Document.fromJson(x))),
-        housePlan: List<HousePlan>.from(
-            json["house_plan"].map((x) => HousePlan.fromJson(x))),
-        size: List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
-        reviews: (json["comments"] == null)
-            ? null
-            : List<ReviewModel>.from(
-                json["comments"].map((x) => ReviewModel.fromJson(x))),
-      );
+  factory PropertyModel.fromJson(Map<String, dynamic> json) {
+    AgentModel? agent;
+
+    if (json["agent"] != null) {
+      agent = AgentModel.fromJson(json["agent"]);
+    } else if (json["developer"] != null) {
+      agent = AgentModel.fromJson(json["developer"]);
+    } else if (json["landlord"] != null) {
+      agent = AgentModel.fromJson(json["landlord"]);
+    } else {
+      agent = null;
+    }
+
+    return PropertyModel(
+      id: json["id"],
+      owner: UserModel.fromJson(json["owner"]),
+      agent: agent,
+      developer: (json["developer"] == null)
+          ? null
+          : AgentModel.fromJson(json["developer"]),
+      landlord: (json["landlord"] == null)
+          ? null
+          : AgentModel.fromJson(json["landlord"]),
+      title: json["title"],
+      desc: json["desc"],
+      propertyType: json["property_type"],
+      noOfRooms: json["no_of_rooms"],
+      noOfBathrooms: json["no_of_bathrooms"],
+      lotSize: json["lot_size"],
+      address: json["address"],
+      propertyStatus: json["property_status"],
+      propertyPrice: json["property_price"],
+      incomePerMonth: json["income_per_month"],
+      yearsBuilt: json["years_built"],
+      yearsRenovated: json["years_renovated"],
+      yearsReconstructed: json["years_reconstructed"],
+      parkingSpace: json["parking_space"],
+      appliance: json["appliance"],
+      appliances: (json["appliances"] != null)
+          ? List.from((json["appliances"]))
+              .map((e) => Appliances.fromJson(e))
+              .toList()
+          : [],
+      location: json["location"],
+      role: json["role"],
+      available: json["available"],
+      createdAt: DateTime.parse(json["created_at"]),
+      houseView: List<HouseView>.from(
+          json["house_view"].map((x) => HouseView.fromJson(x))),
+      livingRoom: List<LivingRoom>.from(
+          json["living_room"].map((x) => LivingRoom.fromJson(x))),
+      bedRoom:
+          List<BedRoom>.from(json["bed_room"].map((x) => BedRoom.fromJson(x))),
+      toilet: List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
+      kitchen:
+          List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
+      documents: List<Document>.from(
+          json["documents"].map((x) => Document.fromJson(x))),
+      housePlan: List<HousePlan>.from(
+          json["house_plan"].map((x) => HousePlan.fromJson(x))),
+      size: List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
+      reviews: (json["reviews"] == null)
+          ? null
+          : List<ReviewModel>.from(
+              json["reviews"].map((x) => ReviewModel.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

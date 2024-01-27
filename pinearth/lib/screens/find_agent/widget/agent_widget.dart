@@ -41,14 +41,14 @@ class AgentWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                     radius: 40,
-                    backgroundImage: NetworkImage(agent.profilePhoto)),
+                    backgroundImage: NetworkImage(agent.profilePhoto ?? "")),
                 10.toRowSpace(),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        agent.name ?? agent.companyName,
+                        agent.name ?? agent.companyName!,
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 20.toFontSize()),
@@ -60,7 +60,7 @@ class AgentWidget extends StatelessWidget {
                       ),
                       3.toColumnSpace(),
                       Text(
-                        "(${agent.review.length})",
+                        "(${agent.review!.length})",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.toFontSize(),
@@ -78,7 +78,7 @@ class AgentWidget extends StatelessWidget {
                 8.toRowSpace(),
                 Expanded(
                   child: Text(
-                    agent.phoneNo,
+                    agent.phoneNo!,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontSize: 18.toFontSize(),

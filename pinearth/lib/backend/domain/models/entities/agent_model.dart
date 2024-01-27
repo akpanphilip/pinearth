@@ -15,19 +15,19 @@ String agentModelToJson(AgentModel data) => json.encode(data.toJson());
 class AgentModel {
   final int id;
   final String? name;
-  final String companyName;
-  final String companyId;
-  final String companyReg;
+  final String? companyName;
+  final String? companyId;
+  final String? companyReg;
   final UserModel user;
-  final String profilePhoto;
-  final String aboutYou;
-  final String specialties;
-  final String email;
-  final String phoneNo;
-  final List<dynamic> property;
-  final String address;
-  final String website;
-  final List<dynamic> review;
+  final String? profilePhoto;
+  final String? aboutYou;
+  final String? specialties;
+  final String? email;
+  final String? phoneNo;
+  final List<dynamic>? property;
+  final String? address;
+  final String? website;
+  final List<dynamic>? review;
   final int? rating;
   final bool? isVerified;
 
@@ -63,10 +63,14 @@ class AgentModel {
         specialties: json["specialties"] ?? "",
         email: json["email"] ?? "",
         phoneNo: json["phone_no"],
-        property: List<dynamic>.from((json["property"] ?? []).map((x) => x)),
+        property: (json["property"] == null)
+            ? null
+            : List<dynamic>.from((json["property"] ?? []).map((x) => x)),
         address: json["address"],
         website: json["website"] ?? "",
-        review: List<dynamic>.from((json["review"] ?? []).map((x) => x)),
+        review: (json["review"] == null)
+            ? null
+            : List<dynamic>.from((json["review"] ?? []).map((x) => x)),
         rating: json["rating"],
         isVerified: json["is_verified"],
       );
@@ -83,10 +87,13 @@ class AgentModel {
         "specialties": specialties,
         "email": email,
         "phone_no": phoneNo,
-        "property": List<dynamic>.from(property.map((x) => x)),
+        "property": (property == null)
+            ? null
+            : List<dynamic>.from(property!.map((x) => x)),
         "address": address,
         "website": website,
-        "review": List<dynamic>.from(review.map((x) => x)),
+        "review":
+            (review == null) ? null : List<dynamic>.from(review!.map((x) => x)),
         "rating": rating,
         "is_verified": isVerified,
       };

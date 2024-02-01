@@ -83,7 +83,10 @@ class PropertyWidget extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 3),
                       child: Text(
-                        property.propertyStatus!,
+                        (property.propertyStatus!.toLowerCase() ==
+                                "for shortlet")
+                            ? "Shortlet"
+                            : property.propertyStatus!,
                         style: TextStyle(
                             fontSize: 14.toFontSize(),
                             fontWeight: FontWeight.w700),
@@ -303,8 +306,9 @@ class PropertyWidget extends ConsumerWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AgentDetailScreen(
-                                              agent: property.agent!)));
+                                          builder: (context) =>
+                                              AgentDetailScreen(
+                                                  agent: property.agent!)));
                                 },
                                 child: CircleAvatar(
                                   radius: 15,

@@ -93,13 +93,34 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                "${widget.agent.name ?? widget.agent.companyName}",
-                                style: TextStyle(
-                                    fontSize: 20.toFontSize(),
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black),
-                              ),
+                              Builder(builder: (context) {
+                                String name = "";
+
+                                if (widget.agent.user.firstName.trim() != "" &&
+                                    widget.agent.user.lastName != null &&
+                                    widget.agent.user.lastName!.trim() != "") {
+                                  name =
+                                      "${widget.agent.user.firstName} ${widget.agent.user.lastName}";
+                                }
+
+                                if (widget.agent.name != null &&
+                                    widget.agent.name!.trim() != "") {
+                                  name = widget.agent.name!;
+                                }
+
+                                if (widget.agent.companyName != null &&
+                                    widget.agent.companyName!.trim() != "") {
+                                  name = widget.agent.companyName!;
+                                }
+
+                                return Text(
+                                  name,
+                                  style: TextStyle(
+                                      fontSize: 20.toFontSize(),
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black),
+                                );
+                              }),
                               if (widget.agent.companyName != null &&
                                   widget.agent.companyName!.isNotEmpty &&
                                   widget.agent.isVerified != null &&
@@ -196,7 +217,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "For sale",
+                        "Listed properties",
                         style: TextStyle(
                             fontSize: 20.toFontSize(),
                             fontWeight: FontWeight.w700,

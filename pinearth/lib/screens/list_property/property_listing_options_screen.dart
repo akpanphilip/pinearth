@@ -33,10 +33,14 @@ class _PropertyListingOptionScreenState
     CustomDropDownItem(label: "For sale", value: 'sale'),
     CustomDropDownItem(label: "shortlet", value: 'shortlet'),
   ];
-  final _rentDurations = [
-    CustomDropDownItem(label: "Month", value: 'month'),
-    CustomDropDownItem(label: "Year", value: 'year')
-  ];
+  List<CustomDropDownItem<String>> rentDurations(String type) {
+    return [
+      if (type == "shortlet") CustomDropDownItem(label: "Day", value: 'day'),
+      CustomDropDownItem(label: "Month", value: 'month'),
+      CustomDropDownItem(label: "Year", value: 'year')
+    ];
+  }
+
   CustomDropDownItem<String> _selected =
       CustomDropDownItem(label: "For sale", value: 'sale');
 
@@ -123,12 +127,13 @@ class _PropertyListingOptionScreenState
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: CustomDropdownWidget<String>(
-                          items: _rentDurations,
+                          items: rentDurations(listPropertyP.listingOption),
                           onSelect: (v) {
                             listPropertyP.setRentDuration(v.value);
                           },
-                          selected: _rentDurations.firstWhere((element) =>
-                              element.value == listPropertyP.rentDuration),
+                          selected: rentDurations(listPropertyP.listingOption)
+                              .firstWhere((element) =>
+                                  element.value == listPropertyP.rentDuration),
                         ),
                       ),
                     ),

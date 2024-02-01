@@ -266,16 +266,16 @@ class _PropertySpecialSpecScreenState
                                     ),
                                   ],
                                 ]),
-                      20.toColumnSpace(),
-                      LabelTitle(text: 'Google map address'),
-                      10.toColumnSpace(),
-                      CustomTextField(
-                        obscureText: false,
-                        hintText: 'E.g https://map.com',
-                        controller:
-                            listpropertyprovider.propertyGoogleMapController,
-                        inputType: TextInputType.url,
-                      ),
+                      // 20.toColumnSpace(),
+                      // LabelTitle(text: 'Google map address'),
+                      // 10.toColumnSpace(),
+                      // CustomTextField(
+                      //   obscureText: false,
+                      //   hintText: 'E.g https://map.com',
+                      //   controller:
+                      //       listpropertyprovider.propertyGoogleMapController,
+                      //   inputType: TextInputType.url,
+                      // ),
                       30.toColumnSpace(),
                     ],
                   ),

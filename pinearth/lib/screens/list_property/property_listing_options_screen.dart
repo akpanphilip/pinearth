@@ -91,6 +91,11 @@ class _PropertyListingOptionScreenState
                   onSelect: (v) {
                     listPropertyP.setLisingOption(v.value);
                     _selected = v as CustomDropDownItem<String>;
+                    if (v.value == "shortlet") {
+                      listPropertyP.setRentDuration("day");
+                    } else {
+                      listPropertyP.setRentDuration("month");
+                    }
                     setState(() {});
                   },
                   // hintText: "Select an option",

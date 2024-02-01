@@ -59,10 +59,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           color: Colors.black, // Set the desired color here
         ),
         title: const AppbarTitle(
+          padding: EdgeInsets.only(left: 30),
           text: 'Profile',
         ),
         centerTitle: false,
         elevation: 0.5,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -105,120 +107,135 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             : Column(
                                 children: [
                                   (!profile.hasRole!)
-                                    ? const Image(
-                                        image: AssetImage(
-                                            'assets/images/user.png'))
-                                  : ClipRRect(
-                                    borderRadius: BorderRadius.circular(10000),
-                                    child: Builder(
-                                      builder: (context) {
-                                        if (profile.hasRole!) {
-                                          if (profile.role == "Bank") {
-                                            return (profile.profile?.avatar ==
-                                                        null ||
-                                                    profile.profile?.avatar
-                                                            ?.trim() ==
-                                                        "")
-                                                ? const Image(
-                                                    image: AssetImage(
-                                                        'assets/images/user.png'))
-                                                : Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image:
-                                                                CachedNetworkImageProvider(
-                                                              profile.profile
-                                                                  ?.avatar,
-                                                              maxWidth: 100,
-                                                              maxHeight: 100,
-                                                            ),
-                                                            fit: BoxFit.cover)),
-                                                  );
-                                          }
-                                          if (profile.role ==
-                                              developerAgentType) {
-                                            return (profileP
-                                                            .developerProfileState
-                                                            .data
-                                                            ?.profilePhoto ==
-                                                        null ||
-                                                    profileP.developerProfileState
-                                                            .data?.profilePhoto!
-                                                            .trim() ==
-                                                        "")
-                                                ? const Image(
-                                                    image: AssetImage(
-                                                        'assets/images/user.png'))
-                                                : Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image:
-                                                                CachedNetworkImageProvider(
-                                                              profileP
-                                                                  .developerProfileState
-                                                                  .data!
-                                                                  .profilePhoto ?? "",
-                                                              maxWidth: 100,
-                                                              maxHeight: 100,
-                                                            ),
-                                                            fit: BoxFit.cover)),
-                                                  );
-                                          }
-                                        }
-                                        return ClipRRect(
+                                      ? const Image(
+                                          image: AssetImage(
+                                              'assets/images/user.png'))
+                                      : ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10000),
-                                          child: Builder(builder: (context) {
-                                            final agentProfileState = ref
-                                                .watch(profileProvider)
-                                                .agentProfileState;
+                                          child: Builder(
+                                            builder: (context) {
+                                              if (profile.hasRole!) {
+                                                if (profile.role == "Bank") {
+                                                  return (profile.profile
+                                                                  ?.avatar ==
+                                                              null ||
+                                                          profile.profile
+                                                                  ?.avatar
+                                                                  ?.trim() ==
+                                                              "")
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    profile
+                                                                        .profile
+                                                                        ?.avatar,
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }
+                                                if (profile.role ==
+                                                    developerAgentType) {
+                                                  return (profileP
+                                                                  .developerProfileState
+                                                                  .data
+                                                                  ?.profilePhoto ==
+                                                              null ||
+                                                          profileP
+                                                                  .developerProfileState
+                                                                  .data
+                                                                  ?.profilePhoto!
+                                                                  .trim() ==
+                                                              "")
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    profileP
+                                                                            .developerProfileState
+                                                                            .data!
+                                                                            .profilePhoto ??
+                                                                        "",
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }
+                                              }
+                                              return ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10000),
+                                                child:
+                                                    Builder(builder: (context) {
+                                                  final agentProfileState = ref
+                                                      .watch(profileProvider)
+                                                      .agentProfileState;
 
-                                            if (agentProfileState.isLoading()) {
-                                              return const Image(
-                                                  image: AssetImage(
-                                                      'assets/images/user.png'));
-                                            }
-                                            if (agentProfileState.isError()) {
-                                              return const Image(
-                                                  image: AssetImage(
-                                                      'assets/images/user.png'));
-                                            }
+                                                  if (agentProfileState
+                                                      .isLoading()) {
+                                                    return const Image(
+                                                        image: AssetImage(
+                                                            'assets/images/user.png'));
+                                                  }
+                                                  if (agentProfileState
+                                                      .isError()) {
+                                                    return const Image(
+                                                        image: AssetImage(
+                                                            'assets/images/user.png'));
+                                                  }
 
-                                            return (ref
-                                                            .read(profileProvider)
-                                                            .agentProfileState
-                                                            .data?[
-                                                        'profile_photo'] ==
-                                                    null)
-                                                ? const Image(
-                                                    image: AssetImage(
-                                                        'assets/images/user.png'))
-                                                : Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image:
-                                                                CachedNetworkImageProvider(
-                                                              ref
+                                                  return (ref
                                                                   .read(
                                                                       profileProvider)
                                                                   .agentProfileState
-                                                                  .data['profile_photo'],
-                                                              maxWidth: 100,
-                                                              maxHeight: 100,
-                                                            ),
-                                                            fit: BoxFit.cover)),
-                                                  );
-                                          }),
-                                        );
-                                      },
-                                    ),
-                                  )
+                                                                  .data?[
+                                                              'profile_photo'] ==
+                                                          null)
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    ref
+                                                                        .read(
+                                                                            profileProvider)
+                                                                        .agentProfileState
+                                                                        .data['profile_photo'],
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                        )
                                 ],
                               )
                       ],

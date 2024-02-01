@@ -31,45 +31,60 @@ class PropertyDetailPhotoScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the property",
-              images: property.houseView.map((e) => e.houseView).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the Living room",
-              images: property.livingRoom.map((e) => e.livingRoom).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the Bedroom",
-              images: property.bedRoom.map((e) => e.bedRoom).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the Bathroom",
-              images: property.bedRoom.map((e) => e.bedRoom).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the Kitchen",
-              images: property.kitchen.map((e) => e.kitchen).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the Kitchen",
-              images: property.documents.map((e) => e.documents).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photo of the House plan",
-              images: property.housePlan.map((e) => e.housePlan).toList(),
-            ),
-            27.toColumnSpace(),
-            PropertyImageItem(
-              title: "Photos of the House size and dimensions",
-              images: property.size.map((e) => e.size).toList(),
-            ),
+            if (property.houseView.isNotEmpty)
+              PropertyImageItem(
+                title: "Photo of the property",
+                images: property.houseView.map((e) => e.houseView).toList(),
+              ),
+            if (property.livingRoom.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the Living room",
+                images: property.livingRoom.map((e) => e.livingRoom).toList(),
+              ),
+            ],
+            if (property.bedRoom.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the Bedroom",
+                images: property.bedRoom.map((e) => e.bedRoom).toList(),
+              ),
+            ],
+            if (property.bedRoom.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the Bathroom",
+                images: property.bedRoom.map((e) => e.bedRoom).toList(),
+              ),
+            ],
+            if (property.kitchen.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the Kitchen",
+                images: property.kitchen.map((e) => e.kitchen).toList(),
+              ),
+            ],
+            if (property.documents.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the Kitchen",
+                images: property.documents.map((e) => e.documents).toList(),
+              ),
+            ],
+            if (property.housePlan.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photo of the House plan",
+                images: property.housePlan.map((e) => e.housePlan).toList(),
+              ),
+            ],
+            if (property.size.isNotEmpty) ...[
+              27.toColumnSpace(),
+              PropertyImageItem(
+                title: "Photos of the House size and dimensions",
+                images: property.size.map((e) => e.size).toList(),
+              ),
+            ],
             23.toColumnSpace()
           ],
         ),

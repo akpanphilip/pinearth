@@ -45,9 +45,11 @@ class _SavedHomesScreenState extends ConsumerState<SavedHomesScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AppbarTitle(
+            padding: EdgeInsets.only(left: 30),
             text: 'Saved Homes',
           ),
         ),

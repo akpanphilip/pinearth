@@ -19,11 +19,10 @@ class UpdatesScreen extends ConsumerStatefulWidget {
 }
 
 class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
-
   @override
   void initState() {
     super.initState();
-    
+
     Future.delayed(Duration.zero, () {
       ref.read(profileProvider).loadNotifications(context);
     });
@@ -36,7 +35,7 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: AppbarTitle(
             text: 'Updates',
           ),
@@ -49,11 +48,13 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
           )
         ],
         elevation: 0.5,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Consumer(
           builder: (context, ref, child) {
-            final notificationState = ref.watch(profileProvider).notificationState;
+            final notificationState =
+                ref.watch(profileProvider).notificationState;
             if (notificationState.isLoading()) {
               return ListView.builder(
                 itemCount: 3,
@@ -67,7 +68,10 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
             }
             if (notificationState.isError()) {
               return Center(
-                child: CustomErrorWidget(message: notificationState.message, onReload: () => ref.read(profileProvider).loadNotifications(context)),
+                child: CustomErrorWidget(
+                    message: notificationState.message,
+                    onReload: () =>
+                        ref.read(profileProvider).loadNotifications(context)),
               );
             }
             final data = notificationState.data ?? [];
@@ -75,19 +79,20 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
               return Center(
                 child: EmptyStateWidget(
                   message: "You do not have any update",
-                  onReload: () => ref.read(profileProvider).loadNotifications(context),
+                  onReload: () =>
+                      ref.read(profileProvider).loadNotifications(context),
                 ),
               );
             }
             return ListView.builder(
-              itemCount: updateLocation.length,
-              itemBuilder: (context, index) {
-                final notification = data[index];
-                return UpdateWidget(
-                  // locationImg: locationUpdate['locationImg'] as String,
-                  location: notification.text,
-                );
-              });
+                itemCount: updateLocation.length,
+                itemBuilder: (context, index) {
+                  final notification = data[index];
+                  return UpdateWidget(
+                    // locationImg: locationUpdate['locationImg'] as String,
+                    location: notification.text,
+                  );
+                });
           },
         ),
         // child: SingleChildScrollView(

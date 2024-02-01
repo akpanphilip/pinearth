@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/backend/domain/repositories/i_property_repo.dart';
@@ -22,6 +21,7 @@ class MyPropertyListingProvider extends BaseProvider {
   void initialize() async {
     try {
       myListingState.toLoading();
+      notifyListeners();
       final res = await propertyRepo.myProperties();
       res.fold((l) {
         myListingState.toError("Error: ${l.message}");
@@ -39,6 +39,7 @@ class MyPropertyListingProvider extends BaseProvider {
   Future<void> getSavedProperties() async {
     try {
       savedPropertyState.toLoading();
+      notifyListeners();
       final res = await propertyRepo.savedProperties();
       res.fold((l) {
         savedPropertyState.toError("Error: ${l.message}");
@@ -86,6 +87,7 @@ class MyPropertyListingProvider extends BaseProvider {
       alert.showErrorAlert("Unable to change property availability");
     }
   }
+
   void unSaveProperty(String id) async {
     try {
       alert.showLoadingAlert("");
@@ -104,14 +106,13 @@ class MyPropertyListingProvider extends BaseProvider {
   }
 
   bool isSaved(String id) {
-    return (savedPropertyState.data ?? []).where((element) => element.id.toString() == id).isNotEmpty;
+    return (savedPropertyState.data ?? [])
+        .where((element) => element.id.toString() == id)
+        .isNotEmpty;
   }
-  
 }
 
 final myPropertyListingProvider = ChangeNotifierProvider((ref) {
   return MyPropertyListingProvider(
-    getIt<IPropertyRepo>(),
-    getIt<IAlertInteraction>()
-  );
+      getIt<IPropertyRepo>(), getIt<IAlertInteraction>());
 });

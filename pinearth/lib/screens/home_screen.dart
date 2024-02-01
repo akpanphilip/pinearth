@@ -117,7 +117,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SearchScreen()));
+                                    builder: (context) =>
+                                        const SearchScreen()));
                           },
                         ),
                       ),
@@ -175,7 +176,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           agentListState.isError()) {
                         return Center(
                             child: CustomErrorWidget(
-                                message: propertyListState.message, //"Request time out",
+                                message: propertyListState
+                                    .message, //"Request time out",
                                 onReload: () {
                                   final user = ref
                                       .watch(profileProvider)
@@ -197,11 +199,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       List<dynamic> agents = agentListState.data ?? [];
 
                       if (currentClass != 'All') {
-                        data = data
-                            .where((element) =>
-                                element.propertyStatus?.toLowerCase() ==
-                                currentClass.toLowerCase())
-                            .toList();
+                        data = data.where((element) {
+                          if (currentClass.toLowerCase() == "shortlet") {
+                            return element.propertyStatus?.toLowerCase() ==
+                                "For Shortlet".toLowerCase();
+                          } else {
+                            return element.propertyStatus?.toLowerCase() ==
+                                currentClass.toLowerCase();
+                          }
+                        }).toList();
                       }
 
                       if (data.isEmpty) {
@@ -217,22 +223,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           if (agents.isNotEmpty)
                             Column(
                               children: [
-                                Center(
-                                  child: Container(
-                                    width: 104,
-                                    height: 34,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xffE6F1F7)),
-                                    child: Center(
-                                      child: Text(
-                                        'Properties',
-                                        style: GoogleFonts.nunito(
-                                            color: const Color(0xff1173AB)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Center(
+                                //   child: Container(
+                                //     width: 104,
+                                //     height: 34,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(20),
+                                //         color: const Color(0xffE6F1F7)),
+                                //     child: Center(
+                                //       child: Text(
+                                //         'Properties',
+                                //         style: GoogleFonts.nunito(
+                                //             color: const Color(0xff1173AB)),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 const SizedBox(height: 15),
                                 Center(
                                   child: Text(
@@ -262,9 +268,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ...List.generate(
                                           agents.length,
                                           (index) => Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 10),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 10),
                                                 width: 300,
                                                 child: AgentWidget(
                                                   agent: agents[index],

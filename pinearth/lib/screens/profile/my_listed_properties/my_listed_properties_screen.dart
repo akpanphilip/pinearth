@@ -8,25 +8,29 @@ import 'package:pinearth/screens/auth/login_screen.dart';
 import 'package:pinearth/screens/widgets/custom_error_widget.dart';
 import 'package:pinearth/screens/widgets/empty_state_widget.dart';
 
-
 import '../widgets/my_listed_property_widget.dart';
-
 
 class MyListedPropertiesScreen extends ConsumerStatefulWidget {
   const MyListedPropertiesScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyListedPropertiesScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MyListedPropertiesScreenState();
 }
 
-class _MyListedPropertiesScreenState extends ConsumerState<MyListedPropertiesScreen> {
-
+class _MyListedPropertiesScreenState
+    extends ConsumerState<MyListedPropertiesScreen> {
   @override
   void initState() {
     super.initState();
     if (ref.read(profileProvider).profileState.data == null) {
       Future.delayed(Duration.zero, () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      });
+    } else {
+      WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
+        ref.read(myPropertyListingProvider).initialize();
       });
     }
   }
@@ -35,7 +39,7 @@ class _MyListedPropertiesScreenState extends ConsumerState<MyListedPropertiesScr
   Widget build(BuildContext context) {
     final mypropertylistingprovider = ref.watch(myPropertyListingProvider);
     final mypropertylistingstate = mypropertylistingprovider.myListingState;
-   return Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -48,45 +52,40 @@ class _MyListedPropertiesScreenState extends ConsumerState<MyListedPropertiesScr
         centerTitle: false,
         elevation: 0.5,
       ),
-      body: SafeArea(
-        child: Builder(
-          builder: (context) {
-            if (mypropertylistingstate.isLoading()) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            }
-            if (mypropertylistingstate.isError()) {
-              return Center(
-                child: CustomErrorWidget(
-                  message: mypropertylistingstate.message, 
-                  onReload: () => mypropertylistingprovider.initialize(),
-                ),
-              );
-            }
-            final data = mypropertylistingstate.data ?? [];
-            if (data.isEmpty) {
-              return Center(
-                child: EmptyStateWidget(
-                  message: "You have not listed any property",
-                  onReload: () => mypropertylistingprovider.initialize(),
-                ),
-              );
-            }
-            return ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-                  child: MyListedPropertyWidget(
-                    property: data[index]
-                  ),
-                );
-              },
+      body: SafeArea(child: Builder(builder: (context) {
+        if (mypropertylistingstate.isLoading()) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        }
+        if (mypropertylistingstate.isError()) {
+          return Center(
+            child: CustomErrorWidget(
+              message: mypropertylistingstate.message,
+              onReload: () => mypropertylistingprovider.initialize(),
+            ),
+          );
+        }
+        final data = mypropertylistingstate.data ?? [];
+        if (data.isEmpty) {
+          return Center(
+            child: EmptyStateWidget(
+              message: "You have not listed any property",
+              onReload: () => mypropertylistingprovider.initialize(),
+            ),
+          );
+        }
+        return ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+              child: MyListedPropertyWidget(property: data[index]),
             );
-          }
-        )),
+          },
+        );
+      })),
     );
   }
 }

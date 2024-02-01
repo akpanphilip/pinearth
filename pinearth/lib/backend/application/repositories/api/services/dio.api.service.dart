@@ -29,7 +29,7 @@ class DioApiService implements IApiService {
       responseHeader: true,
       logPrint: (object) {
         if (!kReleaseMode) {
-          print(object);
+          // print(object);
         }
       },
     ));
@@ -88,9 +88,11 @@ class DioApiService implements IApiService {
       // print("${res.realUri}");
       // print("${res.statusCode}");
 
-      return _handleResponse(res.data,statusCode: res.statusCode);
+      return _handleResponse(res.data, statusCode: res.statusCode);
     } on DioException catch (error) {
-      return _handleError(error,);
+      return _handleError(
+        error,
+      );
     } catch (error) {
       return ApiResponse(message: "Error: $error", status: false);
     }
@@ -115,13 +117,17 @@ class DioApiService implements IApiService {
     }
   }
 
-  ApiResponse _handleResponse(data,{int? statusCode}) {
-    return ApiResponse.fromJson({'data': data, 'status': true,"statusCode": statusCode});
+  ApiResponse _handleResponse(data, {int? statusCode}) {
+    return ApiResponse.fromJson(
+        {'data': data, 'status': true, "statusCode": statusCode});
   }
 
-  ApiResponse _handleError(DioException error,{int? statCode}) {
+  ApiResponse _handleError(DioException error, {int? statCode}) {
     if (error.type == DioExceptionType.unknown) {
-      return ApiResponse(status: false, message: error.error!.toString(),statusCode: statCode);
+      return ApiResponse(
+          status: false,
+          message: error.error!.toString(),
+          statusCode: statCode);
     }
     print("CatchedDioException: ${error.type}");
 

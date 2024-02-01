@@ -22,7 +22,9 @@ class MyPropertyListingProvider extends BaseProvider {
     try {
       myListingState.toLoading();
       notifyListeners();
+
       final res = await propertyRepo.myProperties();
+
       res.fold((l) {
         myListingState.toError("Error: ${l.message}");
         notifyListeners();
@@ -112,7 +114,7 @@ class MyPropertyListingProvider extends BaseProvider {
   }
 }
 
-final myPropertyListingProvider = ChangeNotifierProvider((ref) {
+final myPropertyListingProvider = ChangeNotifierProvider.autoDispose((ref) {
   return MyPropertyListingProvider(
       getIt<IPropertyRepo>(), getIt<IAlertInteraction>());
 });

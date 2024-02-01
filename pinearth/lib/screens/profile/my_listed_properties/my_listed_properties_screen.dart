@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/custom_widgets/custom_widgets.dart';
 import 'package:pinearth/providers/user/my_listing_provider.dart';
 import 'package:pinearth/providers/user/profile_provider.dart';
@@ -23,22 +22,24 @@ class _MyListedPropertiesScreenState
   @override
   void initState() {
     super.initState();
-    if (ref.read(profileProvider).profileState.data == null) {
-      Future.delayed(Duration.zero, () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
-      });
-    } else {
-      WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (ref.read(profileProvider).profileState.data == null) {
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+        });
+      } else {
         ref.read(myPropertyListingProvider).initialize();
-      });
-    }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final mypropertylistingprovider = ref.watch(myPropertyListingProvider);
     final mypropertylistingstate = mypropertylistingprovider.myListingState;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -57,34 +58,42 @@ class _MyListedPropertiesScreenState
           return const Center(
             child: CircularProgressIndicator.adaptive(),
           );
-        }
-        if (mypropertylistingstate.isError()) {
+        } else if (mypropertylistingstate.isError()) {
           return Center(
             child: CustomErrorWidget(
               message: mypropertylistingstate.message,
-              onReload: () => mypropertylistingprovider.initialize(),
+              onReload: () {
+                // print("in heere");
+                mypropertylistingprovider.initialize();
+              },
             ),
           );
-        }
-        final data = mypropertylistingstate.data ?? [];
-        if (data.isEmpty) {
-          return Center(
-            child: EmptyStateWidget(
-              message: "You have not listed any property",
-              onReload: () => mypropertylistingprovider.initialize(),
-            ),
-          );
-        }
-        return ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: data.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-              child: MyListedPropertyWidget(property: data[index]),
+        } else {
+          final data = mypropertylistingstate.data ?? [];
+          if (data.isEmpty) {
+            return Center(
+              child: EmptyStateWidget(
+                message: "You have not listed any property",
+                onReload: () {
+                 
+                  mypropertylistingprovider.initialize();
+                },
+              ),
             );
-          },
-        );
+          } else {
+            return ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+                  child: MyListedPropertyWidget(property: data[index]),
+                );
+              },
+            );
+          }
+        }
       })),
     );
   }

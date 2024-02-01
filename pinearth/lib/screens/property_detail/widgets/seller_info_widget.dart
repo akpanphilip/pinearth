@@ -42,13 +42,34 @@ class SelletInfoWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          property.agent?.companyName ?? "",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20.toFontSize()),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        Builder(builder: (context) {
+                          String name = "";
+
+                          if (property.agent?.user.firstName.trim() != "" &&
+                              property.agent?.user.lastName != null &&
+                              property.agent?.user.lastName!.trim() != "") {
+                            name =
+                                "${property.agent?.user.firstName} ${property.agent?.user.lastName}";
+                          }
+
+                          if (property.agent?.name != null &&
+                              property.agent?.name!.trim() != "") {
+                            name = property.agent!.name!;
+                          }
+
+                          if (property.agent?.companyName != null &&
+                              property.agent?.companyName!.trim() != "") {
+                            name = property.agent!.companyName!;
+                          }
+
+                          return Text(
+                            name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20.toFontSize()),
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        }),
                         6.toColumnSpace(),
                         StarRatingWidget(
                           rating: property.agent?.rating ?? 0,

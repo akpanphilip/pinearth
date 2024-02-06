@@ -85,6 +85,12 @@ class RegisterAsAgentProvider extends BaseProvider {
 
   String agentType = "Agent";
   String hasSecurity = "No";
+  String selectedState = "Lagos state";
+
+  set updateSelectedState(String state) {
+    selectedState = state;
+    notifyListeners();
+  }
 
   set updateHasSecurityStatus(String status) {
     hasSecurity = status;
@@ -100,7 +106,7 @@ class RegisterAsAgentProvider extends BaseProvider {
   }
 
   void selectCompanyId() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
     if (res != null) {
       companyId = res.files.map((e) => e.path!).toList();
       notifyListeners();

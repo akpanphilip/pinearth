@@ -16,6 +16,7 @@ import '../utils/styles/colors.dart';
 // viewLink
 class ViewLink extends StatelessWidget {
   final String text;
+
   const ViewLink({
     super.key,
     required this.text,
@@ -35,6 +36,7 @@ class ViewLink extends StatelessWidget {
 class UpdateWidget extends StatelessWidget {
   // final String locationImg;
   final String location;
+
   const UpdateWidget({
     super.key,
     // required this.locationImg,
@@ -61,6 +63,7 @@ class UpdateWidget extends StatelessWidget {
 class LoadingUpdateWidget extends StatelessWidget {
   // final String locationImg;
   final String location;
+
   const LoadingUpdateWidget({
     super.key,
     // required this.locationImg,
@@ -140,6 +143,7 @@ class AppbarTitle extends StatelessWidget {
 // sub title text
 class SubTitle extends StatelessWidget {
   final String text;
+
   const SubTitle({
     super.key,
     required this.text,
@@ -160,6 +164,7 @@ class SubTitle extends StatelessWidget {
 class AgentList extends StatelessWidget {
   // final String locationImg;
   final String name;
+
   const AgentList({
     super.key,
     // required this.locationImg,
@@ -224,6 +229,7 @@ class AgentList extends StatelessWidget {
 // button
 class ActionButton extends StatelessWidget {
   final String text;
+
   const ActionButton({
     super.key,
     required this.text,
@@ -268,6 +274,7 @@ class ActionButton extends StatelessWidget {
 // description text
 class DescriptionText extends StatelessWidget {
   final String text;
+
   const DescriptionText({
     super.key,
     required this.text,
@@ -289,6 +296,7 @@ class DescriptionText extends StatelessWidget {
 // form title
 class FormTitle extends StatelessWidget {
   final String text;
+
   const FormTitle({
     super.key,
     required this.text,
@@ -313,6 +321,7 @@ class FormTitle extends StatelessWidget {
 // google auth button
 class GoogleAuth extends StatelessWidget {
   final String text;
+
   const GoogleAuth({
     super.key,
     required this.text,
@@ -379,6 +388,7 @@ class LabelTitle extends StatelessWidget {
 
 class ImportantLabelTitle extends StatelessWidget {
   final String text;
+
   const ImportantLabelTitle({
     super.key,
     required this.text,
@@ -443,9 +453,10 @@ class CustomTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 19),
           fillColor: fillColor,
           filled: isFilled,
-          border: border ?? OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide.none),
+          border: border ??
+              OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide.none),
           hintText: hintText,
           constraints: BoxConstraints(maxHeight: maxHeight, minHeight: 48),
           suffixIcon: suffixIcon),
@@ -492,6 +503,7 @@ class CustomTextField extends StatelessWidget {
 // form options
 class TextOpt extends StatelessWidget {
   final String text;
+
   const TextOpt({
     super.key,
     required this.text,
@@ -510,6 +522,7 @@ class TextOpt extends StatelessWidget {
 // mmid title text
 class MidTitle extends StatelessWidget {
   final String text;
+
   const MidTitle({
     super.key,
     required this.text,
@@ -531,6 +544,7 @@ class MidTitle extends StatelessWidget {
 class UploadId extends StatelessWidget {
   final String img;
   final String text;
+
   const UploadId({
     super.key,
     required this.img,
@@ -575,6 +589,7 @@ class UploadId extends StatelessWidget {
 class ButtonSn extends StatelessWidget {
   final String text;
   final Function press;
+
   const ButtonSn({
     super.key,
     required this.text,
@@ -602,6 +617,7 @@ class ButtonSn extends StatelessWidget {
 class ProfileSection extends StatelessWidget {
   final String img;
   final String text;
+
   // final String? borderTop;
   const ProfileSection({
     super.key,
@@ -609,6 +625,7 @@ class ProfileSection extends StatelessWidget {
     required this.text,
     // required this.borderTop,
   });
+
 // AssetImage('assets/images/edit.png')
   @override
   Widget build(BuildContext context) {
@@ -655,6 +672,7 @@ class ProfileSection extends StatelessWidget {
 // upload picture
 class UploadImg extends StatelessWidget {
   const UploadImg({super.key, this.height = 200});
+
   final double height;
 
   @override
@@ -720,8 +738,65 @@ class SelectedImagesWidget extends StatelessWidget {
   }
 }
 
+class SelectedImagesWidgetV2 extends StatelessWidget {
+  const SelectedImagesWidgetV2(
+      {super.key, required this.images, this.height = 200});
+
+  final List images;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300),
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            width: 10,
+          );
+        },
+        itemBuilder: (context, index) {
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Builder(builder: (context) {
+                final e = images[index];
+
+                if (e.runtimeType == String) {
+                  if (e.toString().startsWith('http')) {
+                    return CachedNetworkImage(
+                      imageUrl: e,
+                      fit: BoxFit.cover,
+                      height: 200,
+                    );
+                  }
+                  return Image.file(
+                    File(e),
+                    fit: BoxFit.cover,
+                    height: 200,
+                  );
+                }
+                // if (e.runtimeType == File) {
+                // }
+                return Image.file(
+                  e,
+                  fit: BoxFit.cover,
+                  height: 200,
+                );
+                // return SizedBox.shrink();
+              })).animate().fadeIn(duration: Duration(milliseconds: 500));
+        },
+        itemCount: images.length,
+      ),
+    );
+  }
+}
+
 class Price extends StatelessWidget {
   final String price;
+
   const Price({
     super.key,
     required this.price,
@@ -738,6 +813,7 @@ class Price extends StatelessWidget {
 
 class LabelProperty extends StatelessWidget {
   final String text;
+
   const LabelProperty({
     super.key,
     required this.text,
@@ -755,6 +831,7 @@ class LabelProperty extends StatelessWidget {
 
 class PropertyFeature extends StatelessWidget {
   final String text;
+
   const PropertyFeature({
     super.key,
     required this.text,

@@ -13,6 +13,8 @@ import 'package:pinearth/utils/constants/app_constants.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
+import '../../widgets/custom_drop_down.dart';
+
 class AgentRegistrationContactScreen extends ConsumerStatefulWidget {
   const AgentRegistrationContactScreen({super.key});
 
@@ -185,6 +187,7 @@ class _AgentRegistrationContactScreenState
               bankAgentType,
               developerAgentType
             ].contains(registerasagentprovider.agentType)) ...[
+              //TODO Change to dropdown
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -192,12 +195,24 @@ class _AgentRegistrationContactScreenState
                   children: [
                     const LabelTitle(text: "State"),
                     10.toColumnSpace(),
-                    CustomTextField(
-                      obscureText: false,
-                      hintText: "E.g Rivers State",
-                      controller: registerasagentprovider.stateController,
-                      inputType: TextInputType.text,
+                    CustomDropdownWidget<String>(
+                      items: nigerianState
+                          .map((e) => CustomDropDownItem(label: e, value: e))
+                          .toList(),
+                      onSelect: (v) {
+                        // listPropertyP.setRentDuration(v.value);
+                        registerasagentprovider.updateSelectedState = v.value;
+                      },
+                      selected: CustomDropDownItem(
+                          label: registerasagentprovider.selectedState,
+                          value: registerasagentprovider.selectedState),
                     ),
+                    // CustomTextField(
+                    //   obscureText: false,
+                    //   hintText: "E.g Rivers State",
+                    //   controller: registerasagentprovider.stateController,
+                    //   inputType: TextInputType.text,
+                    // ),
                   ],
                 ),
               ),
@@ -303,7 +318,7 @@ class _AgentRegistrationContactScreenState
                             if (registerasagentprovider.companyId.isEmpty) {
                               return const UploadImg();
                             }
-                            return SelectedImagesWidget(
+                            return SelectedImagesWidgetV2(
                                 images: registerasagentprovider.companyId);
                           },
                         )),

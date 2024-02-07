@@ -262,8 +262,6 @@ class ListPropertyProvider extends BaseProvider {
         "owner_email": owner == null ? "" : "${owner!.email}",
       };
 
-      print("json is $json");
-
       final res = await propertyRepo.listProperty(FormData.fromMap({
         'title': propertyNameController.text,
         'desc': propertyDescriptionController.text,

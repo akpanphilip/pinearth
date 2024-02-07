@@ -154,8 +154,10 @@ class RegisterAsAgentProvider extends BaseProvider {
       if (agentType == shortletAgentType) {
         type = "a short-let";
       }
+
       final profile = profileProvider.profileState.data;
       Either<IFailure, bool> res;
+
       if (isEdit) {
         final agentProfile = profileProvider.agentProfileState.data;
         res = await userRepo.agentProfileUpdate(
@@ -194,6 +196,37 @@ class RegisterAsAgentProvider extends BaseProvider {
                   : null,
             }));
       } else {
+        print({
+          'name': nameController.text,
+          'about_you': aboutController.text,
+          'iname': "s",
+          'specialties': specialityController.text,
+          'email': emailAddressController.text,
+          'phone_no': phoneNumberController.text.addCountryCode,
+          'address':
+              addressController.text.isEmpty ? "" : addressController.text,
+          'website': websiteController.text.isEmpty
+              ? null
+              : websiteController.text.addHttp(),
+          'profile_photo':
+              await MultipartFile.fromFile(professionalProfilePhoto.first),
+          'company_id': companyId.isEmpty
+              ? null
+              : companyId.first.startsWith('http')
+                  ? null
+                  : await MultipartFile.fromFile(companyId.first),
+          'company_reg': companyRegNoController.text,
+          'company_name': nameController.text, //companyNameController.text
+          'state': selectedState,
+          'id_upload': idCard.isNotEmpty
+              ? await MultipartFile.fromFile(idCard.first)
+              : null,
+          'hall_capacity': hallCapacityController.text,
+          'is_security': hasSecurity,
+          'additional_services': additionalServices.text,
+          'price_per_day': pricePerDayController.text,
+        });
+
         res = await userRepo.agentRegistration(
             type,
             profile!.id.toString(),

@@ -22,11 +22,13 @@ class SelletInfoWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      AgentDetailScreen(agent: property.agent!)));
+          if (property.agent != null) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AgentDetailScreen(agent: property.agent!)));
+          }
         },
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),

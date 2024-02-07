@@ -29,7 +29,7 @@ class DioApiService implements IApiService {
       responseHeader: true,
       logPrint: (object) {
         if (!kReleaseMode) {
-          // print(object);
+          print(object);
         }
       },
     ));
@@ -175,7 +175,9 @@ class DioApiService implements IApiService {
     }
 
     if (statusCode.startsWith('5')) {
-      print(error.response!.data);
+      if (kDebugMode) {
+        print("error with 500 status code " + error.response!.data);
+      }
       return ApiResponse(
           status: false, message: "Service not available at the moment.");
     }

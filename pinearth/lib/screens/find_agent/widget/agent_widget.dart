@@ -47,13 +47,33 @@ class AgentWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        agent.name ?? agent.companyName!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.toFontSize()),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      Builder(builder: (context) {
+                        String name = "";
+
+                        if (agent.user.firstName.trim() != "" &&
+                            agent.user.lastName != null &&
+                            agent.user.lastName!.trim() != "") {
+                          name =
+                              "${agent.user.firstName} ${agent.user.lastName}";
+                        }
+
+                        if (agent.name != null && agent.name!.trim() != "") {
+                          name = agent.name!;
+                        }
+
+                        if (agent.companyName != null &&
+                            agent.companyName!.trim() != "") {
+                          name = agent.companyName!;
+                        }
+
+                        return Text(
+                          name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.toFontSize()),
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      }),
                       6.toColumnSpace(),
                       StarRatingWidget(
                         rating: agent.rating ?? 0,

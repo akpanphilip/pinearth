@@ -255,11 +255,14 @@ class ApiUserRepo implements IUserRepo {
   @override
   Future<Either<IFailure, AgentModel>> getBusinessProfile() async {
     try {
-      final res = await apiService.get("/property/a developer", requireToken: true);
+      final res =
+          await apiService.get("/property/a developer/", requireToken: true);
+
       if (res.status == true) {
         return Right(AgentModel.fromJson(res.data));
+      } else {
+        return Left(RepoFailure(res.message!));
       }
-      return Left(RepoFailure(res.message!));
     } catch (error) {
       // rethrow;
       return Left(RepoFailure('Error: $error'));

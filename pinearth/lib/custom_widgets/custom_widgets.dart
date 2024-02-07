@@ -748,49 +748,84 @@ class SelectedImagesWidgetV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300),
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            width: 10,
-          );
-        },
-        itemBuilder: (context, index) {
-          return ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Builder(builder: (context) {
-                final e = images[index];
+        height: height,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey.shade300),
+        child: PageView.builder(
+          itemBuilder: (contex, index) {
+            return ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Builder(builder: (context) {
+                  final e = images[index];
 
-                if (e.runtimeType == String) {
-                  if (e.toString().startsWith('http')) {
-                    return CachedNetworkImage(
-                      imageUrl: e,
+                  if (e.runtimeType == String) {
+                    if (e.toString().startsWith('http')) {
+                      return CachedNetworkImage(
+                        imageUrl: e,
+                        fit: BoxFit.cover,
+                        height: 200,
+                      );
+                    }
+                    return Image.file(
+                      File(e),
                       fit: BoxFit.cover,
                       height: 200,
                     );
                   }
+                  // if (e.runtimeType == File) {
+                  // }
                   return Image.file(
-                    File(e),
+                    e,
                     fit: BoxFit.cover,
                     height: 200,
                   );
-                }
-                // if (e.runtimeType == File) {
-                // }
-                return Image.file(
-                  e,
-                  fit: BoxFit.cover,
-                  height: 200,
-                );
-                // return SizedBox.shrink();
-              })).animate().fadeIn(duration: Duration(milliseconds: 500));
-        },
-        itemCount: images.length,
-      ),
-    );
+                  // return SizedBox.shrink();
+                })).animate().fadeIn(duration: Duration(milliseconds: 500));
+          },
+          itemCount: images.length,
+        )
+
+        // ListView.separated(
+        //   scrollDirection: Axis.horizontal,
+        //   separatorBuilder: (context, index) {
+        //     return const SizedBox(
+        //       width: 10,
+        //     );
+        //   },
+        //   itemBuilder: (context, index) {
+        //     return ClipRRect(
+        //         borderRadius: BorderRadius.circular(10),
+        //         child: Builder(builder: (context) {
+        //           final e = images[index];
+
+        //           if (e.runtimeType == String) {
+        //             if (e.toString().startsWith('http')) {
+        //               return CachedNetworkImage(
+        //                 imageUrl: e,
+        //                 fit: BoxFit.cover,
+        //                 height: 200,
+        //               );
+        //             }
+        //             return Image.file(
+        //               File(e),
+        //               fit: BoxFit.cover,
+        //               height: 200,
+        //             );
+        //           }
+        //           // if (e.runtimeType == File) {
+        //           // }
+        //           return Image.file(
+        //             e,
+        //             fit: BoxFit.cover,
+        //             height: 200,
+        //           );
+        //           // return SizedBox.shrink();
+        //         })).animate().fadeIn(duration: Duration(milliseconds: 500));
+        //   },
+        //   itemCount: images.length,
+        // ),
+        );
   }
 }
 

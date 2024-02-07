@@ -121,9 +121,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                                       color: Colors.black),
                                 );
                               }),
-                              if (widget.agent.companyName != null &&
-                                  widget.agent.companyName!.isNotEmpty &&
-                                  widget.agent.isVerified != null &&
+                              if (widget.agent.isVerified != null &&
                                   widget.agent.isVerified!) ...[
                                 const SizedBox(
                                   width: 10,
@@ -377,8 +375,10 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                     24.toColumnSpace(),
                     CustomButtonWidget(
                       onClick: () {
-                        launchUrl(Uri.parse(
-                            "mailto:support@pinearth.com?subject=Report%20${widget.agent.companyName},%20id%20${widget.agent.id}"));
+                        launchUrl(
+                            Uri.parse("https://wa.me/message/57675SHZFE2MN1"));
+                        // launchUrl(Uri.parse(
+                        //     "mailto:support@pinearth.com?subject=Report%20${widget.agent.companyName},%20id%20${widget.agent.id}"));
                       },
                       color: appColor.red,
                       child: Center(

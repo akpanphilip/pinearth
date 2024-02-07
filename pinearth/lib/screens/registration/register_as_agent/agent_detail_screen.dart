@@ -134,25 +134,25 @@ class _AgentRegistrationDetailScreenState
                   ],
                 ),
               ],
-              10.toColumnSpace(),
-              if ([eventCenterAgentType]
-                  .contains(registerasagentprovider.agentType)) ...[
-                16.toColumnSpace(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const LabelTitle(text: "Email Address"),
-                    10.toColumnSpace(),
-                    CustomTextField(
-                      obscureText: false,
-                      hintText: "E.g xyz@gmail.com",
-                      controller:
-                          registerasagentprovider.emailAddressController,
-                      inputType: TextInputType.text,
-                    ),
-                  ],
-                ),
-              ],
+              // 10.toColumnSpace(),
+              // if ([eventCenterAgentType]
+              //     .contains(registerasagentprovider.agentType)) ...[
+              //   16.toColumnSpace(),
+              //   Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       const LabelTitle(text: "Email Address"),
+              //       10.toColumnSpace(),
+              //       CustomTextField(
+              //         obscureText: false,
+              //         hintText: "E.g xyz@gmail.com",
+              //         controller:
+              //             registerasagentprovider.emailAddressController,
+              //         inputType: TextInputType.text,
+              //       ),
+              //     ],
+              //   ),
+              // ],
               10.toColumnSpace(),
               if ([eventCenterAgentType]
                   .contains(registerasagentprovider.agentType)) ...[
@@ -265,13 +265,13 @@ class _AgentRegistrationDetailScreenState
                               .showErrorAlert("Please provide a phone number");
                           return;
                         }
-                        if (registerasagentprovider.emailAddressController.text
-                            .trim()
-                            .isEmpty) {
-                          getIt<IAlertInteraction>().showErrorAlert(
-                              "Please provide an email address");
-                          return;
-                        }
+                        // if (registerasagentprovider.emailAddressController.text
+                        //     .trim()
+                        //     .isEmpty) {
+                        //   getIt<IAlertInteraction>().showErrorAlert(
+                        //       "Please provide an email address");
+                        //   return;
+                        // }
                         if (registerasagentprovider.pricePerDayController.text
                             .trim()
                             .isEmpty) {

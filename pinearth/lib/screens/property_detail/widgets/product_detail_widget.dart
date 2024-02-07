@@ -165,7 +165,7 @@ class PropertyDetailWidget extends StatelessWidget {
               leading: Image.asset("payments".png),
               title: "Price",
               child: Text(
-                  num.parse(property.propertyPrice!)
+                  num.parse(property.propertyPrice!.replaceAll(",", ""))
                       .formattedMoney(currency: "NGN"),
                   style: GoogleFonts.nunito(
                     fontWeight: FontWeight.w700,

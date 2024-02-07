@@ -84,26 +84,42 @@ class _AgentRegistrationContactScreenState
               ),
               22.toColumnSpace(),
             ],
-            if (agentType != bankAgentType &&
-                agentType != eventCenterAgentType) ...[
+            if (agentType == hotelAgentType)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const LabelTitle(text: "Email address"),
+                    const LabelTitle(text: "Enter address"),
                     10.toColumnSpace(),
                     CustomTextField(
                       obscureText: false,
-                      hintText: "example@domain.com",
-                      controller:
-                          registerasagentprovider.emailAddressController,
+                      hintText: "6391 Elgin St. Celina, Delaware 10299",
+                      controller: registerasagentprovider.addressController,
                     ),
                   ],
                 ),
               ),
-              22.toColumnSpace(),
-            ],
+            // if (agentType != bankAgentType &&
+            //     agentType != eventCenterAgentType) ...[
+            //   Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 16),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         const LabelTitle(text: "Email address"),
+            //         10.toColumnSpace(),
+            //         CustomTextField(
+            //           obscureText: false,
+            //           hintText: "example@domain.com",
+            //           controller:
+            //               registerasagentprovider.emailAddressController,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   22.toColumnSpace(),
+            // ],
             if (agentType == eventCenterAgentType) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -511,12 +527,12 @@ class _AgentRegistrationContactScreenState
                                 .showErrorAlert("Please provide a name");
                             return;
                           }
-                          if (registerasagentprovider
-                              .emailAddressController.text.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert(
-                                "Please provide an email address");
-                            return;
-                          }
+                          // if (registerasagentprovider
+                          //     .emailAddressController.text.isEmpty) {
+                          //   getIt<IAlertInteraction>().showErrorAlert(
+                          //       "Please provide an email address");
+                          //   return;
+                          // }
                           if (registerasagentprovider
                               .phoneNumberController.text.isEmpty) {
                             getIt<IAlertInteraction>().showErrorAlert(

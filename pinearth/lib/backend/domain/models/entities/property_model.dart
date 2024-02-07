@@ -83,8 +83,10 @@ class PropertyModel {
       agent = AgentModel.fromJson(json["developer"]);
     } else if (json["landlord"] != null) {
       agent = AgentModel.fromJson(json["landlord"]);
-    } else {
-      agent = null;
+    } else if (json["hotel"] != null) {
+      agent = AgentModel.fromJson(json["hotel"]);
+    } else if (json["short_let"] != null) {
+      agent = AgentModel.fromJson(json["hotel"]);
     }
 
     return PropertyModel(

@@ -64,7 +64,7 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
             56.toColumnSpace(),
             Center(
               child: Text(
-                "Find an agent in your area",
+                "Find  ${("aeiou".contains(widget.type[0].toLowerCase())) ? "an" : "a"} ${widget.type.toLowerCase()} in your area",
                 style: TextStyle(
                     fontSize: 20.toFontSize(),
                     fontWeight: FontWeight.w800,

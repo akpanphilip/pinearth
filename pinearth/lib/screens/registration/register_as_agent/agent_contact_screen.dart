@@ -443,8 +443,8 @@ class _AgentRegistrationContactScreenState
                           if (registerasagentprovider.companyNameController.text
                               .trim()
                               .isEmpty) {
-                            getIt<IAlertInteraction>()
-                                .showErrorAlert("Please provide a company name");
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide a company name");
                             return;
                           }
                         }
@@ -540,6 +540,28 @@ class _AgentRegistrationContactScreenState
                           //   return;
                           // }
                         } else {
+                          if (registerasagentprovider.agentType ==
+                              developerAgentType) {
+                            if (registerasagentprovider
+                                .companyNameController.text.isEmpty) {
+                              getIt<IAlertInteraction>().showErrorAlert(
+                                  "Please provide a company name");
+                              return;
+                            }
+                            if (registerasagentprovider
+                                .companyRegNoController.text.isEmpty) {
+                              getIt<IAlertInteraction>().showErrorAlert(
+                                  "Please provide a company reg number.");
+                              return;
+                            }
+
+                            if (registerasagentprovider.companyId.isEmpty) {
+                              getIt<IAlertInteraction>().showErrorAlert(
+                                  "Please provide an image of company id.");
+                              return;
+                            }
+                          }
+
                           if (requireName &&
                               registerasagentprovider
                                   .nameController.text.isEmpty) {

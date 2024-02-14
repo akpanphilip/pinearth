@@ -25,7 +25,7 @@ class _SideBarWidgetState extends State<SideBarWidget> {
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
           defaultValue: null);
 
-      if (value == null || value == "") {
+      if (value == null) {
         showHelpOverlay = true;
         setState(() {});
       }

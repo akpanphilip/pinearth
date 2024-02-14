@@ -60,7 +60,9 @@ class _PropertyDetailScreenState extends ConsumerState<PropertyDetailScreen> {
         if (propertydetailstate.isError()) {
           return Center(
             child: CustomErrorWidget(
-                message: propertydetailstate.message,
+                message: (propertydetailstate.message.contains("unauth")
+                    ? "Please login to view"
+                    : propertydetailstate.message),
                 onReload: () => ref
                     .read(propertyListProvider)
                     .loadPropertyDetail(widget.property.id.toString())),

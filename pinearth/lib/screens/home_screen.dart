@@ -35,6 +35,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   String currentClass = "All";
   final localStorage = HiveLocalStorageService();
+  // bool? value = true; //user has seen how to
 
   @override
   void initState() {
@@ -46,13 +47,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
           defaultValue: null);
 
-      if (value == null || value == "") {
-        if (mounted) {
-          Scaffold.of(context).openDrawer();
-        }
+      final user = ref.watch(profileProvider).profileState.data;
+
+      if ((user != null && user.hasRole == true) && (value == null)) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          if (mounted) {
+            if (!Scaffold.of(context).isDrawerOpen) {
+              Scaffold.of(context).openDrawer();
+            }
+          }
+        });
       }
 
-      final user = ref.watch(profileProvider).profileState.data;
       ref.read(propertyListProvider).loadProperties();
       if (user != null) {
         if (user.profile?.uploadId == null ||
@@ -64,6 +70,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       uploadId: true,
                     )),
           );
+        } else {
+          // if (user.hasRole == true && value == null || value == "") {
+          //   if (mounted) {
+          //     if (!Scaffold.of(context).isDrawerOpen){
+          //       Scaffold.of(context).openDrawer();
+          //     }
+          //   }
+          // }
         }
         ref.read(findAgentProvider).loadAgents();
       }
@@ -80,6 +94,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final agentListState = agentListP.agentsState;
     final user = ref.watch(profileProvider).profileState.data;
     final isLoggedIn = user != null;
+
+
 
     // final user = ref.watch(profileProvider);
 
@@ -100,8 +116,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       // final user = ref.watch(profileProvider).profileState.data;
 
                       // const hasRole = false;
-                      final hasRole =
-                          false; //isLoggedIn && user.hasRole == true;
+                      final hasRole = isLoggedIn && user.hasRole == true;
                       return !isLoggedIn
                           ? const SizedBox.shrink()
                           : (!hasRole

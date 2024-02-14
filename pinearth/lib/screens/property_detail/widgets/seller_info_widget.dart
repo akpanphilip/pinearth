@@ -38,7 +38,7 @@ class SelletInfoWidget extends StatelessWidget {
                   CircleAvatar(
                       radius: 40,
                       backgroundImage:
-                          NetworkImage(property.agent?.profilePhoto ?? "")),
+                      NetworkImage(property.agent?.profilePhoto ?? "")),
                   50.toRowSpace(),
                   Expanded(
                     child: Column(
@@ -51,7 +51,8 @@ class SelletInfoWidget extends StatelessWidget {
                               property.agent?.user.lastName != null &&
                               property.agent?.user.lastName!.trim() != "") {
                             name =
-                                "${property.agent?.user.firstName} ${property.agent?.user.lastName}";
+                            "${property.agent?.user.firstName} ${property.agent
+                                ?.user.lastName}";
                           }
 
                           if (property.agent?.name != null &&
@@ -62,6 +63,12 @@ class SelletInfoWidget extends StatelessWidget {
                           if (property.agent?.companyName != null &&
                               property.agent?.companyName!.trim() != "") {
                             name = property.agent!.companyName!;
+                          }
+
+                          if (property != null) {
+                            name =
+                            "${property.owner.lastName} ${property.owner
+                                .firstName}";
                           }
 
                           return Text(
@@ -78,7 +85,8 @@ class SelletInfoWidget extends StatelessWidget {
                         ),
                         3.toColumnSpace(),
                         Text(
-                          "(${property.reviews == null ? "0" : property.reviews!.length})",
+                          "(${property.reviews == null ? "0" : property.reviews!
+                              .length})",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18.toFontSize(),
@@ -94,26 +102,29 @@ class SelletInfoWidget extends StatelessWidget {
                 Row(
                   children: [
                     10.toColumnSpace(),
-                    SizedBox(
-                      height: 40,
-                      child: CustomButtonWidget(
-                          color: appColor.primary,
-                          onClick: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AgentDetailScreen(
-                                        agent: property.agent!)));
-                          },
-                          child: Center(
-                            child: Text(
-                              "Book now",
-                              style: TextStyle(
-                                  fontSize: 20.toFontSize(),
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
-                            ),
-                          )),
+                    Expanded(
+                      child: SizedBox(
+                        height: 40,
+                        child: CustomButtonWidget(
+                            color: appColor.primary,
+                            onClick: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AgentDetailScreen(
+                                              agent: property.agent!)));
+                            },
+                            child: Center(
+                              child: Text(
+                                "Book now",
+                                style: TextStyle(
+                                    fontSize: 20.toFontSize(),
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                            )),
+                      ),
                     ),
                     const SizedBox(
                       width: 20,
@@ -123,13 +134,15 @@ class SelletInfoWidget extends StatelessWidget {
                         children: [
                           SvgPicture.asset('telephone'.svg),
                           8.toRowSpace(),
-                          Text(
-                            property.agent?.phoneNo ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 18.toFontSize(),
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black.withOpacity(.5)),
+                          Expanded(
+                            child: Text(
+                              property.agent?.phoneNo ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 18.toFontSize(),
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black.withOpacity(.5)),
+                            ),
                           ),
                         ],
                       ),

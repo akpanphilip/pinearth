@@ -103,8 +103,8 @@ class _AgentRegistrationDetailScreenState
               ),
               10.toColumnSpace(),
               GestureDetector(
-                  onTap: () =>
-                      registerasagentprovider.selectProfessionalPictures(),
+                  onTap: () => registerasagentprovider
+                      .selectProfessionalPictures(allowMultiple: false),
                   child: Builder(
                     builder: (context) {
                       if (registerasagentprovider
@@ -243,21 +243,38 @@ class _AgentRegistrationDetailScreenState
                   Expanded(
                       child: CustomButtonWidget(
                     onClick: () {
-                      if ([eventCenterAgentType]
-                          .contains(registerasagentprovider.agentType)) {
-                        if (registerasagentprovider.companyNameController.text
-                            .trim()
-                            .isEmpty) {
-                          getIt<IAlertInteraction>()
-                              .showErrorAlert("Please provide a company name");
-                          return;
-                        }
+                      if (registerasagentprovider
+                          .professionalProfilePhoto.isEmpty) {
+                        getIt<IAlertInteraction>().showErrorAlert(
+                            "Please provide a picture/logo to continue");
+                        return;
+                      }
+
+                      if (registerasagentprovider.agentType !=
+                          eventCenterAgentType) {
                         if (registerasagentprovider
                             .professionalProfilePhoto.isEmpty) {
                           getIt<IAlertInteraction>().showErrorAlert(
                               "Please provide a picture/logo to continue");
                           return;
                         }
+                      }
+
+                      if ([eventCenterAgentType]
+                          .contains(registerasagentprovider.agentType)) {
+                        // if (registerasagentprovider.companyNameController.text
+                        //     .trim()
+                        //     .isEmpty) {
+                        //   getIt<IAlertInteraction>()
+                        //       .showErrorAlert("Please provide a company name");
+                        //   return;
+                        // }
+                        // if (registerasagentprovider
+                        //     .professionalProfilePhoto.isEmpty) {
+                        //   getIt<IAlertInteraction>().showErrorAlert(
+                        //       "Please provide a picture/logo to continue");
+                        //   return;
+                        // }
                         if (registerasagentprovider.phoneNumberController.text
                             .trim()
                             .isEmpty) {
@@ -281,20 +298,37 @@ class _AgentRegistrationDetailScreenState
                         }
                       }
 
-                      if ([eventCenterAgentType, shortletAgentType]
-                          .contains(registerasagentprovider.agentType)) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AgentRegistrationContactScreen()));
-                      } else {
-                        if (registerasagentprovider
-                            .professionalProfilePhoto.isEmpty) {
-                          getIt<IAlertInteraction>().showErrorAlert(
-                              "Please provide a picture/logo to continue");
+                      if ([
+                        eventCenterAgentType,
+                        shortletAgentType,
+                      ].contains(registerasagentprovider.agentType)) {
+                        if (registerasagentprovider.companyNameController.text
+                            .trim()
+                            .isEmpty) {
+                          getIt<IAlertInteraction>()
+                              .showErrorAlert("Please provide a company name");
                           return;
                         }
+
+                        // if (registerasagentprovider
+                        //     .professionalProfilePhoto.isEmpty) {
+                        //   getIt<IAlertInteraction>().showErrorAlert(
+                        //       "Please provide a picture/logo to continue");
+                        //   return;
+                        // }
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const AgentRegistrationContactScreen()));
+                      } else {
+                        // if (registerasagentprovider
+                        //     .professionalProfilePhoto.isEmpty) {
+                        //   getIt<IAlertInteraction>().showErrorAlert(
+                        //       "Please provide a picture/logo to continue");
+                        //   return;
+                        // }
                         if (registerasagentprovider
                             .aboutController.text.isEmpty) {
                           getIt<IAlertInteraction>().showErrorAlert(
@@ -310,12 +344,13 @@ class _AgentRegistrationDetailScreenState
                             return;
                           }
                         }
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AgentRegistrationContactScreen()));
                       }
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AgentRegistrationContactScreen()));
                     },
                     color: appColor.primary,
                     child: const Center(

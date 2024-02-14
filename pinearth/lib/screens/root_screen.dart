@@ -22,6 +22,7 @@ class RootScreen extends ConsumerStatefulWidget {
 class _RootScreenState extends ConsumerState<RootScreen> {
   // int _bottomNavIndex = 0;
   // list of screens
+
   List<Widget> pages = const [
     HomeScreen(),
     UpdatesScreen(),
@@ -50,10 +51,6 @@ class _RootScreenState extends ConsumerState<RootScreen> {
 
   int _bottomNavIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +66,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: Scaffold(
+        drawerEnableOpenDragGesture: true, //TODO change to false
         body: pages[_bottomNavIndex],
         drawer: Drawer(
           backgroundColor: appColor.primary,

@@ -95,6 +95,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     },
                     child: Column(
                       children: [
+                        ///Display picture.
                         (profileP.newProfilePic != "")
                             ? SizedBox(
                                 height: 100,
@@ -241,6 +242,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
+
+                  ///End
+
                   const SizedBox(height: 10),
                   Builder(builder: (context) {
                     if (profile.role == developerAgentType) {
@@ -305,22 +309,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           text: 'My listed properties',
                         ),
                       ),
-                    GestureDetector(
-                      onTap: () {
-                        ref.read(registerAsAgentProvider).agentType =
-                            profile.role!;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const EditBusinessProfileScreen()),
-                        );
-                      },
-                      child: const ProfileSection(
-                        img: 'assets/images/edit.png',
-                        text: 'Edit business profile',
+                    if (profile.role == developerAgentType)
+                      GestureDetector(
+                        onTap: () {
+                          ref.read(registerAsAgentProvider).agentType =
+                              profile.role!;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const EditBusinessProfileScreen()),
+                          );
+                        },
+                        child: const ProfileSection(
+                          img: 'assets/images/edit.png',
+                          text: 'Edit business profile',
+                        ),
                       ),
-                    ),
                   ],
                   GestureDetector(
                     onTap: () {

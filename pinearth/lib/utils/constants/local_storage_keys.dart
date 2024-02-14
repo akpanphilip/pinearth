@@ -4,3 +4,4 @@ const userEmailKey = "user_email_key";
 const userRefreshTokenKey = "user_refresh_token";
 const appDataBoxKey = "app_data_box";
 const seenIntroKey = "seen_intro_key";
+const seenHowToKey = "seen_how_to_key";

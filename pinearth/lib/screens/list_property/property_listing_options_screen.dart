@@ -175,7 +175,7 @@ class _PropertyListingOptionScreenState
                         return UploadImg();
                       }
 
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listPropertyP.propertyImages);
                     },
                   )),

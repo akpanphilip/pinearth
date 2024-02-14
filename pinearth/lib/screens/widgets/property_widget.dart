@@ -173,12 +173,16 @@ class PropertyWidget extends ConsumerWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              '${(num.tryParse(property.propertyPrice!) ?? 0).formattedMoney()} NGN/Month',
-                              style: GoogleFonts.nunito(
-                                  color: const Color(0xff1173AB),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700)),
+                          if (property.propertyPrice != null)
+                            Text(
+                                num.parse(property.propertyPrice!
+                                        .replaceAll(",", ""))
+                                    .formattedMoney(currency: "NGN"),
+                                // NGN/Month
+                                style: GoogleFonts.nunito(
+                                    color: const Color(0xff1173AB),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                           5.toColumnSpace(),
                           Text(
                             '${property.title} in ${property.address}',
@@ -308,7 +312,9 @@ class PropertyWidget extends ConsumerWidget {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               AgentDetailScreen(
-                                                  agent: property.agent!)));
+                                                  agent: property.agent!,
+                                                  property: property,
+                                              )));
                                 },
                                 child: CircleAvatar(
                                   radius: 15,

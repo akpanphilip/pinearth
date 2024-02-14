@@ -77,7 +77,7 @@ class _PropertySectionPictureScreenState
                       if (listPropertyP.livingRoomImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listPropertyP.livingRoomImages);
                     },
                   )),
@@ -104,7 +104,7 @@ class _PropertySectionPictureScreenState
                       if (listPropertyP.bedRoomImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listPropertyP.bedRoomImages);
                     },
                   )),
@@ -131,7 +131,7 @@ class _PropertySectionPictureScreenState
                       if (listPropertyP.toiletImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listPropertyP.toiletImages);
                     },
                   )),
@@ -158,7 +158,7 @@ class _PropertySectionPictureScreenState
                       if (listPropertyP.kitchenImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listPropertyP.kitchenImages);
                     },
                   )),

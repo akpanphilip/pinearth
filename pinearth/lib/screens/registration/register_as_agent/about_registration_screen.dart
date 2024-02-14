@@ -53,7 +53,7 @@ class _AboutAgentRegistrationScreenState extends ConsumerState<AboutAgentRegistr
       image = "bank".png;
     }
     if (widget.agentType == hotelAgentType) {
-      title = "Pride your hospitality!, ";
+      title = "Pride your hospitality!";
       description = "Where luxury meets opportunity! Register your hotel and showcase it’s unique charm to a global audience. Amplify your bookings, reach discerning travelers, and boost your brand visibility. Join our exclusive network of hospitality partners and unlock the full potential of your property. Elevate the guest experience – register your hotel now and let the world experience the extraordinary with you!";
       image = "hotel".png;
     }

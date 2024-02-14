@@ -21,9 +21,10 @@ import 'package:pinearth/utils/styles/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AgentDetailScreen extends ConsumerStatefulWidget {
-  const AgentDetailScreen({super.key, required this.agent});
+  const AgentDetailScreen({super.key, required this.agent, this.property});
 
   final AgentModel agent;
+  final PropertyModel? property;
 
   @override
   ConsumerState<AgentDetailScreen> createState() => _AgentDetailScreenState();
@@ -36,8 +37,9 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
   bool isRoom = false;
 
   void loadAgentProperty() async {
-    final res = await getIt<IAgentRepo>()
-        .getAgentPropertyes(widget.agent.id.toString());
+    final res = await getIt<IAgentRepo>().getAgentPropertyes(
+        widget.agent.id.toString(),
+        (widget.property?.owner.role == developerAgentType) ? true : false);
     res.fold((l) {
       print(l.message);
       agentProperties.toError(l.message);
@@ -111,6 +113,11 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                                 if (widget.agent.companyName != null &&
                                     widget.agent.companyName!.trim() != "") {
                                   name = widget.agent.companyName!;
+                                }
+
+                                if (widget.property != null) {
+                                  name =
+                                      "${widget.property?.owner.lastName} ${widget.property?.owner.firstName}";
                                 }
 
                                 return Text(

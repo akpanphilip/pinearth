@@ -75,7 +75,7 @@ class _PropertyDocumentScreenState
                       if (listpropertyprovider.documentFiles.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listpropertyprovider.documentFiles);
                     },
                   )),
@@ -102,7 +102,7 @@ class _PropertyDocumentScreenState
                       if (listpropertyprovider.housePlanImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listpropertyprovider.housePlanImages);
                     },
                   )),
@@ -129,7 +129,7 @@ class _PropertyDocumentScreenState
                       if (listpropertyprovider.propertySizeImages.isEmpty) {
                         return UploadImg();
                       }
-                      return SelectedImagesWidget(
+                      return SelectedImagesWidgetV2(
                           images: listpropertyprovider.propertySizeImages);
                     },
                   )),

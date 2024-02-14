@@ -203,7 +203,6 @@ class _AgentRegistrationContactScreenState
               bankAgentType,
               developerAgentType
             ].contains(registerasagentprovider.agentType)) ...[
-              //TODO Change to dropdown
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -325,7 +324,8 @@ class _AgentRegistrationContactScreenState
                   children: [
                     const LabelTitle(text: "Company ID"),
                     10.toColumnSpace(),
-                    LabelTitle(text: "*20 images max", color: appColor.red),
+                    LabelTitle(
+                        text: "*Image must be clear", color: appColor.red),
                     10.toColumnSpace(),
                     GestureDetector(
                         onTap: () => registerasagentprovider.selectCompanyId(),
@@ -351,8 +351,7 @@ class _AgentRegistrationContactScreenState
                     children: [
                       const LabelTitle(text: "Images of the Event center"),
                       10.toColumnSpace(),
-                      LabelTitle(
-                          text: "*Image must be clear", color: appColor.red),
+                      LabelTitle(text: "*20 images max", color: appColor.red),
                       10.toColumnSpace(),
                       GestureDetector(
                           onTap: () =>
@@ -440,7 +439,35 @@ class _AgentRegistrationContactScreenState
                     onClick: () {
                       if ([bankAgentType, hotelAgentType, shortletAgentType]
                           .contains(registerasagentprovider.agentType)) {
-                        if (agentType == bankAgentType) {
+                        if (agentType == hotelAgentType) {
+                          if (registerasagentprovider.companyNameController.text
+                              .trim()
+                              .isEmpty) {
+                            getIt<IAlertInteraction>()
+                                .showErrorAlert("Please provide a company name");
+                            return;
+                          }
+                        }
+
+                        // if (agentType == bankAgentType ||
+                        //     agentType == shortletAgentType) {
+                        if (registerasagentprovider.addressController.text
+                            .trim()
+                            .isEmpty) {
+                          getIt<IAlertInteraction>()
+                              .showErrorAlert("Please provide an address");
+                          return;
+                        }
+                        if (registerasagentprovider
+                            .phoneNumberController.text.isEmpty) {
+                          getIt<IAlertInteraction>()
+                              .showErrorAlert("Please provide a phone number.");
+                          return;
+                        }
+                        // }
+
+                        if (agentType == bankAgentType ||
+                            agentType == hotelAgentType) {
                           if (registerasagentprovider.nameController.text
                               .trim()
                               .isEmpty) {
@@ -448,19 +475,7 @@ class _AgentRegistrationContactScreenState
                                 .showErrorAlert("Please provide a name");
                             return;
                           }
-                          if (registerasagentprovider.addressController.text
-                              .trim()
-                              .isEmpty) {
-                            getIt<IAlertInteraction>()
-                                .showErrorAlert("Please provide an address");
-                            return;
-                          }
-                          if (registerasagentprovider
-                              .phoneNumberController.text.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert(
-                                "Please provide a phone number.");
-                            return;
-                          }
+
                           if (registerasagentprovider
                               .companyRegNoController.text.isEmpty) {
                             getIt<IAlertInteraction>().showErrorAlert(
@@ -473,7 +488,6 @@ class _AgentRegistrationContactScreenState
                             return;
                           }
                         }
-
                         registerasagentprovider.register(context);
                       } else {
                         if (registerasagentprovider.agentType ==
@@ -485,13 +499,13 @@ class _AgentRegistrationContactScreenState
                                 .showErrorAlert("Please provide an address");
                             return;
                           }
-                          if (registerasagentprovider.stateController.text
-                              .trim()
-                              .isEmpty) {
-                            getIt<IAlertInteraction>()
-                                .showErrorAlert("Please provide a state");
-                            return;
-                          }
+                          // if (registerasagentprovider.stateController.text
+                          //     .trim()
+                          //     .isEmpty) {
+                          //   getIt<IAlertInteraction>()
+                          //       .showErrorAlert("Please provide a state");
+                          //   return;
+                          // }
                           if (registerasagentprovider
                               .hallCapacityController.text
                               .trim()
@@ -514,6 +528,12 @@ class _AgentRegistrationContactScreenState
                                 "Please provide image of the event center");
                             return;
                           }
+                          if (registerasagentprovider.companyId.isEmpty) {
+                            getIt<IAlertInteraction>().showErrorAlert(
+                                "Please provide image of the company ID");
+                            return;
+                          }
+
                           // if (registerasagentprovider.eventCenterImages.isEmpty){
                           //   getIt<IAlertInteraction>()
                           //       .showErrorAlert("Please provide image of the event center");

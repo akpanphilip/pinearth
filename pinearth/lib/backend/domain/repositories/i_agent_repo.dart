@@ -11,5 +11,5 @@ abstract class IAgentRepo {
   Future<Either<IFailure, List<AgentModel>>> getOrSearchBank([String searchParam = ""]);
   Future<Either<IFailure, List<AgentModel>>> getOrSearchShortLet([String searchParam = ""]);
   
-  Future<Either<IFailure, dynamic>> getAgentPropertyes(String agentId);
+  Future<Either<IFailure, dynamic>> getAgentPropertyes(String agentId,bool isADeveloper);
 }

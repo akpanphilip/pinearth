@@ -97,8 +97,9 @@ class RegisterAsAgentProvider extends BaseProvider {
     notifyListeners();
   }
 
-  void selectProfessionalPictures() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: false);
+  void selectProfessionalPictures({bool allowMultiple = true}) async {
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: allowMultiple, type: FileType.image);
     if (res != null) {
       professionalProfilePhoto = res.files.map((e) => e.path!).toList();
       notifyListeners();
@@ -106,7 +107,8 @@ class RegisterAsAgentProvider extends BaseProvider {
   }
 
   void selectCompanyId() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: false, type: FileType.image);
     if (res != null) {
       companyId = res.files.map((e) => e.path!).toList();
       notifyListeners();
@@ -114,7 +116,8 @@ class RegisterAsAgentProvider extends BaseProvider {
   }
 
   void selectIdCard() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: false, type: FileType.image);
     if (res != null) {
       idCard = res.files.map((e) => e.path!).toList();
       notifyListeners();
@@ -122,7 +125,8 @@ class RegisterAsAgentProvider extends BaseProvider {
   }
 
   void selectEventCenter() async {
-    final res = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final res = await FilePicker.platform
+        .pickFiles(allowMultiple: true, type: FileType.image);
     if (res != null) {
       eventCenterImages = res.files.map((e) => e.path!).toList();
       notifyListeners();
@@ -196,37 +200,6 @@ class RegisterAsAgentProvider extends BaseProvider {
                   : null,
             }));
       } else {
-        print({
-          'name': nameController.text,
-          'about_you': aboutController.text,
-          'iname': "s",
-          'specialties': specialityController.text,
-          'email': emailAddressController.text,
-          'phone_no': phoneNumberController.text.addCountryCode,
-          'address':
-              addressController.text.isEmpty ? "" : addressController.text,
-          'website': websiteController.text.isEmpty
-              ? null
-              : websiteController.text.addHttp(),
-          'profile_photo':
-              await MultipartFile.fromFile(professionalProfilePhoto.first),
-          'company_id': companyId.isEmpty
-              ? null
-              : companyId.first.startsWith('http')
-                  ? null
-                  : await MultipartFile.fromFile(companyId.first),
-          'company_reg': companyRegNoController.text,
-          'company_name': nameController.text, //companyNameController.text
-          'state': selectedState,
-          'id_upload': idCard.isNotEmpty
-              ? await MultipartFile.fromFile(idCard.first)
-              : null,
-          'hall_capacity': hallCapacityController.text,
-          'is_security': hasSecurity,
-          'additional_services': additionalServices.text,
-          'price_per_day': pricePerDayController.text,
-        });
-
         res = await userRepo.agentRegistration(
             type,
             profile!.id.toString(),
@@ -237,7 +210,8 @@ class RegisterAsAgentProvider extends BaseProvider {
               'specialties': specialityController.text,
               'email': emailAddressController.text,
               'phone_no': phoneNumberController.text.addCountryCode,
-              'address': addressController.text,
+              'address':
+                  addressController.text.isEmpty ? "" : addressController.text,
               'website': websiteController.text.isEmpty
                   ? null
                   : websiteController.text.addHttp(),
@@ -250,7 +224,7 @@ class RegisterAsAgentProvider extends BaseProvider {
                       : await MultipartFile.fromFile(companyId.first),
               'company_reg': companyRegNoController.text,
               'company_name': nameController.text, //companyNameController.text
-              'state': stateController.text,
+              'state': selectedState,
               'id_upload': idCard.isNotEmpty
                   ? await MultipartFile.fromFile(idCard.first)
                   : null,

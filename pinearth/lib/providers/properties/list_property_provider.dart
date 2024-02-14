@@ -211,7 +211,7 @@ class ListPropertyProvider extends BaseProvider {
     try {
       alert.showLoadingAlert("");
       final profile = profileProvider.profileState.data!;
-      //TODO check this code properly
+
       // String status = "Sale";
       // if (profile.role == "Landlord") {
       //   status = "Rent";
@@ -219,48 +219,7 @@ class ListPropertyProvider extends BaseProvider {
 
       String status = listingOption;
 
-      final json = {
-        'title': propertyNameController.text,
-        'desc': propertyDescriptionController.text,
-        'property_type': propertyTypeController.text,
-        'no_of_rooms': numberOfRoomsController.text,
-        'no_of_bathrooms': numberOfBathroomController.text,
-        'lot_size': propertyLotSizeController.text,
-        'address': propertyAddressController.text,
-        'property_status': "For $status",
-        'property_price': propertyPriceController.text,
-        'income_per_month': propertyIncomePerYearController.text,
-        'years_built': propertyYearBuiltController.text,
-        'years_renovated': propertyYearRenovatedController.text,
-        'years_reconstructed': propertyYearReconstructedController.text,
-        'parking_space': propertyHasPackingSpaceController.text,
-        'appliance': propertyHasAppliancesController.text,
-        'location': propertyGoogleMapController.text.addHttp(),
-        'role': profile.role?.toLowerCase(),
-        'available': true,
-        'uappliances': appliancesController.text.trim() == ""
-            ? ["none"]
-            : appliancesController.text.split(","),
-        'uhouse_view': await Future.wait(
-            propertyImages.map((e) async => await MultipartFile.fromFile(e))),
-        'uliving_room': await Future.wait(
-            livingRoomImages.map((e) async => await MultipartFile.fromFile(e))),
-        'ubed_room': await Future.wait(
-            bedRoomImages.map((e) async => await MultipartFile.fromFile(e))),
-        'utoilet': await Future.wait(
-            toiletImages.map((e) async => await MultipartFile.fromFile(e))),
-        'ukitchen': await Future.wait(
-            kitchenImages.map((e) async => await MultipartFile.fromFile(e))),
-        'udocuments': await Future.wait(
-            documentFiles.map((e) async => await MultipartFile.fromFile(e))),
-        'uhouse_plan': await Future.wait(
-            housePlanImages.map((e) async => await MultipartFile.fromFile(e))),
-        'usize': await Future.wait(propertySizeImages
-            .map((e) async => await MultipartFile.fromFile(e))),
-        'owner_name':
-        owner == null ? "" : "${owner!.firstName} ${owner!.lastName}",
-        "owner_email": owner == null ? "" : "${owner!.email}",
-      };
+     print("listing property");
 
       final res = await propertyRepo.listProperty(FormData.fromMap({
         'title': propertyNameController.text,

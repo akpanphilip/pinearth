@@ -11,9 +11,11 @@ import 'package:pinearth/screens/widgets/side_bar_widget.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
+import '../backend/application/servicies/localstorage/hive.local_storage.service.dart';
 import '../backend/domain/models/entities/agent_model.dart';
 import '../providers/agent/find_agent_provider.dart';
 import '../providers/base_provider.dart';
+import '../utils/constants/local_storage_keys.dart';
 import 'auth/register/personal_id_screen.dart';
 import 'find_agent/widget/agent_widget.dart';
 import 'widgets/custom_button_widget.dart';
@@ -32,6 +34,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   String currentClass = "All";
+  final localStorage = HiveLocalStorageService();
 
   @override
   void initState() {
@@ -39,7 +42,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // Future.delayed(Duration.zero, () {
 
     // if (mounted) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
+          defaultValue: null);
+
+      if (value == null || value == "") {
+        if (mounted) {
+          Scaffold.of(context).openDrawer();
+        }
+      }
+
       final user = ref.watch(profileProvider).profileState.data;
       ref.read(propertyListProvider).loadProperties();
       if (user != null) {
@@ -88,10 +100,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       // final user = ref.watch(profileProvider).profileState.data;
 
                       // const hasRole = false;
-                      final hasRole = isLoggedIn && user.hasRole == true;
+                      final hasRole =
+                          false; //isLoggedIn && user.hasRole == true;
                       return !isLoggedIn
                           ? const SizedBox.shrink()
-                          : !hasRole
+                          : (!hasRole
                               ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -106,7 +119,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     11.toRowSpace(),
                                   ],
                                 )
-                              : const SizedBox.shrink();
+                              : const SizedBox.shrink());
                     }),
                     Expanded(
                       child: GestureDetector(
@@ -223,22 +236,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           if (agents.isNotEmpty)
                             Column(
                               children: [
-                                // Center(
-                                //   child: Container(
-                                //     width: 104,
-                                //     height: 34,
-                                //     decoration: BoxDecoration(
-                                //         borderRadius: BorderRadius.circular(20),
-                                //         color: const Color(0xffE6F1F7)),
-                                //     child: Center(
-                                //       child: Text(
-                                //         'Properties',
-                                //         style: GoogleFonts.nunito(
-                                //             color: const Color(0xff1173AB)),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
+                                Center(
+                                  child: Container(
+                                    width: 104,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: const Color(0xffE6F1F7)),
+                                    child: Center(
+                                      child: Text(
+                                        'Agents',
+                                        style: GoogleFonts.nunito(
+                                            color: const Color(0xff1173AB)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(height: 15),
                                 Center(
                                   child: Text(

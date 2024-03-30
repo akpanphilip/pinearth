@@ -23,9 +23,9 @@ class _SideBarWidgetState extends State<SideBarWidget> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
-          defaultValue: null);
+          defaultValue: false);
 
-      if (value == null) {
+      if (!value) {
         showHelpOverlay = true;
         setState(() {});
       }
@@ -151,7 +151,7 @@ class _SideBarWidgetState extends State<SideBarWidget> {
           Positioned.fill(
             child: GestureDetector(
               onTap: () async {
-                await localStorage.setItem(userDataBoxKey, seenHowToKey, false);
+                await localStorage.setItem(userDataBoxKey, seenHowToKey, true);
                 showHelpOverlay = false;
                 setState(() {});
               },

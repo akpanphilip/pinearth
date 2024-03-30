@@ -14,30 +14,36 @@ class EmptyStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SvgPicture.asset("moon_stars".svg),
-          10.toColumnSpace(),
-          Text(
-            message,
-            style: const TextStyle(
-              color: Colors.black,
+      child: GestureDetector(
+        onTap: () {
+          if (onReload != null) {
+            onReload!();
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SvgPicture.asset("moon_stars".svg),
+            10.toColumnSpace(),
+            Text(
+              message,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          10.toColumnSpace(),
-          if (onReload != null)
-            Center(
-              child: InkWell(
-                  onTap: () => onReload!(),
-                  child: const Text(
-                    'Tap to reload',
-                    style: TextStyle(color: Colors.black),
-                  )),
-            )
-        ],
+            10.toColumnSpace(),
+            if (onReload != null)
+              Center(
+                child: InkWell(
+                    child: const Text(
+                  'Tap to reload',
+                  style: TextStyle(color: Colors.black),
+                )),
+              )
+          ],
+        ),
       ),
     );
   }

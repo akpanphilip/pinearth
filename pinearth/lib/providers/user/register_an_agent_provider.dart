@@ -85,7 +85,7 @@ class RegisterAsAgentProvider extends BaseProvider {
 
   String agentType = "Agent";
   String hasSecurity = "No";
-  String selectedState = "Lagos state";
+  String selectedState = "Rivers state";
 
   set updateSelectedState(String state) {
     selectedState = state;
@@ -187,7 +187,7 @@ class RegisterAsAgentProvider extends BaseProvider {
                   ? null
                   : await MultipartFile.fromFile(companyId.first),
               'company_reg': companyRegNoController.text,
-              'company_name': nameController.text, //companyNameController.text
+              'company_name': companyNameController.text,
               'state': stateController.text,
               'hall_capacity': hallCapacityController.text,
               'is_security': hasSecurity,

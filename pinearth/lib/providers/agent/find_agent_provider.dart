@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/backend/domain/repositories/i_agent_repo.dart';
@@ -9,9 +8,9 @@ import 'package:pinearth/utils/constants/app_constants.dart';
 class FindAgentProvider extends BaseProvider {
   final IAgentRepo agentRepo;
   FindAgentProvider(this.agentRepo) {
-    searchParamController.addListener(() {
-      initialize();
-    });
+    // searchParamController.addListener(() {
+    //   initialize();
+    // });
   }
 
   String agentType = "";
@@ -46,6 +45,9 @@ class FindAgentProvider extends BaseProvider {
     if (agentType == hotelAgentType) {
       _loadHotel();
     }
+    if (agentType == eventCenterAgentType) {
+      _loadEventCenter();
+    }
   }
 
   void loadAgents() async {
@@ -66,11 +68,13 @@ class FindAgentProvider extends BaseProvider {
       rethrow;
     }
   }
+
   void _loadLandLoord() async {
     try {
       agentsState.toLoading();
       notifyListeners();
-      final res = await agentRepo.getOrSearchLandlord(searchParamController.text);
+      final res =
+          await agentRepo.getOrSearchLandlord(searchParamController.text);
       res.fold((l) {
         agentsState.toError(l.message);
         notifyListeners();
@@ -84,11 +88,13 @@ class FindAgentProvider extends BaseProvider {
       rethrow;
     }
   }
+
   void _loadDevelopers() async {
     try {
       agentsState.toLoading();
       notifyListeners();
-      final res = await agentRepo.getOrSearchDeveloper(searchParamController.text);
+      final res =
+          await agentRepo.getOrSearchDeveloper(searchParamController.text);
       res.fold((l) {
         agentsState.toError(l.message);
         notifyListeners();
@@ -121,6 +127,7 @@ class FindAgentProvider extends BaseProvider {
       rethrow;
     }
   }
+
   void _loadBank() async {
     try {
       agentsState.toLoading();
@@ -139,9 +146,27 @@ class FindAgentProvider extends BaseProvider {
       rethrow;
     }
   }
+
+  void _loadEventCenter() async {
+    try {
+      agentsState.toLoading();
+      notifyListeners();
+      final res =
+          await agentRepo.getOrSearchEventCenter(searchParamController.text);
+      res.fold((l) {
+        agentsState.toError(l.message);
+        notifyListeners();
+      }, (r) {
+        agentsState.toSuccess(r);
+        notifyListeners();
+      });
+    } catch (error) {
+      agentsState.toError("Error: Unable to load event centers");
+      notifyListeners();
+      rethrow;
+    }
+  }
 }
 
-
-final findAgentProvider = ChangeNotifierProvider.autoDispose((ref) => FindAgentProvider(
-  getIt<IAgentRepo>()
-));
+final findAgentProvider = ChangeNotifierProvider.autoDispose(
+    (ref) => FindAgentProvider(getIt<IAgentRepo>()));

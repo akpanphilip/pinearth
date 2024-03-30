@@ -165,9 +165,13 @@ class ApiUserRepo implements IUserRepo {
     try {
       final res = await apiService.get("notif/view/", requireToken: true);
       if (res.status == true) {
-        return Right(List.from(res.data)
-            .map((e) => NotificationModel.fromJson(e))
-            .toList());
+        if (res.data.isEmpty || res.data["messages"] == null) {
+          return const Right([]);
+        } else {
+          return Right(List.from(res.data["messages"])
+              .map((e) => NotificationModel.fromJson(e))
+              .toList());
+        }
       }
       return Left(RepoFailure(res.message ?? 'Unable get messages'));
     } catch (error) {
@@ -260,6 +264,24 @@ class ApiUserRepo implements IUserRepo {
 
       if (res.status == true) {
         return Right(AgentModel.fromJson(res.data));
+      } else {
+        return Left(RepoFailure(res.message!));
+      }
+    } catch (error) {
+      // rethrow;
+      return Left(RepoFailure('Error: $error'));
+    }
+  }
+
+  @override
+  Future<Either<IFailure, bool>> sendComplaint(
+      Map<String, String> message) async {
+    try {
+      final res =
+          await apiService.post("/user/support/", message, requireToken: true);
+
+      if (res.status == true) {
+        return const Right(true);
       } else {
         return Left(RepoFailure(res.message!));
       }

@@ -17,6 +17,8 @@ import '../../custom_widgets/custom_widgets.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:image_cropper/image_cropper.dart';
 
+import '../../utils/constants/app_constants.dart';
+import '../widgets/custom_drop_down.dart';
 import 'special_property_spec_screen.dart';
 
 class PropertySpecScreen extends ConsumerStatefulWidget {
@@ -127,6 +129,22 @@ class _PropertySpecScreenState extends ConsumerState<PropertySpecScreen> {
                           hintText: '2118 Thromming',
                           controller:
                               listpropertyprovider.propertyAddressController,
+                        ),
+                        20.toColumnSpace(),
+                        LabelTitle(text: 'Property State'),
+                        10.toColumnSpace(),
+                        CustomDropdownWidget<String>(
+                          items: nigerianState
+                              .map(
+                                  (e) => CustomDropDownItem(label: e, value: e))
+                              .toList(),
+                          onSelect: (v) {
+                            // listPropertyP.setRentDuration(v.value);
+                            listpropertyprovider.updateSelectedState = v.value;
+                          },
+                          selected: CustomDropDownItem(
+                              label: listpropertyprovider.selectedState,
+                              value: listpropertyprovider.selectedState),
                         ),
                         if (user.role == "Agent" &&
                             listpropertyprovider.listingOption == "sale") ...[

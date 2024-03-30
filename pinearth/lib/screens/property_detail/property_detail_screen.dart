@@ -19,7 +19,7 @@ import 'widgets/product_detail_widget.dart';
 import 'widgets/seller_info_widget.dart';
 
 class PropertyDetailScreen extends ConsumerStatefulWidget {
-  const PropertyDetailScreen({super.key, required this.property});
+  const  PropertyDetailScreen({super.key, required this.property});
 
   final PropertyModel property;
 

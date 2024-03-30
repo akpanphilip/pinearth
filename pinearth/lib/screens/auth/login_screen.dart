@@ -90,7 +90,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         .loginWithGoogle = true;
                     ref
                         .read<RegisterProvider>(registerProvider)
-                        .registerWithGoogle(context);
+                        .registerWithGoogle(context,isLogin: true);
                   },
                   image: "google".png,
                 ),

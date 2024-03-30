@@ -130,6 +130,26 @@ class ApiAgentRepo implements IAgentRepo {
   }
 
   @override
+  Future<Either<IFailure, List<AgentModel>>> getOrSearchEventCenter(
+      [String searchParam = ""]) async {
+    try {
+      String url = "an event center/";
+      if (searchParam.isNotEmpty) {
+        url = "search_event center?search=$searchParam";
+      }
+      final res = await apiService.get("/role/$url", requireToken: true);
+      if (res.status == true) {
+        return Right(
+            List.from(res.data).map((e) => AgentModel.fromJson(e)).toList());
+      }
+      return Left(RepoFailure(res.message!));
+    } catch (error) {
+      // rethrow;
+      return Left(RepoFailure('Error: $error'));
+    }
+  }
+
+  @override
   Future<Either<IFailure, dynamic>> getAgentPropertyes(
       String agentId, bool isADeveloper) async {
     try {

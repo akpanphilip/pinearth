@@ -49,6 +49,12 @@ class RegisterProvider extends ChangeNotifier {
   String? idFile;
   DateTime? dateOfBirth;
   bool passwordIsVisible = false;
+  String selectedState = "Rivers state";
+
+  set updateSelectedState(String state) {
+    selectedState = state;
+    notifyListeners();
+  }
 
   void togglePasswordVisibility() {
     passwordIsVisible = !passwordIsVisible;
@@ -172,7 +178,7 @@ class RegisterProvider extends ChangeNotifier {
   //   }
   // }
 
-  void registerWithGoogle(BuildContext context) async {
+  void registerWithGoogle(BuildContext context, {bool isLogin = false}) async {
     try {
       loadingGoogleInfo = true;
       notifyListeners();
@@ -199,7 +205,7 @@ class RegisterProvider extends ChangeNotifier {
           profilePicture = googleSignInAccount.photoUrl;
           email = googleSignInAccount.email;
 
-          registerWithSocialProvider(context);
+          registerWithSocialProvider(context, isLogin: isLogin);
         } else {
           debugPrint("sign in account is null");
           // throw Exception();
@@ -263,7 +269,9 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 
-  void uploadId(BuildContext context,) async {
+  void uploadId(
+    BuildContext context,
+  ) async {
     try {
       primaryFocus?.unfocus();
       alert.showLoadingAlert("Please wait...");
@@ -280,7 +288,6 @@ class RegisterProvider extends ChangeNotifier {
             context,
             MaterialPageRoute(builder: (context) => RootScreen()),
             (v) => false);
-        
       });
     } catch (error) {
       alert.closeAlert();
@@ -290,23 +297,23 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   void registerWithSocialProvider(BuildContext context,
-      ) async {
+      {bool isLogin = false}) async {
     try {
       primaryFocus?.unfocus();
       alert.showLoadingAlert("Please wait...");
 
-      final res = 
-           await userRepo.registerWithSocialProvider({
-              "email": email,
-              "given_name": givenName,
-              "family_name": familyName,
-              "profile_picture": profilePicture,
-            });
+      final res = await userRepo.registerWithSocialProvider({
+        "email": email,
+        "given_name": givenName,
+        "family_name": familyName,
+        "profile_picture": profilePicture,
+      });
       alert.closeAlert();
       res.fold((l) {
         alert.showErrorAlert("${l.message}");
       }, (r) {
-        alert.showSuccessAlert("Registration successful");
+        alert.showSuccessAlert(
+            isLogin ? "Login successful" : "Registration successful");
 
         // print("profile upload id is ${r.profile?.uploadId}");
 

@@ -152,26 +152,49 @@ class PropertyDetailWidget extends StatelessWidget {
               PropertyFeatureTitle(
                   leading: Image.asset("payments".png),
                   title: "Income generated from property per month",
-                  child: Text(
-                    num.parse(property.incomePerMonth!)
-                        .formattedMoney(currency: "NGN"),
-                    style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
-                  )),
+                  child: Builder(builder: (context) {
+                    num? amount;
+
+                    amount = num.tryParse(property.propertyPrice!
+                        .replaceAll(",", "")
+                        .replaceAll(".", ""));
+
+                    if (amount != null) {
+                      return Text(
+                        amount.formattedMoney(currency: "NGN"),
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })),
             14.toColumnSpace(),
-            PropertyFeatureTitle(
-              leading: Image.asset("payments".png),
-              title: "Price",
-              child: Text(
-                  num.parse(property.propertyPrice!.replaceAll(",", ""))
-                      .formattedMoney(currency: "NGN"),
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                  )),
-            ),
+            if (property.propertyPrice != null &&
+                property.propertyPrice!.trim() != "")
+              Builder(builder: (context) {
+                num? amount;
+
+                amount = num.tryParse(property.propertyPrice!
+                    .replaceAll(",", "")
+                    .replaceAll(".", ""));
+
+                if (amount != null) {
+                  return PropertyFeatureTitle(
+                    leading: Image.asset("payments".png),
+                    title: "Price",
+                    child: Text(amount.formattedMoney(currency: "NGN"),
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        )),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
             // 10.toColumnSpace(),
             // 14.toColumnSpace(),
             // PropertyFeatureTitle(

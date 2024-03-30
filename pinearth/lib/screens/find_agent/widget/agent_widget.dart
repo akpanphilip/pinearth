@@ -79,13 +79,14 @@ class AgentWidget extends StatelessWidget {
                         rating: agent.rating ?? 0,
                       ),
                       3.toColumnSpace(),
-                      Text(
-                        "(${agent.review!.length})",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.toFontSize(),
-                            color: Colors.black.withOpacity(.5)),
-                      )
+                      if (agent.review != null)
+                        Text(
+                          "(${agent.review!.length})",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.toFontSize(),
+                              color: Colors.black.withOpacity(.5)),
+                        )
                     ],
                   ),
                 )

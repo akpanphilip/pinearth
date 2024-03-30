@@ -41,4 +41,5 @@ abstract class IUserRepo {
   Future<Either<IFailure, List<UserSearchResultModel>>> searchUser(
       String param);
   Future<Either<IFailure, AgentModel>> getBusinessProfile();
+  Future<Either<IFailure, bool>> sendComplaint(Map<String,String> message);
 }

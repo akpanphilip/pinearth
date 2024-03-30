@@ -433,6 +433,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
                       const LabelTitle(text: 'Phone number'),
                       10.toColumnSpace(),
                       CustomTextField(
+                        inputType: TextInputType.phone,
                         obscureText: false,
                         hintText: '',
                         controller: scheduleAVisitP.phoneNumberController,

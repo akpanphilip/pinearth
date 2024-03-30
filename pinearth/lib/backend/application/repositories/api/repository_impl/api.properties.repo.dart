@@ -36,7 +36,7 @@ class ApiPropertyRepo implements IPropertyRepo {
   Future<Either<IFailure, dynamic>> scheduleVisit(
       role, ScheduleVisitRequest request) async {
     try {
-      final res = await apiService.post("user/contact/$role/", request.toJson(),
+      final res = await apiService.post("user/contact/agent/", request.toJson(), //user/contact/$role
           requireToken: true);
       if (res.status == true) {
         return const Right(true);

@@ -20,30 +20,36 @@ class CustomErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (showErrorImage) ...[
-            SvgPicture.asset("moon_stars".svg),
-            10.toColumnSpace(),
-          ],
-          Text(
-            message,
-            style: const TextStyle(
-              color: Colors.red,
+      child: GestureDetector(
+        onTap: () {
+          if (onReload != null) {
+            onReload!();
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (showErrorImage) ...[
+              SvgPicture.asset("moon_stars".svg),
+              10.toColumnSpace(),
+            ],
+            Text(
+              message,
+              style: const TextStyle(
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          10.toColumnSpace(),
-          if (onReload != null)
-            InkWell(
-                onTap: () => onReload!(),
-                child: const Text(
-                  'Tap to refresh',
-                  style: TextStyle(color: Colors.black),
-                ))
-        ],
+            10.toColumnSpace(),
+            if (onReload != null)
+              InkWell(
+                  child: const Text(
+                'Tap to refresh',
+                style: TextStyle(color: Colors.black),
+              ))
+          ],
+        ),
       ),
     );
   }

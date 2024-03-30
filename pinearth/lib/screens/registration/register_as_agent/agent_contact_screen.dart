@@ -100,26 +100,29 @@ class _AgentRegistrationContactScreenState
                   ],
                 ),
               ),
-            // if (agentType != bankAgentType &&
-            //     agentType != eventCenterAgentType) ...[
-            //   Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 16),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         const LabelTitle(text: "Email address"),
-            //         10.toColumnSpace(),
-            //         CustomTextField(
-            //           obscureText: false,
-            //           hintText: "example@domain.com",
-            //           controller:
-            //               registerasagentprovider.emailAddressController,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            //   22.toColumnSpace(),
-            // ],
+            if (agentType == developerAgentType ||
+                agentType == eventCenterAgentType ||
+                agentType == agentAgentType ||
+                agentType == landlordAgentType ||
+                agentType == shortletAgentType) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelTitle(text: "Email address"),
+                    10.toColumnSpace(),
+                    CustomTextField(
+                      obscureText: false,
+                      hintText: "example@domain.com",
+                      controller:
+                          registerasagentprovider.emailAddressController,
+                    ),
+                  ],
+                ),
+              ),
+              22.toColumnSpace(),
+            ],
             if (agentType == eventCenterAgentType) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -197,12 +200,13 @@ class _AgentRegistrationContactScreenState
               ),
               22.toColumnSpace(),
             ],
-            if (![
-              agentAgentType,
-              landlordAgentType,
-              bankAgentType,
-              developerAgentType
-            ].contains(registerasagentprovider.agentType)) ...[
+            // if (![
+            //   agentAgentType,
+            //   landlordAgentType,
+            //   bankAgentType,
+            //   developerAgentType
+            // ].contains(registerasagentprovider.agentType))
+            ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -437,6 +441,20 @@ class _AgentRegistrationContactScreenState
                   Expanded(
                       child: CustomButtonWidget(
                     onClick: () {
+                      if ([
+                        agentAgentType,
+                        eventCenterAgentType,
+                        landlordAgentType,
+                        shortletAgentType
+                      ].contains(registerasagentprovider.agentType)) {
+                        if (registerasagentprovider
+                            .emailAddressController.text.isEmpty) {
+                          getIt<IAlertInteraction>().showErrorAlert(
+                              "Please provide an email address");
+                          return;
+                        }
+                      }
+
                       if ([bankAgentType, hotelAgentType, shortletAgentType]
                           .contains(registerasagentprovider.agentType)) {
                         if (agentType == hotelAgentType) {

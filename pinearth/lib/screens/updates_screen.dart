@@ -8,8 +8,11 @@ import 'package:pinearth/providers/user/profile_provider.dart';
 import 'package:pinearth/screens/widgets/custom_error_widget.dart';
 import 'package:pinearth/screens/widgets/empty_state_widget.dart';
 
+import '../backend/application/servicies/localstorage/hive.local_storage.service.dart';
 import '../custom_widgets/custom_widgets.dart';
 import '../models/update_location_model.dart';
+import '../utils/constants/local_storage_keys.dart';
+import 'auth/login_screen.dart';
 
 class UpdatesScreen extends ConsumerStatefulWidget {
   const UpdatesScreen({super.key});
@@ -23,8 +26,22 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () {
-      ref.read(profileProvider).loadNotifications(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      HiveLocalStorageService localStorage = HiveLocalStorageService();
+
+      final token = await localStorage.getItem(userDataBoxKey, userTokenKey,
+          defaultValue: null);
+
+      if (token == null || token.trim() == "") {
+        if (mounted) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        }
+      } else {
+        if (mounted) {
+          ref.read(profileProvider).loadNotifications(context);
+        }
+      }
     });
   }
 
@@ -85,7 +102,7 @@ class _UpdatesScreenState extends ConsumerState<UpdatesScreen> {
               );
             }
             return ListView.builder(
-                itemCount: updateLocation.length,
+                itemCount: data.length,
                 itemBuilder: (context, index) {
                   final notification = data[index];
                   return UpdateWidget(

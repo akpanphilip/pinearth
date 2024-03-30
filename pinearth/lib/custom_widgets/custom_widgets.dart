@@ -415,9 +415,12 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? inputType;
   final Widget? suffixIcon;
   final double maxHeight;
+  final bool expands;
   final bool isFilled;
   final Color fillColor;
   final InputBorder? border;
+  final TextAlignVertical? textAlignVertical;
+  final EdgeInsets? contentPadding;
 
   const CustomTextField(
       {super.key,
@@ -431,7 +434,10 @@ class CustomTextField extends StatelessWidget {
       this.onTap,
       this.validator,
       this.inputType,
+      this.textAlignVertical,
       this.maxHeight = 48,
+      this.expands = false,
+      this.contentPadding,
       this.suffixIcon});
 
   @override
@@ -441,7 +447,10 @@ class CustomTextField extends StatelessWidget {
       style: TextStyle(color: Colors.black, fontSize: 16.toFontSize()),
       controller: controller,
       readOnly: readOnly,
-      textAlignVertical: TextAlignVertical.center,
+      minLines: null,
+      maxLines: expands ? null : 1,
+      expands: expands,
+      textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
       validator: validator,
       onTap: () {
         if (onTap != null) {
@@ -450,7 +459,7 @@ class CustomTextField extends StatelessWidget {
       },
       keyboardType: inputType,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 19),
+          contentPadding: contentPadding ?? EdgeInsets.symmetric(vertical: 0, horizontal: 19),
           fillColor: fillColor,
           filled: isFilled,
           border: border ??

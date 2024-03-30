@@ -11,6 +11,7 @@ import 'package:pinearth/screens/auth/login_screen.dart';
 import 'package:pinearth/utils/constants/local_storage_keys.dart';
 
 import '../../backend/domain/models/entities/agent_model.dart';
+import '../../screens/feedback_alert/bot_toast_feedback_alert.dart';
 
 class ProfileProvider extends BaseProvider {
   final IUserRepo userRepo;
@@ -22,9 +23,12 @@ class ProfileProvider extends BaseProvider {
   final agentProfileState = ProviderActionState<dynamic>();
   final developerProfileState = ProviderActionState<AgentModel>();
   final notificationState = ProviderActionState<List<NotificationModel>>();
+  final sendCompaintState = ProviderActionState<bool>();
 
   bool canList = false;
   String newProfilePic = "";
+
+  final BotToastAlert botToastAlert = BotToastAlert();
 
   void setProfileState(UserModel res) {
     profileState.toSuccess(res);
@@ -50,7 +54,9 @@ class ProfileProvider extends BaseProvider {
           toLogin(context);
         }
       }, (r) {
-        canList = ['Agent', 'Developer', 'Short let'].contains(r.role);
+        print("role is ${r.role} ************* ");
+        canList =
+            ['Agent', 'Developer', 'Short let', 'Short-let'].contains(r.role);
         loadAgentProfile(context);
         if (r.role != null && r.role!.contains("Developer")) {
           loadDeveloperProfile(context);
@@ -110,14 +116,43 @@ class ProfileProvider extends BaseProvider {
       // final email = await localStorage.getItem(userDataBoxKey, userEmailKey, defaultValue: null);
       final res = await userRepo.notifications();
       res.fold((l) {
-        toLogin(context);
+        notificationState.toError(l.message);
+        notifyListeners();
       }, (r) {
         notificationState.toSuccess(r);
         notifyListeners();
       });
     } catch (error) {
-      toLogin(context);
+      notificationState.toError("an unknown error has occurred");
       rethrow;
+    }
+  }
+
+  void sendComplaint(Map<String, String> data) async {
+    try {
+      botToastAlert.showLoadingAlert("");
+
+      sendCompaintState.toLoading();
+      notifyListeners();
+
+      final res = await userRepo.sendComplaint(data);
+      botToastAlert.closeAlert();
+
+      res.fold((l) {
+        botToastAlert.showErrorAlert(l.message);
+        sendCompaintState.toError(l.message);
+      }, (r) {
+        botToastAlert.showSuccessAlert("Message sent successfully");
+        sendCompaintState.toSuccess(r);
+        notifyListeners();
+      });
+    } catch (error) {
+      botToastAlert.closeAlert();
+      botToastAlert.showSuccessAlert("unknown error");
+
+      sendCompaintState.toError("unknown error");
+
+      // rethrow;
     }
   }
 

@@ -29,6 +29,7 @@ class PropertyWidget extends ConsumerWidget {
         ref.watch(myPropertyListingProvider).isSaved(property.id.toString());
     final profileState = ref.read(profileProvider).profileState;
     final isLoggedIn = profileState.data != null;
+
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -173,16 +174,27 @@ class PropertyWidget extends ConsumerWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (property.propertyPrice != null)
-                            Text(
-                                num.parse(property.propertyPrice!
-                                        .replaceAll(",", ""))
-                                    .formattedMoney(currency: "NGN"),
-                                // NGN/Month
-                                style: GoogleFonts.nunito(
-                                    color: const Color(0xff1173AB),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700)),
+                          if (property.propertyPrice != null &&
+                              property.propertyPrice!.trim() != "")
+                            Builder(builder: (context) {
+                              num? amount;
+
+                              amount = num.tryParse(property.propertyPrice!
+                                  .replaceAll(",", "")
+                                  .replaceAll(".", ""));
+
+                              if (amount != null) {
+                                return Text(
+                                    amount!.formattedMoney(currency: "NGN"),
+                                    // NGN/Month
+                                    style: GoogleFonts.nunito(
+                                        color: const Color(0xff1173AB),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700));
+                              } else {
+                                return Container();
+                              }
+                            }),
                           5.toColumnSpace(),
                           Text(
                             '${property.title} in ${property.address}',
@@ -304,26 +316,33 @@ class PropertyWidget extends ConsumerWidget {
                           21.toColumnSpace(),
                           Row(
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  // context.router;
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AgentDetailScreen(
-                                                  agent: property.agent!,
-                                                  property: property,
-                                              )));
-                                },
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      property.owner.profile!.uploadId!,
-                                      maxWidth: 30,
-                                      maxHeight: 30),
-                                ),
-                              ),
+                              (property.owner.profile?.uploadId != null)
+                                  ? InkWell(
+                                      onTap: () {
+                                        // context.router;
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AgentDetailScreen(
+                                                      agent: property.agent!,
+                                                      property: property,
+                                                    )));
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                property
+                                                    .owner.profile!.uploadId!,
+                                                maxWidth: 30,
+                                                maxHeight: 30),
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: AppColor().primary,
+                                    ),
                               6.toRowSpace(),
                               Expanded(
                                 child: Column(

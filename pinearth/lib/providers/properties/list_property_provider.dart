@@ -50,8 +50,16 @@ class ListPropertyProvider extends BaseProvider {
   List<String> housePlanImages = [];
   List<String> propertySizeImages = [];
   UserSearchResultModel? owner;
+    String selectedState = "Rivers state";
+
+
+set updateSelectedState(String state) {
+    selectedState = state;
+    notifyListeners();
+  }
 
   void reset() {
+    selectedState = "Rivers state";
     propertyImages = [];
     livingRoomImages = [];
     toiletImages = [];

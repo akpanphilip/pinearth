@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +9,8 @@ import 'package:pinearth/firebase_options.dart';
 import 'package:pinearth/locator.dart';
 
 import 'screens/onboarding_screen.dart';
+import 'utils/styles/colors.dart';
 
-//
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +36,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Color.fromARGB(255, 5, 113, 201)));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: appColor.primary));
   }
 
   @override

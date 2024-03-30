@@ -94,7 +94,7 @@ class _EditProfileBodyState extends ConsumerState<EditProfileBody> {
       final editBusinessProviderProvider = ref.watch(registerAsAgentProvider);
 
       editBusinessProviderProvider.nameController.text =
-          widget.profile.name ?? '';
+          widget.profile.companyName ?? '';
       editBusinessProviderProvider.emailAddressController.text =
           widget.profile.email ?? "";
       editBusinessProviderProvider.companyNameController.text =

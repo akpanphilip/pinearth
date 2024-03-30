@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinearth/custom_widgets/custom_widgets.dart';
@@ -22,11 +24,15 @@ class FindAgentScreen extends ConsumerStatefulWidget {
 }
 
 class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
+  Timer? timer;
+
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(findAgentProvider).setAgentType(widget.type);
+      final findAgentRef = ref.read(findAgentProvider);
+      findAgentRef.setAgentType(widget.type);
+      findAgentRef.initialize();
     });
   }
 
@@ -76,8 +82,13 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 31.0),
               child: SearchPropertyFieldWidget(
-                  controller:
-                      ref.watch(findAgentProvider).searchParamController),
+                controller: ref.watch(findAgentProvider).searchParamController,
+                onChanged: () {
+                  if (timer != null) timer!.cancel();
+                  timer = Timer(const Duration(milliseconds: 500),
+                      () => ref.read(findAgentProvider).initialize());
+                },
+              ),
             ),
             41.toColumnSpace(),
             Expanded(
@@ -96,7 +107,7 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
                             ref.read(findAgentProvider).initialize()),
                   );
                 }
-                print(agentState.data);
+                // print(agentState.data);
                 final data = agentState.data ?? [];
                 if (data.isEmpty) {
                   return EmptyStateWidget(

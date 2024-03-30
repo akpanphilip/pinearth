@@ -45,11 +45,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // if (mounted) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
-          defaultValue: null);
+          defaultValue: false);
 
       final user = ref.watch(profileProvider).profileState.data;
 
-      if ((user != null && user.hasRole == true) && (value == null)) {
+      if ((user != null && user.hasRole == false) && !value) {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           if (mounted) {
             if (!Scaffold.of(context).isDrawerOpen) {
@@ -94,8 +94,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final agentListState = agentListP.agentsState;
     final user = ref.watch(profileProvider).profileState.data;
     final isLoggedIn = user != null;
-
-
 
     // final user = ref.watch(profileProvider);
 
@@ -224,6 +222,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       //on success
 
                       List<PropertyModel> data = propertyListState.data ?? [];
+                      // print("data length is ${data}");
                       List<dynamic> agents = agentListState.data ?? [];
 
                       if (currentClass != 'All') {

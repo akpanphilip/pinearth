@@ -51,7 +51,6 @@ class _RootScreenState extends ConsumerState<RootScreen> {
 
   int _bottomNavIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     final profileP = ref.watch(profileProvider);
@@ -66,7 +65,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: Scaffold(
-        drawerEnableOpenDragGesture: true, //TODO change to false
+        drawerEnableOpenDragGesture: false,
         body: pages[_bottomNavIndex],
         drawer: Drawer(
           backgroundColor: appColor.primary,

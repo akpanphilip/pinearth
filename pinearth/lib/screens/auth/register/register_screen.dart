@@ -15,7 +15,9 @@ import 'package:pinearth/utils/styles/colors.dart';
 
 import '../../../custom_widgets/custom_widgets.dart';
 import '../../../locator.dart';
+import '../../../utils/constants/app_constants.dart';
 import '../../feedback_alert/i_feedback_alert.dart';
+import '../../widgets/custom_drop_down.dart';
 import '../widgets/social_provider.dart';
 import 'home_address.dart';
 
@@ -72,8 +74,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       title: "Sign up with Google",
                       isLoading: provider.loadingGoogleInfo,
                       function: () {
-                        ref.read<RegisterProvider>(registerProvider).loginWithGoogle = true;
-                        ref.read<RegisterProvider>(registerProvider).registerWithGoogle(context);
+                        ref
+                            .read<RegisterProvider>(registerProvider)
+                            .loginWithGoogle = true;
+                        ref
+                            .read<RegisterProvider>(registerProvider)
+                            .registerWithGoogle(context);
 
                         // ref
                         //     .read<RegisterProvider>(registerProvider)
@@ -156,6 +162,32 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ref.read(registerProvider).setDateOfBirth(date);
                   }
                 },
+              ),
+              20.toColumnSpace(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const LabelTitle(text: "State"),
+                  10.toColumnSpace(),
+                  CustomDropdownWidget<String>(
+                    items: nigerianState
+                        .map((e) => CustomDropDownItem(label: e, value: e))
+                        .toList(),
+                    onSelect: (v) {
+                      // listPropertyP.setRentDuration(v.value);
+                      registerP.updateSelectedState = v.value;
+                    },
+                    selected: CustomDropDownItem(
+                        label: registerP.selectedState,
+                        value: registerP.selectedState),
+                  ),
+                  // CustomTextField(
+                  //   obscureText: false,
+                  //   hintText: "E.g Rivers State",
+                  //   controller: registerasagentprovider.stateController,
+                  //   inputType: TextInputType.text,
+                  // ),
+                ],
               ),
               20.toColumnSpace(),
 

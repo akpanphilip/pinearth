@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinearth/backend/domain/models/entities/property_model.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
@@ -148,7 +149,8 @@ class PropertyDetailWidget extends StatelessWidget {
             ),
             10.toColumnSpace(),
             if (property.incomePerMonth != null &&
-                property.incomePerMonth!.trim() != "")
+                property.incomePerMonth!.trim() != "" &&
+                property.propertyStatus != "For rent")
               PropertyFeatureTitle(
                   leading: Image.asset("payments".png),
                   title: "Income generated from property per month",
@@ -185,11 +187,23 @@ class PropertyDetailWidget extends StatelessWidget {
                   return PropertyFeatureTitle(
                     leading: Image.asset("payments".png),
                     title: "Price",
-                    child: Text(amount.formattedMoney(currency: "NGN"),
-                        style: GoogleFonts.nunito(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                        )),
+                    child: Builder(builder: (context) {
+                      String amountString =
+                          amount!.formattedMoney(currency: "NGN");
+                      if ((property.propertyStatus == "For rent")) {
+                        if (property.duration != null &&
+                            property.duration!.isNotEmpty) {
+                          amountString = "$amountString/${property.duration}"
+                              .removeAllWhitespace;
+                        }
+                      }
+
+                      return Text(amountString,
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                          ));
+                    }),
                   );
                 } else {
                   return Container();

@@ -36,6 +36,7 @@ class PropertyModel {
   final List<HousePlan> housePlan;
   final List<Size> size;
   final List<ReviewModel>? reviews;
+  final String? duration;
 
   PropertyModel({
     required this.id,
@@ -47,6 +48,7 @@ class PropertyModel {
     this.noOfRooms,
     this.noOfBathrooms,
     this.lotSize,
+    this.duration,
     this.address,
     this.propertyStatus,
     this.appliances = const <Appliances>[],
@@ -113,6 +115,7 @@ class PropertyModel {
       yearsRenovated: json["years_renovated"],
       yearsReconstructed: json["years_reconstructed"],
       parkingSpace: json["parking_space"],
+      duration: json["duration"],
       appliance: json["appliance"],
       appliances: (json["appliances"] != null)
           ? List.from((json["appliances"]))
@@ -152,6 +155,7 @@ class PropertyModel {
         "property_type": propertyType,
         "no_of_rooms": noOfRooms,
         "no_of_bathrooms": noOfBathrooms,
+        "duration": duration,
         "lot_size": lotSize,
         "address": address,
         "property_status": propertyStatus,

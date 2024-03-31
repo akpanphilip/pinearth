@@ -37,10 +37,18 @@ class SearchPropertyProvider extends BaseProvider {
     try {
       allPropertySearchResult.toLoading();
       notifyListeners();
+
+      // await Future.delayed(Duration(seconds: 10), () {
+      //   allPropertySearchResult.toSuccess([]);
+      //   notifyListeners();
+      // });
+
+      // return;
       final res = await propertyRepo.searchProperties(
           address: searchParamController.text,
           propertyPrice: searchParamController.text,
-          propertyStatus: propertyStatus,
+          state: searchParamController.text,
+          propertyStatus: (propertyStatus == "All") ? "" : propertyStatus,
           propertyType: searchParamController.text);
       res.fold((l) {
         allPropertySearchResult.toError(l.message);
@@ -50,6 +58,7 @@ class SearchPropertyProvider extends BaseProvider {
         notifyListeners();
       });
     } catch (error) {
+      print("error \t\t $error");
       allPropertySearchResult.toError("Error: $error");
       notifyListeners();
     }

@@ -50,10 +50,9 @@ class ListPropertyProvider extends BaseProvider {
   List<String> housePlanImages = [];
   List<String> propertySizeImages = [];
   UserSearchResultModel? owner;
-    String selectedState = "Rivers state";
+  String selectedState = "Rivers state";
 
-
-set updateSelectedState(String state) {
+  set updateSelectedState(String state) {
     selectedState = state;
     notifyListeners();
   }
@@ -212,8 +211,6 @@ set updateSelectedState(String state) {
 
     // String status = listingOption;
 
-
-
     // return;
 
     try {
@@ -227,9 +224,10 @@ set updateSelectedState(String state) {
 
       String status = listingOption;
 
-     print("listing property");
+      print("listing property");
 
       final res = await propertyRepo.listProperty(FormData.fromMap({
+        "state": selectedState,
         'title': propertyNameController.text,
         'desc': propertyDescriptionController.text,
         'property_type': propertyTypeController.text,
@@ -237,6 +235,7 @@ set updateSelectedState(String state) {
         'no_of_bathrooms': numberOfBathroomController.text,
         'lot_size': propertyLotSizeController.text,
         'address': propertyAddressController.text,
+        'duration': rentDuration,
         'property_status': "For $status",
         'property_price': propertyPriceController.text,
         'income_per_month': propertyIncomePerYearController.text,

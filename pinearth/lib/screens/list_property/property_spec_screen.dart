@@ -191,12 +191,19 @@ class _PropertySpecScreenState extends ConsumerState<PropertySpecScreen> {
                                 return;
                               }
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PropertySpecialSpecScreen()),
-                              );
+                              final profileRef = ref.read(profileProvider);
+
+                              if (profileRef.profileState.data?.role ==
+                                  developerAgentType) {
+                                listpropertyprovider.listProperty(context);
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PropertySpecialSpecScreen()),
+                                );
+                              }
                             },
                             color: appColor.primary,
                             child:

@@ -49,7 +49,8 @@ class _ListPropertyScreenState extends ConsumerState<ListPropertyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profileState = ref.watch(profileProvider).profileState;
+    final profileRef = ref.watch(profileProvider);
+    final profileState = profileRef.profileState;
     final profile = profileState.data!;
 
     return Scaffold(
@@ -129,7 +130,9 @@ class _ListPropertyScreenState extends ConsumerState<ListPropertyScreen> {
                       SizedBox(
                           child: CustomButtonWidget(
                               onClick: () {
-                                if (profile != null && profile.hasRole!) {
+                                if (profile != null &&
+                                    profile.hasRole! &&
+                                    profileRef.canList) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

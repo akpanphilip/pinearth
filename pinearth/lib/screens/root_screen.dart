@@ -52,15 +52,23 @@ class _RootScreenState extends ConsumerState<RootScreen> {
   int _bottomNavIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(profileProvider).initialize(context, failSilently: true);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final profileP = ref.watch(profileProvider);
-    final profile = profileP.profileState;
-    // bool hasRole = false;
-    bool canList = false;
-    if (profile.data != null) {
-      // hasRole = profile.data!.hasRole!;
-      canList = profileP.canList;
-    }
+    // final profile = profileP.profileState;
+    // // bool hasRole = false;
+    // bool canList = false;
+    // if (profile.data != null) {
+    //   // hasRole = profile.data!.hasRole!;
+    //   canList = profileP.canList;
+    // }
 
     return WillPopScope(
       onWillPop: () => Future.value(false),
@@ -84,7 +92,7 @@ class _RootScreenState extends ConsumerState<RootScreen> {
                     icon: IconlyLight.bookmark, page: 2, label: "Saved Homes"),
                 _bottomAppBarItem(context,
                     icon: IconlyLight.notification, page: 1, label: "Updates"),
-                if (canList)
+                if (profileP.canList)
                   _bottomAppBarItem(context,
                       icon: IconlyLight.category,
                       page: 3,

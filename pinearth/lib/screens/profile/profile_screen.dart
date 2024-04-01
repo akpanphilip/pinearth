@@ -86,311 +86,304 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
             return Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20, horizontal: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          profileP.updateProfilePicture();
-                        },
-                        child: Column(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      profileP.updateProfilePicture();
+                    },
+                    child: Column(
+                      children: [
+                        ///Display picture.
+                        (profileP.newProfilePic != "")
+                            ? SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10000),
+                                    child: Image.file(
+                                      File(profileP.newProfilePic),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    )),
+                              )
+                            : Column(
+                                children: [
+                                  (!profile.hasRole!)
+                                      ? const Image(
+                                          image: AssetImage(
+                                              'assets/images/user.png'))
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10000),
+                                          child: Builder(
+                                            builder: (context) {
+                                              if (profile.hasRole!) {
+                                                if (profile.role == "Bank") {
+                                                  return (profile.profile
+                                                                  ?.avatar ==
+                                                              null ||
+                                                          profile.profile
+                                                                  ?.avatar
+                                                                  ?.trim() ==
+                                                              "")
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    profile
+                                                                        .profile
+                                                                        ?.avatar,
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }
+                                                if (profile.role ==
+                                                    developerAgentType) {
+                                                  return (profileP
+                                                                  .developerProfileState
+                                                                  .data
+                                                                  ?.profilePhoto ==
+                                                              null ||
+                                                          profileP
+                                                                  .developerProfileState
+                                                                  .data
+                                                                  ?.profilePhoto!
+                                                                  .trim() ==
+                                                              "")
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    profileP
+                                                                            .developerProfileState
+                                                                            .data!
+                                                                            .profilePhoto ??
+                                                                        "",
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }
+                                              }
+                                              return ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10000),
+                                                child:
+                                                    Builder(builder: (context) {
+                                                  final agentProfileState = ref
+                                                      .watch(profileProvider)
+                                                      .agentProfileState;
+
+                                                  if (agentProfileState
+                                                      .isLoading()) {
+                                                    return const Image(
+                                                        image: AssetImage(
+                                                            'assets/images/user.png'));
+                                                  }
+                                                  if (agentProfileState
+                                                      .isError()) {
+                                                    return const Image(
+                                                        image: AssetImage(
+                                                            'assets/images/user.png'));
+                                                  }
+
+                                                  return (ref
+                                                                  .read(
+                                                                      profileProvider)
+                                                                  .agentProfileState
+                                                                  .data?[
+                                                              'profile_photo'] ==
+                                                          null)
+                                                      ? const Image(
+                                                          image: AssetImage(
+                                                              'assets/images/user.png'))
+                                                      : Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: CachedNetworkImageProvider(
+                                                                    ref
+                                                                        .read(
+                                                                            profileProvider)
+                                                                        .agentProfileState
+                                                                        .data['profile_photo'],
+                                                                    maxWidth:
+                                                                        100,
+                                                                    maxHeight:
+                                                                        100,
+                                                                  ),
+                                                                  fit: BoxFit.cover)),
+                                                        );
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                        )
+                                ],
+                              )
+                      ],
+                    ),
+                  ),
+
+                  ///End
+
+                  const SizedBox(height: 10),
+                  Builder(builder: (context) {
+                    if (profile.role == developerAgentType) {
+                      if (profileP.developerProfileState.data != null) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
-
-                            ///Display picture.
-                            (profileP.newProfilePic != "")
-                                ? SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10000),
-                                  child: Image.file(
-                                    File(profileP.newProfilePic), width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,)),
-                            )
-                                : Column(
-                              children: [
-                                (!profile.hasRole!)
-                                    ? const Image(
-                                    image: AssetImage(
-                                        'assets/images/user.png'))
-                                    : ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.circular(10000),
-                                  child: Builder(
-                                    builder: (context) {
-                                      if (profile.hasRole!) {
-                                        if (profile.role == "Bank") {
-                                          return (profile.profile
-                                              ?.avatar ==
-                                              null ||
-                                              profile.profile
-                                                  ?.avatar
-                                                  ?.trim() ==
-                                                  "")
-                                              ? const Image(
-                                              image: AssetImage(
-                                                  'assets/images/user.png'))
-                                              : Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: CachedNetworkImageProvider(
-                                                      profile
-                                                          .profile
-                                                          ?.avatar,
-                                                      maxWidth:
-                                                      100,
-                                                      maxHeight:
-                                                      100,
-                                                    ),
-                                                    fit: BoxFit.cover)),
-                                          );
-                                        }
-                                        if (profile.role ==
-                                            developerAgentType) {
-                                          return (profileP
-                                              .developerProfileState
-                                              .data
-                                              ?.profilePhoto ==
-                                              null ||
-                                              profileP
-                                                  .developerProfileState
-                                                  .data
-                                                  ?.profilePhoto!
-                                                  .trim() ==
-                                                  "")
-                                              ? const Image(
-                                              image: AssetImage(
-                                                  'assets/images/user.png'))
-                                              : Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: CachedNetworkImageProvider(
-                                                      profileP
-                                                          .developerProfileState
-                                                          .data!
-                                                          .profilePhoto ??
-                                                          "",
-                                                      maxWidth:
-                                                      100,
-                                                      maxHeight:
-                                                      100,
-                                                    ),
-                                                    fit: BoxFit.cover)),
-                                          );
-                                        }
-                                      }
-                                      return ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(
-                                            10000),
-                                        child:
-                                        Builder(builder: (context) {
-                                          final agentProfileState = ref
-                                              .watch(profileProvider)
-                                              .agentProfileState;
-
-                                          if (agentProfileState
-                                              .isLoading()) {
-                                            return const Image(
-                                                image: AssetImage(
-                                                    'assets/images/user.png'));
-                                          }
-                                          if (agentProfileState
-                                              .isError()) {
-                                            return const Image(
-                                                image: AssetImage(
-                                                    'assets/images/user.png'));
-                                          }
-
-                                          return (ref
-                                              .read(
-                                              profileProvider)
-                                              .agentProfileState
-                                              .data?[
-                                          'profile_photo'] ==
-                                              null)
-                                              ? const Image(
-                                              image: AssetImage(
-                                                  'assets/images/user.png'))
-                                              : Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: CachedNetworkImageProvider(
-                                                      ref
-                                                          .read(
-                                                          profileProvider)
-                                                          .agentProfileState
-                                                          .data['profile_photo'],
-                                                      maxWidth:
-                                                      100,
-                                                      maxHeight:
-                                                      100,
-                                                    ),
-                                                    fit: BoxFit.cover)),
-                                          );
-                                        }),
-                                      );
-                                    },
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-
-                      ///End
-
-                      const SizedBox(height: 10),
-                      Builder(builder: (context) {
-                        if (profile.role == developerAgentType) {
-                          if (profileP.developerProfileState.data != null) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                    '${profileP.developerProfileState.data
-                                        ?.companyName}',
-                                    style: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18)),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                if (profileP.developerProfileState.data!
-                                    .isVerified !=
-                                    null &&
-                                    profileP
-                                        .developerProfileState.data!
-                                        .isVerified!)
-                                  SvgPicture.asset("verified".svg),
-                              ],
-                            );
-                          } else {
-                            return Container();
-                          }
-                        } else {
-                          return Center(
-                            child: Text(
-                                '${profile.firstName} ${profile.lastName}',
+                            Text(
+                                '${profileP.developerProfileState.data?.companyName}',
                                 style: GoogleFonts.nunito(
                                     fontWeight: FontWeight.w700, fontSize: 18)),
-                          );
-                        }
-                      }),
-                      const SizedBox(height: 20),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            if (profileP.developerProfileState.data!
+                                        .isVerified !=
+                                    null &&
+                                profileP
+                                    .developerProfileState.data!.isVerified!)
+                              SvgPicture.asset("verified".svg),
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    } else {
+                      return Center(
+                        child: Text('${profile.firstName} ${profile.lastName}',
+                            style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w700, fontSize: 18)),
+                      );
+                    }
+                  }),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfileScreen()),
+                      );
+                    },
+                    child: const ProfileSection(
+                      img: 'assets/images/edit.png',
+                      text: 'Edit profile',
+                    ),
+                  ),
+                  if (profile.hasRole!) ...[
+                    if (canList)
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (
-                                    context) => const EditProfileScreen()),
+                                builder: (context) =>
+                                    const MyListedPropertiesScreen()),
+                          );
+                        },
+                        child: const ProfileSection(
+                          img: 'assets/images/listed.png',
+                          text: 'My listed properties',
+                        ),
+                      ),
+                    if (profile.role != null)
+                      GestureDetector(
+                        onTap: () {
+                          ref.read(registerAsAgentProvider).agentType =
+                              profile.role!;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const EditBusinessProfileScreen()),
                           );
                         },
                         child: const ProfileSection(
                           img: 'assets/images/edit.png',
-                          text: 'Edit profile',
+                          text: 'Edit business profile',
                         ),
                       ),
-                      if (profile.hasRole!) ...[
-                        if (canList)
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const MyListedPropertiesScreen()),
-                              );
-                            },
-                            child: const ProfileSection(
-                              img: 'assets/images/listed.png',
-                              text: 'My listed properties',
-                            ),
-                          ),
-                        if (profile.role == developerAgentType)
-                          GestureDetector(
-                            onTap: () {
-                              ref
-                                  .read(registerAsAgentProvider)
-                                  .agentType =
-                              profile.role!;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const EditBusinessProfileScreen()),
-                              );
-                            },
-                            child: const ProfileSection(
-                              img: 'assets/images/edit.png',
-                              text: 'Edit business profile',
-                            ),
-                          ),
-                      ],
+                  ],
 
-                      if (!profileState.data!.googleUser)
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SecurityScreen()),
-                            );
-                          },
-                          child: const ProfileSection(
-                            img: 'assets/images/security.png',
-                            text: 'Security',
-                          ),
-                        ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HowToUse()),
-                          );
-                        },
-                        child: const ProfileSection(
-                          img: 'assets/images/how.png',
-                          text: 'How to use?',
-                        ),
+                  if (!profileState.data!.googleUser)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SecurityScreen()),
+                        );
+                      },
+                      child: const ProfileSection(
+                        img: 'assets/images/security.png',
+                        text: 'Security',
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const CustomerSupportScreen()));
-                        },
-                        child: const ProfileSection(
-                          img: 'assets/images/customer-support.png',
-                          text: 'Customer support',
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          ref.read(profileProvider).logout(context);
-                        },
-                        child: const ProfileSection(
-                          img: '',
-                          text: 'Logout',
-                        ),
-                      )
-                    ],
+                    ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HowToUse()),
+                      );
+                    },
+                    child: const ProfileSection(
+                      img: 'assets/images/how.png',
+                      text: 'How to use?',
+                    ),
                   ),
-                ));
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const CustomerSupportScreen()));
+                    },
+                    child: const ProfileSection(
+                      img: 'assets/images/customer-support.png',
+                      text: 'Customer support',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(profileProvider).logout(context);
+                    },
+                    child: const ProfileSection(
+                      img: '',
+                      text: 'Logout',
+                    ),
+                  )
+                ],
+              ),
+            ));
           }),
         ),
       ),

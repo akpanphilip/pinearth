@@ -10,9 +10,10 @@ import 'package:pinearth/utils/extensions/string_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
 class AgentWidget extends StatelessWidget {
-  const AgentWidget({super.key, required this.agent});
+  const AgentWidget({super.key, required this.agent, this.showBookNow = false});
 
   final AgentModel agent;
+  final bool showBookNow;
 
   @override
   Widget build(BuildContext context) {
@@ -75,59 +76,94 @@ class AgentWidget extends StatelessWidget {
                         );
                       }),
                       6.toColumnSpace(),
-                      StarRatingWidget(
-                        rating: agent.rating ?? 0,
+                      Row(
+                        children: [
+                          StarRatingWidget(
+                            rating: agent.rating ?? 0,
+                          ),
+                          if (agent.review != null && !showBookNow) ...[
+                            3.toRowSpace(),
+                            Text(
+                              "(${agent.review!.length})",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18.toFontSize(),
+                                  color: Colors.black.withOpacity(.5)),
+                            ),
+                          ]
+                        ],
                       ),
                       3.toColumnSpace(),
-                      if (agent.review != null)
+                      if (agent.review != null && showBookNow)
                         Text(
                           "(${agent.review!.length})",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18.toFontSize(),
                               color: Colors.black.withOpacity(.5)),
-                        )
+                        ),
+                      if (!showBookNow) ...[
+                        3.toColumnSpace(),
+                        Row(
+                          children: [
+                            SvgPicture.asset('telephone'.svg),
+                            8.toRowSpace(),
+                            Expanded(
+                              child: Text(
+                                agent.phoneNo!,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 18.toFontSize(),
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black.withOpacity(.5)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ]
                     ],
                   ),
                 )
               ],
             ),
             10.toColumnSpace(),
-            Row(
-              children: [
-                SvgPicture.asset('telephone'.svg),
-                8.toRowSpace(),
-                Expanded(
-                  child: Text(
-                    agent.phoneNo!,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 18.toFontSize(),
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black.withOpacity(.5)),
+            if (showBookNow)
+              Row(
+                children: [
+                  SvgPicture.asset('telephone'.svg),
+                  8.toRowSpace(),
+                  Expanded(
+                    child: Text(
+                      agent.phoneNo!,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 18.toFontSize(),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black.withOpacity(.5)),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             10.toColumnSpace(),
-            CustomButtonWidget(
-                color: appColor.primary,
-                onClick: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AgentDetailScreen(agent: agent)));
-                },
-                child: Center(
-                  child: Text(
-                    "Book now",
-                    style: TextStyle(
-                        fontSize: 20.toFontSize(),
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  ),
-                ))
+            if (showBookNow)
+              CustomButtonWidget(
+                  color: appColor.primary,
+                  onClick: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AgentDetailScreen(agent: agent)));
+                  },
+                  child: Center(
+                    child: Text(
+                      "Book now",
+                      style: TextStyle(
+                          fontSize: 20.toFontSize(),
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ))
           ],
         ),
       ),

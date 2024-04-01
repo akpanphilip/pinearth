@@ -31,41 +31,51 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   void onTap(String selected) {
     if (selected == 'Agents') {
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   const FindAgentScreen(type: agentAgentType)));
     } else if (selected == 'Landlord') {
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   const FindAgentScreen(type: landlordAgentType)));
     } else if (selected == 'Hotel') {
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   const FindAgentScreen(type: hotelAgentType)));
+    } else if (selected == 'House loans') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const FindAgentScreen(type: bankAgentType)));
     } else if (selected == 'Developer') {
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   const FindAgentScreen(type: developerAgentType)));
+    } else if (selected == 'Shortlet') {
+      // ref.read(searchPropertyProvider).updatePropertyStatus = "";
+      ref.read(searchPropertyProvider).updatePropertyType = selected;
+      ref.read(searchPropertyProvider).searchProperty();
+
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             const FindAgentScreen(type: eventCenterAgentType)));
     } else if (selected == 'Event Center') {
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   const FindAgentScreen(type: eventCenterAgentType)));
-    } else if (selected == 'Shortlet') {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const FindAgentScreen(type: shortletAgentType)));
     } else {
       ref.read(searchPropertyProvider).updatePropertyStatus = selected;
       ref.read(searchPropertyProvider).searchProperty();
@@ -130,6 +140,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     38.toRowSpace(),
                   ],
                 ),
+                57.toColumnSpace(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: SearchPropertyFieldWidget(
+                      controller: ref
+                          .read(searchPropertyProvider)
+                          .searchParamController),
+                ),
                 30.toColumnSpace(),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -178,27 +196,22 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   ),
                 ),
                 57.toColumnSpace(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: SearchPropertyFieldWidget(
-                      controller: ref
-                          .read(searchPropertyProvider)
-                          .searchParamController),
-                ),
-                10.toColumnSpace(),
                 Consumer(
                   builder: (context, ref, child) {
                     final searchProvider = ref.watch(searchPropertyProvider);
                     final propertySearchState =
                         searchProvider.allPropertySearchResult;
-                    if (searchProvider.searchParamController.text.isEmpty &&
-                        searchProvider.propertyStatus == "") {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 30.0),
-                          child: Text("Start typing to search..."),
-                        ),
-                      );
+                    // if (searchProvider.searchParamController.text.isEmpty &&
+                    //     searchProvider.propertyStatus == "") {
+                    //   return const Center(
+                    //     child: Padding(
+                    //       padding: EdgeInsets.only(top: 30.0),
+                    //       child: Text("Start typing to search..."),
+                    //     ),
+                    //   );
+                    // }
+                    if (propertySearchState.isInitial()) {
+                      return Container();
                     }
                     if (propertySearchState.isLoading()) {
                       return const Center(

@@ -33,7 +33,7 @@ class SearchPropertyFieldWidget extends StatelessWidget {
         }
       },
       decoration: InputDecoration(
-          hintText: 'Enter an address, neighborhood or zip code',
+          hintText: 'Enter an address, neighborhood or state',
           hintStyle: TextStyle(
               fontSize: 12.toFontSize(),
               fontWeight: FontWeight.w400,

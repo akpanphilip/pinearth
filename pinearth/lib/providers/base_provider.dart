@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class BaseProvider extends ChangeNotifier {
-
   String _message = 'Loading...';
 
   GeneralPageState _pageState = GeneralPageState.Loading;
@@ -32,6 +31,7 @@ class BaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get isInitial => _pageState == GeneralPageState.Initial;
   bool get isLoading => _pageState == GeneralPageState.Loading;
   bool get isLoaded => _pageState == GeneralPageState.Loaded;
   bool get isError => _pageState == GeneralPageState.Error;
@@ -40,17 +40,20 @@ class BaseProvider extends ChangeNotifier {
   bool isStateLoading(GeneralPageState state) {
     return state.isLoading();
   }
+
   bool isStateLoaded(GeneralPageState state) {
     return state.isLoaded();
   }
+
   bool isStateError(GeneralPageState state) {
     return state.isError();
   }
 }
 
-enum GeneralPageState {Loading, Loaded, Error}
+enum GeneralPageState { Loading, Loaded, Error, Initial }
 
 extension ActionState on GeneralPageState {
+  bool isInitial() => this == GeneralPageState.Initial;
   bool isLoading() => this == GeneralPageState.Loading;
   bool isLoaded() => this == GeneralPageState.Loaded;
   bool isError() => this == GeneralPageState.Error;
@@ -61,45 +64,48 @@ class ProviderActionState<T> {
   String message = "Nothing to show";
   T? data;
 
-  ProviderActionState({
-    this.state = GeneralPageState.Loading, 
-    this.message = "Nothing to show", 
-    this.data
-  });
+  ProviderActionState(
+      {this.state = GeneralPageState.Initial,
+      this.message = "Nothing to show",
+      this.data});
 
-  ProviderActionState copyWith({
-    GeneralPageState? state, 
-    String? message, 
-    T? data
-  }) {
+  ProviderActionState copyWith(
+      {GeneralPageState? state, String? message, T? data}) {
     return ProviderActionState(
-      state: state ?? this.state,
-      message: message ?? this.message,
-      data: data ?? this.data
-    );
+        state: state ?? this.state,
+        message: message ?? this.message,
+        data: data ?? this.data);
   }
 
   void toError(String message) {
     this.message = message;
     this.state = GeneralPageState.Error;
   }
+
   void toSuccess(T data, {String? message}) {
     this.message = message ?? this.message;
     this.state = GeneralPageState.Loaded;
     this.data = data;
   }
+
   void toLoading({String? message}) {
     this.message = message ?? this.message;
     this.state = GeneralPageState.Loading;
     this.data = null;
   }
 
+  bool isInitial() {
+    return this.state == GeneralPageState.Initial;
+  }
+
   bool isLoading() {
     return this.state == GeneralPageState.Loading;
   }
+
   bool isError() {
     return this.state == GeneralPageState.Error;
   }
+
   bool isLoaded() {
     return this.state == GeneralPageState.Loaded;
   }

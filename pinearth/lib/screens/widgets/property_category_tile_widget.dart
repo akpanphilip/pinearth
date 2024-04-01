@@ -15,7 +15,8 @@ class PropertyClassTileWidget extends StatelessWidget {
     "For Sale",
     "Hotel",
     "Shortlet",
-    "Event Center"
+    "Event Center",
+    "Bank"
   ];
 
   @override

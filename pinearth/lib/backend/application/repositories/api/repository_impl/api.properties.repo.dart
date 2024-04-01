@@ -36,7 +36,8 @@ class ApiPropertyRepo implements IPropertyRepo {
   Future<Either<IFailure, dynamic>> scheduleVisit(
       role, ScheduleVisitRequest request) async {
     try {
-      final res = await apiService.post("user/contact/agent/", request.toJson(), //user/contact/$role
+      final res = await apiService.post(
+          "user/contact/agent/", request.toJson(), //user/contact/$role
           requireToken: true);
       if (res.status == true) {
         return const Right(true);
@@ -88,7 +89,7 @@ class ApiPropertyRepo implements IPropertyRepo {
 
     try {
       final res = await apiService.get(
-          "property/search/?address=$address&property_status=$propertyStatus&state=$state",
+          "property/search/?address=$address&property_status=$propertyStatus&state=$state&property_type=$propertyType",
           requireToken: false);
       if (res.status == true) {
         return Right(

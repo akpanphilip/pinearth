@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pinearth/backend/domain/models/dtos/property/schedule_visit_request.dart';
 import 'package:pinearth/backend/domain/repositories/i_property_repo.dart';
@@ -14,22 +13,25 @@ class ScheduleAVisitProvider extends ChangeNotifier {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
 
-  void scheduleVisit(BuildContext context, String ownerEmail, String role) async {
+  void scheduleVisit(
+      BuildContext context, String ownerEmail, String role) async {
     try {
       alert.showLoadingAlert("");
-      final res = await propertyRepo.scheduleVisit(role, ScheduleVisitRequest(
-        recipient: ownerEmail, 
-        name: nameController.text, 
-        phoneNo: phoneNumberController.text, 
-        email: emailController.text, 
-        message: messageController.text,
-        // role: role
-      ));
+      final res = await propertyRepo.scheduleVisit(
+          role,
+          ScheduleVisitRequest(
+            recipient: ownerEmail,
+            name: nameController.text,
+            phoneNo: phoneNumberController.text,
+            email: emailController.text,
+            message: messageController.text,
+            // role: role
+          ));
       alert.closeAlert();
       res.fold((l) {
         alert.showErrorAlert(l.message);
       }, (r) {
-        alert.showSuccessAlert("Visit has been scheduled");
+        alert.showSuccessAlert("Your request has been sent");
         Navigator.pop(context);
       });
     } catch (error) {

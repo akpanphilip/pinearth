@@ -9,9 +9,11 @@ import 'package:pinearth/screens/widgets/custom_chip_widget.dart';
 import 'package:pinearth/screens/widgets/custom_error_widget.dart';
 import 'package:pinearth/screens/widgets/empty_state_widget.dart';
 import 'package:pinearth/screens/widgets/input_fields/search_input_field.dart';
+import 'package:pinearth/utils/constants/app_constants.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/extensions/string_extension.dart';
 
+import '../widgets/property_widget.dart';
 import 'widget/featured_agents_widget.dart';
 
 class FindAgentScreen extends ConsumerStatefulWidget {
@@ -120,12 +122,23 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const FeaturedAgentWidget(),
+                      // const FeaturedAgentWidget(),
                       22.toColumnSpace(),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 13.0),
+                      //   child: CustomChipWidget(
+                      //     label: widget.type.capitalizeFirst(),
+                      //   ),
+                      // ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 13.0),
-                        child: CustomChipWidget(
-                          label: widget.type.capitalizeFirst(),
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          "${widget.type.capitalizeFirst()}s",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       22.toColumnSpace(),
@@ -135,10 +148,17 @@ class _FindAgentScreenState extends ConsumerState<FindAgentScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                         itemBuilder: (context, index) {
+                          // if (widget.type == shortletAgentType) {
+                          //   return PropertyWidget(
+                          //     property: data[index],
+                          //   );
+                          // }
+
                           return Container(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: AgentWidget(agent: data[index]),
+                            child: AgentWidget(
+                                agent: data[index], showBookNow: false),
                           );
                         },
                       ),

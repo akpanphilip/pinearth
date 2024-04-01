@@ -8,6 +8,7 @@ import 'package:pinearth/backend/domain/services/i_local_storage_service.dart';
 import 'package:pinearth/locator.dart';
 import 'package:pinearth/providers/base_provider.dart';
 import 'package:pinearth/screens/auth/login_screen.dart';
+import 'package:pinearth/utils/constants/app_constants.dart';
 import 'package:pinearth/utils/constants/local_storage_keys.dart';
 
 import '../../backend/domain/models/entities/agent_model.dart';
@@ -45,6 +46,7 @@ class ProfileProvider extends BaseProvider {
 
   void initialize(BuildContext context, {bool failSilently = false}) async {
     try {
+      canList = false;
       profileState.toLoading();
       notifyListeners();
       // final email = await localStorage.getItem(userDataBoxKey, userEmailKey, defaultValue: null);
@@ -55,8 +57,7 @@ class ProfileProvider extends BaseProvider {
         }
       }, (r) {
         print("role is ${r.role} ************* ");
-        canList =
-            ['Agent', 'Developer', 'Short let', 'Short-let'].contains(r.role);
+        canList = ![bankAgentType, eventCenterAgentType].contains(r.role);
         loadAgentProfile(context);
         if (r.role != null && r.role!.contains("Developer")) {
           loadDeveloperProfile(context);

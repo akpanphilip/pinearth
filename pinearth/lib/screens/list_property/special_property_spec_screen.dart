@@ -9,6 +9,7 @@ import 'package:pinearth/screens/list_property/property_document_screen.dart';
 import 'package:pinearth/screens/list_property/widgets/property_listing_back_button.dart';
 import 'package:pinearth/screens/widgets/custom_button_widget.dart';
 import 'package:pinearth/screens/widgets/custom_drop_down.dart';
+import 'package:pinearth/utils/constants/app_constants.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
@@ -16,6 +17,7 @@ import '../../custom_widgets/custom_widgets.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:image_cropper/image_cropper.dart';
 
+import '../../providers/user/profile_provider.dart';
 import 'property_spec_screen.dart';
 
 class PropertySpecialSpecScreen extends ConsumerStatefulWidget {
@@ -36,6 +38,7 @@ class _PropertySpecialSpecScreenState
   @override
   Widget build(BuildContext context) {
     final listpropertyprovider = ref.watch(listPropertyProvider);
+    final profileRef = ref.watch(profileProvider);
     final hasParkingSpace =
         listpropertyprovider.propertyHasPackingSpaceController.text;
     final hasAppliances =
@@ -75,7 +78,9 @@ class _PropertySpecialSpecScreenState
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      (listpropertyprovider.listingOption != "sale")
+                      (listpropertyprovider.listingOption != "sale" ||
+                              profileRef.profileState.data?.role ==
+                                  shortletAgentType)
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -261,7 +266,8 @@ class _PropertySpecialSpecScreenState
                                       obscureText: false,
                                       hintText:
                                           'E.g Fridge, Grinder, Washing machine',
-                                      controller: listpropertyprovider.appliancesController,
+                                      controller: listpropertyprovider
+                                          .appliancesController,
                                       inputType: TextInputType.text,
                                     ),
                                   ],
@@ -293,7 +299,9 @@ class _PropertySpecialSpecScreenState
                             color: appColor.primary,
                             onClick: () {
                               if (listpropertyprovider.listingOption ==
-                                  "sale") {
+                                      "sale" &&
+                                  profileRef.profileState.data?.role !=
+                                      shortletAgentType) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

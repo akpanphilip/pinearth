@@ -25,11 +25,17 @@ class SearchPropertyProvider extends BaseProvider {
   final searchParamController = TextEditingController();
   String lastText = "";
   String propertyStatus = "";
+  String propertyType = "";
   Timer? searchTimer;
   final allPropertySearchResult = ProviderActionState<List<PropertyModel>>();
 
   set updatePropertyStatus(String status) {
     propertyStatus = status;
+    notifyListeners();
+  }
+  
+  set updatePropertyType(String type) {
+    propertyType = type;
     notifyListeners();
   }
 
@@ -49,7 +55,7 @@ class SearchPropertyProvider extends BaseProvider {
           propertyPrice: searchParamController.text,
           state: searchParamController.text,
           propertyStatus: (propertyStatus == "All") ? "" : propertyStatus,
-          propertyType: searchParamController.text);
+          propertyType: propertyType);
       res.fold((l) {
         allPropertySearchResult.toError(l.message);
         notifyListeners();

@@ -86,7 +86,8 @@ class _PropertyListingOptionScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (profileRef.profileState.data?.role != landlordAgentType &&
-                  profileRef.profileState.data?.role != shortletAgentType) ...[
+                  profileRef.profileState.data?.role != shortletAgentType &&
+                  profileRef.profileState.data?.role != "Short-let") ...[
                 Text(
                     'How do you want to list as: eg Rent, Shortlet or for sale',
                     style: GoogleFonts.nunito(

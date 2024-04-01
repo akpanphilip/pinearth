@@ -28,15 +28,44 @@ class _EditBusinessProfileScreenState
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(profileProvider).loadDeveloperProfile(context);
+      fetchAccountData();
     });
     super.initState();
+  }
+
+  void fetchAccountData() {
+    final profileRef = ref.read(profileProvider);
+    final role = profileRef.profileState.data?.role;
+
+    print("role is ${role}");
+
+    if (role == bankAgentType) {
+      profileRef.loadBusinessProfile(context, "a bank");
+    }
+    if (role == "Short-let") {
+      profileRef.loadBusinessProfile(context, "a short-let");
+    }
+    if (role == landlordAgentType) {
+      profileRef.loadBusinessProfile(context, "a landlord");
+    }
+    if (role == developerAgentType) {
+      profileRef.loadBusinessProfile(context, "a developer");
+    }
+    if (role == hotelAgentType) {
+      profileRef.loadBusinessProfile(context, "a hotel");
+    }
+    if (role == eventCenterAgentType) {
+      profileRef.loadBusinessProfile(context, "an event-center");
+    }
+    if (role == agentAgentType) {
+      profileRef.loadBusinessProfile(context, "an agent");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final profileP = ref.watch(profileProvider);
-    final businessProfileState = profileP.developerProfileState;
+    final businessProfileState = profileP.businessProfileState;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -61,8 +90,7 @@ class _EditBusinessProfileScreenState
             child: CustomErrorWidget(
                 message: businessProfileState.message,
                 showErrorImage: true,
-                onReload: () =>
-                    ref.read(profileProvider).loadDeveloperProfile(context)),
+                onReload: () => fetchAccountData()),
           );
         } else {
           //Assume it is loaded

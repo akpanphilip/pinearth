@@ -11,7 +11,6 @@ import 'package:pinearth/locator.dart';
 import 'screens/onboarding_screen.dart';
 import 'utils/styles/colors.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

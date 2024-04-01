@@ -316,8 +316,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     if (profile.role != null)
                       GestureDetector(
                         onTap: () {
-                          ref.read(registerAsAgentProvider).agentType =
-                              profile.role!;
+                          // ref.read(registerAsAgentProvider).agentType =
+                          //     profile.role!;
                           Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -274,6 +274,25 @@ class ApiUserRepo implements IUserRepo {
   }
 
   @override
+  Future<Either<IFailure, AgentModel>> getBusinessAccount(
+      String accountType) async {
+    print("url is /property/$accountType/}");
+    try {
+      final res =
+          await apiService.get("/property/$accountType/", requireToken: true);
+
+      if (res.status == true) {
+        return Right(AgentModel.fromJson(res.data));
+      } else {
+        return Left(RepoFailure(res.message!));
+      }
+    } catch (error) {
+      // rethrow;
+      return Left(RepoFailure('Error: $error'));
+    }
+  }
+
+  @override
   Future<Either<IFailure, bool>> sendComplaint(
       Map<String, String> message) async {
     try {

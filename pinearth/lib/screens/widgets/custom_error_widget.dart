@@ -36,6 +36,8 @@ class CustomErrorWidget extends StatelessWidget {
             ],
             Text(
               message,
+              overflow: TextOverflow.clip,
+              maxLines: 3,
               style: const TextStyle(
                 color: Colors.red,
               ),
@@ -43,8 +45,8 @@ class CustomErrorWidget extends StatelessWidget {
             ),
             10.toColumnSpace(),
             if (onReload != null)
-              InkWell(
-                  child: const Text(
+              const InkWell(
+                  child: Text(
                 'Tap to refresh',
                 style: TextStyle(color: Colors.black),
               ))

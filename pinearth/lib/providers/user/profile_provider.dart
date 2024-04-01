@@ -23,6 +23,7 @@ class ProfileProvider extends BaseProvider {
   final profileState = ProviderActionState<UserModel>();
   final agentProfileState = ProviderActionState<dynamic>();
   final developerProfileState = ProviderActionState<AgentModel>();
+  final businessProfileState = ProviderActionState<AgentModel>();
   final notificationState = ProviderActionState<List<NotificationModel>>();
   final sendCompaintState = ProviderActionState<bool>();
 
@@ -105,6 +106,26 @@ class ProfileProvider extends BaseProvider {
       notifyListeners();
     } catch (error) {
       developerProfileState.toError("No internet connection");
+
+      rethrow;
+    }
+  }
+
+  void loadBusinessProfile(BuildContext context, String accountType) async {
+    try {
+      businessProfileState.toLoading();
+      notifyListeners();
+      final res = await userRepo.getBusinessAccount(accountType);
+      res.fold((l) {
+        businessProfileState.toError(l.message);
+
+        // toLogin(context);
+      }, (r) {
+        businessProfileState.toSuccess(r);
+      });
+      notifyListeners();
+    } catch (error) {
+      businessProfileState.toError("No internet connection");
 
       rethrow;
     }

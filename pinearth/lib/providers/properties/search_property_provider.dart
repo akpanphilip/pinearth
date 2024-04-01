@@ -26,6 +26,7 @@ class SearchPropertyProvider extends BaseProvider {
   String lastText = "";
   String propertyStatus = "";
   String propertyType = "";
+  String selectedState = "";
   Timer? searchTimer;
   final allPropertySearchResult = ProviderActionState<List<PropertyModel>>();
 
@@ -33,9 +34,14 @@ class SearchPropertyProvider extends BaseProvider {
     propertyStatus = status;
     notifyListeners();
   }
-  
+
   set updatePropertyType(String type) {
     propertyType = type;
+    notifyListeners();
+  }
+
+  set updateSelectedState(String state) {
+    selectedState = state;
     notifyListeners();
   }
 
@@ -53,7 +59,7 @@ class SearchPropertyProvider extends BaseProvider {
       final res = await propertyRepo.searchProperties(
           address: searchParamController.text,
           propertyPrice: searchParamController.text,
-          state: searchParamController.text,
+          state: selectedState,
           propertyStatus: (propertyStatus == "All") ? "" : propertyStatus,
           propertyType: propertyType);
       res.fold((l) {

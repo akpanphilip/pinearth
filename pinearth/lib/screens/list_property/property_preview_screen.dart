@@ -34,7 +34,7 @@ class _PropertyPreviewScreenState extends State<PropertyPreviewScreen> {
         backgroundColor: Colors.white,
         title: AppbarTitle(
           text: 'Here\'s how it works',
-        ),
+      ),
         centerTitle: false,
         elevation: 0.5,
       ),

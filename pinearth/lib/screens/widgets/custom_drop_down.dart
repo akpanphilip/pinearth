@@ -28,14 +28,14 @@ class CustomDropdownWidget<T> extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(
-                      selected == null ? hintText : selected!.label,
-                      style: GoogleFonts.nunitoSans(
-                          fontWeight: FontWeight.w400, fontSize: 16),
-                    )),
+                  selected == null ? hintText : selected!.label,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.nunitoSans(
+                      fontWeight: FontWeight.w400, fontSize: 16),
+                )),
                 const Icon(Icons.expand_more)
               ],
             ),
-
           )),
       itemBuilder: (context) {
         return [

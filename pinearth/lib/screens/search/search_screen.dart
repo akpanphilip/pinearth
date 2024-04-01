@@ -16,6 +16,7 @@ import 'package:pinearth/utils/styles/colors.dart';
 import '../../backend/application/servicies/localstorage/hive.local_storage.service.dart';
 import '../../backend/domain/services/i_local_storage_service.dart';
 import '../../utils/constants/local_storage_keys.dart';
+import '../widgets/custom_drop_down.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -61,8 +62,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               builder: (context) =>
                   const FindAgentScreen(type: developerAgentType)));
     } else if (selected == 'Shortlet') {
-      // ref.read(searchPropertyProvider).updatePropertyStatus = "";
-      ref.read(searchPropertyProvider).updatePropertyType = selected;
+      ref.read(searchPropertyProvider).updatePropertyStatus = "For shortlet";
       ref.read(searchPropertyProvider).searchProperty();
 
       // Navigator.pushReplacement(
@@ -108,6 +108,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final searchPropertyRef = ref.watch(searchPropertyProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: LayoutBuilder(
@@ -142,11 +144,36 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 ),
                 57.toColumnSpace(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: SearchPropertyFieldWidget(
-                      controller: ref
-                          .read(searchPropertyProvider)
-                          .searchParamController),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: SearchPropertyFieldWidget(
+                            controller: ref
+                                .read(searchPropertyProvider)
+                                .searchParamController),
+                      ),
+                      5.toRowSpace(),
+                      Expanded(
+                        flex: 1,
+                        child: CustomDropdownWidget<String>(
+                          items: nigerianState
+                              .map(
+                                  (e) => CustomDropDownItem(label: e, value: e))
+                              .toList(),
+                          onSelect: (v) {
+                            // listPropertyP.setRentDuration(v.value);
+                            searchPropertyRef.updateSelectedState = v.value;
+                            ref.read(searchPropertyProvider).searchProperty();
+                          },
+                          selected: CustomDropDownItem(
+                              label: searchPropertyRef.selectedState,
+                              value: searchPropertyRef.selectedState),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 30.toColumnSpace(),
                 Container(

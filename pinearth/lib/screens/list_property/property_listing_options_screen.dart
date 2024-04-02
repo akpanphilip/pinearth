@@ -53,6 +53,13 @@ class _PropertyListingOptionScreenState
       _selected = _items.firstWhere((element) =>
           element.value ==
           ref.read<ListPropertyProvider>(listPropertyProvider).listingOption);
+
+      if (ref.read(profileProvider).profileState.data?.role == "Short-let") {
+        ref
+            .read<ListPropertyProvider>(listPropertyProvider)
+            .setLisingOption("shortlet");
+      }
+
       setState(() {});
     });
   }
@@ -85,40 +92,42 @@ class _PropertyListingOptionScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (profileRef.profileState.data?.role != landlordAgentType &&
+              if (
+                  // profileRef.profileState.data?.role != landlordAgentType &&
                   profileRef.profileState.data?.role != shortletAgentType &&
-                  profileRef.profileState.data?.role != "Short-let") ...[
+                      profileRef.profileState.data?.role != "Short-let" &&
+                      profileRef.profileState.data?.role != hotelAgentType) ...[
                 Text(
                     'How do you want to list as: eg Rent, Shortlet or for sale',
                     style: GoogleFonts.nunito(
                         fontSize: 14, fontWeight: FontWeight.w700)),
                 10.toColumnSpace(),
-                if (profileRef.profileState.data?.role == agentAgentType)
-                  Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: AppColor().inactiveColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text("For Sale")),
-                if (profileRef.profileState.data?.role == developerAgentType)
-                  SizedBox(
-                    width: 200,
-                    child: CustomDropdownWidget<String>(
-                      items: _items,
-                      onSelect: (v) {
-                        listPropertyP.setLisingOption(v.value);
-                        _selected = v as CustomDropDownItem<String>;
-                        if (v.value == "shortlet") {
-                          listPropertyP.setRentDuration("day");
-                        } else {
-                          listPropertyP.setRentDuration("month");
-                        }
-                        setState(() {});
-                      },
-                      // hintText: "Select an option",
-                      selected: _selected,
-                    ),
+                // if (profileRef.profileState.data?.role == agentAgentType)
+                //   Container(
+                //       padding: EdgeInsets.all(10),
+                //       decoration: BoxDecoration(
+                //           color: AppColor().inactiveColor,
+                //           borderRadius: BorderRadius.circular(10)),
+                //       child: Text("For Sale")),
+                // if (profileRef.profileState.data?.role == developerAgentType)
+                SizedBox(
+                  width: 200,
+                  child: CustomDropdownWidget<String>(
+                    items: _items,
+                    onSelect: (v) {
+                      listPropertyP.setLisingOption(v.value);
+                      _selected = v as CustomDropDownItem<String>;
+                      if (v.value == "shortlet") {
+                        listPropertyP.setRentDuration("day");
+                      } else {
+                        listPropertyP.setRentDuration("month");
+                      }
+                      setState(() {});
+                    },
+                    // hintText: "Select an option",
+                    selected: _selected,
                   ),
+                ),
                 30.toColumnSpace(),
               ],
               LabelTitle(text: 'Name of property'),
@@ -129,10 +138,12 @@ class _PropertyListingOptionScreenState
                 controller: listPropertyP.propertyNameController,
               ),
               20.toColumnSpace(),
-              LabelTitle(
-                  text: (listPropertyP.listingOption == "sale")
-                      ? 'Property price'
-                      : "Price of rent"),
+              (profileRef.profileState.data?.role == hotelAgentType)
+                  ? LabelTitle(text: "Price per night")
+                  : LabelTitle(
+                      text: (listPropertyP.listingOption == "sale")
+                          ? 'Property price'
+                          : "Price of rent"),
               10.toColumnSpace(),
               Row(
                 children: [
@@ -145,11 +156,13 @@ class _PropertyListingOptionScreenState
                       inputType: TextInputType.number,
                     ),
                   ),
-                  if (listPropertyP.listingOption != "sale" ||
-                      (profileRef.profileState.data?.role ==
-                              landlordAgentType &&
-                          profileRef.profileState.data?.role !=
-                              shortletAgentType))
+                  if (listPropertyP.listingOption != "sale"
+                      // ||
+                      // (profileRef.profileState.data?.role ==
+                      //         landlordAgentType &&
+                      //     profileRef.profileState.data?.role !=
+                      //         shortletAgentType)
+                      )
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -168,7 +181,7 @@ class _PropertyListingOptionScreenState
               ),
               20.toColumnSpace(),
               if (profileRef.profileState.data?.role != landlordAgentType &&
-                  profileRef.profileState.data?.role != shortletAgentType) ...[
+                  profileRef.profileState.data?.role != "Short-let") ...[
                 LabelTitle(text: 'Description of property'),
                 10.toColumnSpace(),
                 TextAreaField(
@@ -179,15 +192,25 @@ class _PropertyListingOptionScreenState
               ],
               Row(
                 children: [
-                  LabelTitle(text: 'Images of property'),
+                  (profileRef.profileState.data?.role != hotelAgentType)
+                      ? LabelTitle(text: 'Images of property')
+                      : LabelTitle(text: 'Images of hotel'),
                   SizedBox(width: 15),
-                  Text(
-                    '*${listPropertyP.listingOption == "sale" ? "60" : "20"} images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
+                  (profileRef.profileState.data?.role == hotelAgentType)
+                      ? Text(
+                          '*8 images max',
+                          style: GoogleFonts.nunito(
+                              fontSize: 14,
+                              color: Colors.red,
+                              fontWeight: FontWeight.w700),
+                        )
+                      : Text(
+                          '*${listPropertyP.listingOption == "sale" ? "60" : "20"} images max',
+                          style: GoogleFonts.nunito(
+                              fontSize: 14,
+                              color: Colors.red,
+                              fontWeight: FontWeight.w700),
+                        )
                 ],
               ),
               10.toColumnSpace(),
@@ -232,7 +255,7 @@ class _PropertyListingOptionScreenState
                           if (profileRef.profileState.data?.role !=
                                   landlordAgentType &&
                               profileRef.profileState.data?.role !=
-                                  shortletAgentType) {
+                                  "Short-let") {
                             if (listPropertyP
                                 .propertyDescriptionController.text.isEmpty) {
                               getIt<IAlertInteraction>().showErrorAlert(
@@ -269,7 +292,9 @@ class _PropertyListingOptionScreenState
 
                           if (listPropertyP.listingOption == "sale" &&
                               profileRef.profileState.data?.role !=
-                                  developerAgentType) {
+                                  developerAgentType &&
+                              profileRef.profileState.data?.role !=
+                                  hotelAgentType) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(

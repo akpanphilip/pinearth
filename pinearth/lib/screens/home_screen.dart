@@ -45,10 +45,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     // if (mounted) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      ref.read(profileProvider).initialize(context, failSilently: true);
+
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
           defaultValue: false);
 
-      final user = ref.watch(profileProvider).profileState.data;
+      final user = ref.read(profileProvider).profileState.data;
 
       if ((user != null && user.hasRole == false) && !value) {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -204,8 +206,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           agentListState.isError()) {
                         return Center(
                             child: CustomErrorWidget(
-                                message: propertyListState
-                                    .message, //"Request time out",
+                                message: genericHttpRequestErrorMessage,
                                 onReload: () {
                                   final user = ref
                                       .watch(profileProvider)
@@ -226,7 +227,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       List<PropertyModel> data = propertyListState.data ?? [];
                       // print("data length is ${data}");
                       List<dynamic> agents = agentListState.data ?? [];
-                      print("agents length ${agents.length}");
+                      // print("agents length ${agents.length}");
 
                       if (currentClass != 'All') {
                         data = data.where((element) {
@@ -258,6 +259,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (agents.isNotEmpty)
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  ...agents
+                                      .map((e) => SizedBox(
+                                            width: 300,
+                                            height: 250,
+                                            child: AgentWidget(
+                                              agent: e,
+                                              showBookNow: true,
+                                            ),
+                                          ))
+                                      .toList()
+                                ],
+                              ),
+                            ),
                           const SizedBox(height: 15),
                           prop(),
                           const SizedBox(height: 15),
@@ -291,116 +310,122 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           if (currentClass == "All")
-                            Column(children: [
-                              20.toColumnSpace(),
-                              prop(),
-                              20.toColumnSpace(),
-                              Center(
-                                child: Text(
-                                  "For Sale",
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 16,
-                                      color: const Color(0xff000000),
-                                      fontWeight: FontWeight.w700),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ...data.where((element) {
-                                      return (element.propertyStatus
-                                              ?.toLowerCase() ==
-                                          "for sale");
-                                    }).map((e) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15.0),
-                                        child: PropertyWidget(
-                                          property: e,
-                                        ),
-                                      );
-                                    })
-                                  ],
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              prop(),
-                              20.toColumnSpace(),
-                              Center(
-                                child: Text(
-                                  "For rent",
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 16,
-                                      color: const Color(0xff000000),
-                                      fontWeight: FontWeight.w700),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ...data.where((element) {
-                                      return (element.propertyStatus
-                                              ?.toLowerCase() ==
-                                          "for rent");
-                                    }).map((e) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15.0),
-                                        child: PropertyWidget(
-                                          property: e,
-                                        ),
-                                      );
-                                    })
-                                  ],
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              prop(),
-                              20.toColumnSpace(),
-                              Center(
-                                child: Text(
-                                  "Shortlet",
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 16,
-                                      color: const Color(0xff000000),
-                                      fontWeight: FontWeight.w700),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ...data.where((element) {
-                                      return (element.propertyStatus
-                                              ?.toLowerCase() ==
-                                          "For Shortlet".toLowerCase());
-                                    }).map((e) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15.0),
-                                        child: PropertyWidget(
-                                          property: e,
-                                        ),
-                                      );
-                                    })
-                                  ],
-                                ),
-                              ),
-                              20.toColumnSpace(),
-                              // if (agents.isEmpty)
-                              Column(
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  20.toColumnSpace(),
+                                  prop(),
+                                  20.toColumnSpace(),
+                                  Center(
+                                    child: Text(
+                                      "For Sale",
+                                      style: GoogleFonts.nunito(
+                                          fontSize: 16,
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  20.toColumnSpace(),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ...data.where((element) {
+                                          return (element.propertyStatus
+                                                  ?.toLowerCase() ==
+                                              "for sale");
+                                        }).map((e) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: PropertyWidget(
+                                              property: e,
+                                            ),
+                                          );
+                                        })
+                                      ],
+                                    ),
+                                  ),
+                                  20.toColumnSpace(),
+                                  prop(),
+                                  20.toColumnSpace(),
+                                  Center(
+                                    child: Text(
+                                      "For rent",
+                                      style: GoogleFonts.nunito(
+                                          fontSize: 16,
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  20.toColumnSpace(),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        ...data.where((element) {
+                                          return (element.propertyStatus
+                                                  ?.toLowerCase() ==
+                                              "for rent");
+                                        }).map((e) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: PropertyWidget(
+                                              property: e,
+                                            ),
+                                          );
+                                        })
+                                      ],
+                                    ),
+                                  ),
+                                  20.toColumnSpace(),
+                                  prop(),
+                                  20.toColumnSpace(),
+                                  Center(
+                                    child: Text(
+                                      "Shortlet",
+                                      style: GoogleFonts.nunito(
+                                          fontSize: 16,
+                                          color: const Color(0xff000000),
+                                          fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  20.toColumnSpace(),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        ...data.where((element) {
+                                          return (element.propertyStatus
+                                                  ?.toLowerCase() ==
+                                              "For Shortlet".toLowerCase());
+                                        }).map((e) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: PropertyWidget(
+                                              property: e,
+                                            ),
+                                          );
+                                        })
+                                      ],
+                                    ),
+                                  ),
+                                  // 20.toColumnSpace(),
+                                  // if (agents.isEmpty)
+                                  // Column(
+                                  //   children: [
                                   // Center(
                                   //   child: Container(
                                   //     width: 104,
@@ -419,40 +444,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   //   ),
                                   // ),
                                   // const SizedBox(height: 15),
-                                  Center(
-                                    child: Text(
-                                      "Agents",
-                                      style: GoogleFonts.nunito(
-                                          fontSize: 16,
-                                          color: const Color(0xff000000),
-                                          fontWeight: FontWeight.w700),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  30.toColumnSpace(),
-                                  // SizedBox(
-                                  //   height: 100,
-                                  //   child: ListView.builder(
-                                  //     scrollDirection: Axis.horizontal,
-                                  //     itemBuilder: (context, index) {
-                                  //       return Container();
-                                  //     },
-                                  //     itemCount: agents.length,
+                                  // Center(
+                                  //   child: Text(
+                                  //     "Agents",
+                                  //     style: GoogleFonts.nunito(
+                                  //         fontSize: 16,
+                                  //         color: const Color(0xff000000),
+                                  //         fontWeight: FontWeight.w700),
+                                  //     textAlign: TextAlign.center,
                                   //   ),
                                   // ),
-                                  ...List.generate(
-                                      agents.length,
-                                      (index) => Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 10),
-                                            // width: 300,
-                                            child: AgentWidget(
-                                              agent: agents[index],
-                                            ),
-                                          ))
-                                ],
-                              ),
-                            ])
+                                  // 30.toColumnSpace(),
+
+                                  // ...List.generate(
+                                  //     agents.length,
+                                  //     (index) => Container(
+                                  //           padding:
+                                  //               const EdgeInsets.symmetric(
+                                  //                   horizontal: 10,
+                                  //                   vertical: 10),
+                                  //           // width: 300,
+                                  // child: AgentWidget(
+                                  //   agent: agents[index],
+                                  // ),
+                                  //         ))
+                                  //   ],
+                                  // ),
+                                ])
                         ],
                       );
                     },

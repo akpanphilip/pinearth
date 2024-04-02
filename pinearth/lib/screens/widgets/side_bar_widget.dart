@@ -22,8 +22,10 @@ class _SideBarWidgetState extends State<SideBarWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
-          defaultValue: false);
+      // final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
+      //     defaultValue: false);
+
+      await localStorage.setItem(userDataBoxKey, seenHowToKey, true);
 
       // if (!value) {
       //   showHelpOverlay = true;

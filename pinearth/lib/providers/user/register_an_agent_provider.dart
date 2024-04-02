@@ -152,10 +152,10 @@ class RegisterAsAgentProvider extends BaseProvider {
       if (agentType == hotelAgentType) {
         type = "a hotel";
       }
-      if (agentType == eventCenterAgentType) {
+      if (agentType == eventCenterAgentType || agentType == "EventCenter") {
         type = "an event center";
       }
-      if (agentType == shortletAgentType) {
+      if (agentType == shortletAgentType || agentType == "Short-let") {
         type = "a short-let";
       }
 

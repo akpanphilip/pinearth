@@ -1,4 +1,3 @@
-
 const agentAgentType = "Agent";
 const bankAgentType = "Bank";
 const landlordAgentType = "Landlord";
@@ -16,7 +15,7 @@ const nigerianState = [
   "Bayelsa state",
   "Benue state",
   "Borno state",
-  "CrossRiver state"  ,
+  "CrossRiver state",
   "Delta state",
   "Ebonyi state",
   "Edo state",
@@ -45,3 +44,6 @@ const nigerianState = [
   "Yobe state",
   "Zamfara state",
 ];
+
+const String genericHttpRequestErrorMessage =
+    "Could not complete request, please make sure you have a good internet connection and try again";

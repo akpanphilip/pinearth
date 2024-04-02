@@ -116,7 +116,9 @@ class RegisterProvider extends ChangeNotifier {
 
   void selectDocument() async {
     try {
-      final file = await FilePicker.platform.pickFiles();
+      final file = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ["jpg", "png", "jpeg", "pdf"]);
       if (file != null) {
         idFile = file.files.first.path!;
         notifyListeners();

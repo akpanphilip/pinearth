@@ -58,13 +58,29 @@ class ProfileProvider extends BaseProvider {
         }
       }, (r) {
         print("role is ${r.role} ************* ");
-        canList = ![bankAgentType, eventCenterAgentType].contains(r.role);
+        if (r.role == null || r.role!.trim() == "") {
+          canList = false;
+        } else {
+          if (r.role!.replaceAll(" ", "").toLowerCase() ==
+                  bankAgentType.replaceAll(" ", "").toLowerCase() ||
+              r.role!.replaceAll(" ", "").toLowerCase() ==
+                  eventCenterAgentType.replaceAll(" ", "").toLowerCase()) {
+            canList = false;
+          } else {
+            canList = true;
+          }
+        }
+        // canList = ![
+        //   bankAgentType,
+        //   eventCenterAgentType,
+        //   null,
+        //   r.role.trim().isEmpty
+        // ].contains(r.role);
         loadAgentProfile(context);
         if (r.role != null && r.role!.contains("Developer")) {
           loadDeveloperProfile(context);
         }
         profileState.toSuccess(r);
-
         notifyListeners();
       });
     } catch (error) {

@@ -63,6 +63,7 @@ class FindAgentProvider extends BaseProvider {
         notifyListeners();
       });
     } catch (error) {
+      print("Error loading agents $error");
       agentsState.toError("Error: Unable to load agents");
       notifyListeners();
       rethrow;

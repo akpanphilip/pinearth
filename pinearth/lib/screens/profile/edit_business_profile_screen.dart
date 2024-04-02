@@ -55,7 +55,10 @@ class _EditBusinessProfileScreenState
       profileRef.loadBusinessProfile(context, "a hotel");
     }
     if (role == eventCenterAgentType) {
-      profileRef.loadBusinessProfile(context, "an event-center");
+      profileRef.loadBusinessProfile(context, "an event center");
+    }
+    if (role == "EventCenter") {
+      profileRef.loadBusinessProfile(context, "an event center");
     }
     if (role == agentAgentType) {
       profileRef.loadBusinessProfile(context, "an agent");
@@ -163,7 +166,8 @@ class _EditProfileBodyState extends ConsumerState<EditProfileBody> {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  editBusinessProviderProvider.selectProfessionalPictures();
+                  editBusinessProviderProvider.selectProfessionalPictures(
+                      allowMultiple: false);
                 },
                 child: SizedBox(
                   height: 100,
@@ -310,8 +314,10 @@ class _EditProfileBodyState extends ConsumerState<EditProfileBody> {
 
             CustomButtonWidget(
               onClick: () {
+                final role = ref.read(profileProvider).profileState.data?.role;
+                print("role is $role");
                 editBusinessProviderProvider.isEdit = true;
-                editBusinessProviderProvider.agentType = developerAgentType;
+                editBusinessProviderProvider.agentType = role!;
                 editBusinessProviderProvider.register(context,
                     id: widget.profile.id.toString());
               },

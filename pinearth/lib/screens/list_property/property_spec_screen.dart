@@ -19,6 +19,7 @@ import '../../custom_widgets/custom_widgets.dart';
 
 import '../../utils/constants/app_constants.dart';
 import '../widgets/custom_drop_down.dart';
+import 'property_photos_screen.dart';
 import 'special_property_spec_screen.dart';
 
 class PropertySpecScreen extends ConsumerStatefulWidget {
@@ -67,17 +68,19 @@ class _PropertySpecScreenState extends ConsumerState<PropertySpecScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelTitle(text: 'Property Type'),
-                        10.toColumnSpace(),
-                        CustomTextField(
-                          maxHeight: double.infinity,
-                          obscureText: false,
-                          hintText: 'E.g (bungalow etc)',
-                          validator: Validator.validateEmptyField,
-                          controller:
-                              listpropertyprovider.propertyTypeController,
-                        ),
-                        20.toColumnSpace(),
+                        if (user.role != hotelAgentType) ...[
+                          LabelTitle(text: 'Property Type'),
+                          10.toColumnSpace(),
+                          CustomTextField(
+                            maxHeight: double.infinity,
+                            obscureText: false,
+                            hintText: 'E.g (bungalow etc)',
+                            validator: Validator.validateEmptyField,
+                            controller:
+                                listpropertyprovider.propertyTypeController,
+                          ),
+                          20.toColumnSpace(),
+                        ],
                         LabelTitle(text: 'Number of rooms'),
                         10.toColumnSpace(),
                         CustomTextField(
@@ -102,24 +105,26 @@ class _PropertySpecScreenState extends ConsumerState<PropertySpecScreen> {
                           inputType: TextInputType.number,
                         ),
                         20.toColumnSpace(),
-                        LabelTitle(text: 'Lot size(sqft)'),
-                        10.toColumnSpace(),
-                        CustomTextField(
-                            maxHeight: double.infinity,
-                            obscureText: false,
-                            validator: Validator.validateEmptyField,
-                            hintText: 'E.g 173 Square feet',
-                            controller:
-                                listpropertyprovider.propertyLotSizeController,
-                            inputType: TextInputType.number,
-                            suffixIcon: HelpButton(
-                              text: "Sqft",
-                              helpIcon: Icon(
-                                Icons.help_outline_rounded,
-                                color: Colors.white,
-                              ),
-                            )),
-                        20.toColumnSpace(),
+                        if (user.role != hotelAgentType) ...[
+                          LabelTitle(text: 'Lot size(sqft)'),
+                          10.toColumnSpace(),
+                          CustomTextField(
+                              maxHeight: double.infinity,
+                              obscureText: false,
+                              validator: Validator.validateEmptyField,
+                              hintText: 'E.g 173 Square feet',
+                              controller: listpropertyprovider
+                                  .propertyLotSizeController,
+                              inputType: TextInputType.number,
+                              suffixIcon: HelpButton(
+                                text: "Sqft",
+                                helpIcon: Icon(
+                                  Icons.help_outline_rounded,
+                                  color: Colors.white,
+                                ),
+                              )),
+                          20.toColumnSpace(),
+                        ],
                         LabelTitle(text: 'Address Of Property'),
                         10.toColumnSpace(),
                         CustomTextField(
@@ -196,6 +201,14 @@ class _PropertySpecScreenState extends ConsumerState<PropertySpecScreen> {
                               if (profileRef.profileState.data?.role ==
                                   developerAgentType) {
                                 listpropertyprovider.listProperty(context);
+                              } else if (profileRef.profileState.data?.role ==
+                                  hotelAgentType) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PropertySectionPictureScreen()),
+                                );
                               } else {
                                 Navigator.push(
                                   context,

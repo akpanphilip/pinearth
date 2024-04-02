@@ -9,6 +9,7 @@ import 'package:pinearth/providers/properties/list_property_provider.dart';
 import 'package:pinearth/screens/feedback_alert/i_feedback_alert.dart';
 import 'package:pinearth/screens/list_property/widgets/property_listing_back_button.dart';
 import 'package:pinearth/screens/widgets/custom_button_widget.dart';
+import 'package:pinearth/utils/constants/app_constants.dart';
 import 'package:pinearth/utils/extensions/number_extension.dart';
 import 'package:pinearth/utils/styles/colors.dart';
 
@@ -16,6 +17,7 @@ import '../../custom_widgets/custom_widgets.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:image_cropper/image_cropper.dart';
 
+import '../../providers/user/profile_provider.dart';
 import 'property_spec_screen.dart';
 
 class PropertySectionPictureScreen extends ConsumerStatefulWidget {
@@ -31,6 +33,7 @@ class _PropertySectionPictureScreenState
   @override
   Widget build(BuildContext context) {
     final listPropertyP = ref.watch(listPropertyProvider);
+    final user = ref.watch(profileProvider).profileState.data!;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -55,33 +58,35 @@ class _PropertySectionPictureScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: 'Detailed living room photo’s'),
-                  Text(
-                    '*10 images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
-              10.toColumnSpace(),
-              GestureDetector(
-                  onTap: () => listPropertyP.selectLivingRoomImages(
-                      fileType: FileType.image),
-                  child: Builder(
-                    builder: (context) {
-                      if (listPropertyP.livingRoomImages.isEmpty) {
-                        return UploadImg();
-                      }
-                      return SelectedImagesWidgetV2(
-                          images: listPropertyP.livingRoomImages);
-                    },
-                  )),
-              20.toColumnSpace(),
+              if (user.role != hotelAgentType) ...[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelTitle(text: 'Detailed living room photo’s'),
+                    Text(
+                      '*10 images max',
+                      style: GoogleFonts.nunito(
+                          fontSize: 14,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    10.toColumnSpace(),
+                    GestureDetector(
+                        onTap: () => listPropertyP.selectLivingRoomImages(
+                            fileType: FileType.image),
+                        child: Builder(
+                          builder: (context) {
+                            if (listPropertyP.livingRoomImages.isEmpty) {
+                              return UploadImg();
+                            }
+                            return SelectedImagesWidgetV2(
+                                images: listPropertyP.livingRoomImages);
+                          },
+                        )),
+                    20.toColumnSpace(),
+                  ],
+                ),
+              ],
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,33 +141,35 @@ class _PropertySectionPictureScreenState
                     },
                   )),
               20.toColumnSpace(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelTitle(text: 'Detailed kitchen photo\'s'),
-                  Text(
-                    '*10 images max',
-                    style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
-              10.toColumnSpace(),
-              GestureDetector(
-                  onTap: () => listPropertyP.selectKitchenImages(
-                      fileType: FileType.image),
-                  child: Builder(
-                    builder: (context) {
-                      if (listPropertyP.kitchenImages.isEmpty) {
-                        return UploadImg();
-                      }
-                      return SelectedImagesWidgetV2(
-                          images: listPropertyP.kitchenImages);
-                    },
-                  )),
-              40.toColumnSpace(),
+              if (user.role != hotelAgentType) ...[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelTitle(text: 'Detailed kitchen photo\'s'),
+                    Text(
+                      '*10 images max',
+                      style: GoogleFonts.nunito(
+                          fontSize: 14,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700),
+                    )
+                  ],
+                ),
+                10.toColumnSpace(),
+                GestureDetector(
+                    onTap: () => listPropertyP.selectKitchenImages(
+                        fileType: FileType.image),
+                    child: Builder(
+                      builder: (context) {
+                        if (listPropertyP.kitchenImages.isEmpty) {
+                          return UploadImg();
+                        }
+                        return SelectedImagesWidgetV2(
+                            images: listPropertyP.kitchenImages);
+                      },
+                    )),
+                40.toColumnSpace(),
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -175,10 +182,17 @@ class _PropertySectionPictureScreenState
                     height: 50,
                     child: CustomButtonWidget(
                         onClick: () {
-                          if (listPropertyP.livingRoomImages.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert(
-                                "Please provide at least 1 living room image");
-                            return;
+                          if (user.role != hotelAgentType) {
+                            if (listPropertyP.livingRoomImages.isEmpty) {
+                              getIt<IAlertInteraction>().showErrorAlert(
+                                  "Please provide at least 1 living room image");
+                              return;
+                            }
+                            if (listPropertyP.kitchenImages.isEmpty) {
+                              getIt<IAlertInteraction>().showErrorAlert(
+                                  "Please provide at least 1 kitchen image");
+                              return;
+                            }
                           }
                           if (listPropertyP.bedRoomImages.isEmpty) {
                             getIt<IAlertInteraction>().showErrorAlert(
@@ -190,16 +204,16 @@ class _PropertySectionPictureScreenState
                                 "Please provide at least 1 toilet image");
                             return;
                           }
-                          if (listPropertyP.kitchenImages.isEmpty) {
-                            getIt<IAlertInteraction>().showErrorAlert(
-                                "Please provide at least 1 toilet image");
-                            return;
+
+                          if (user.role == hotelAgentType) {
+                            listPropertyP.listProperty(context);
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PropertySpecScreen()),
+                            );
                           }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PropertySpecScreen()),
-                          );
                         },
                         color: appColor.primary,
                         child: Text('Continue', style: GoogleFonts.nunito())),

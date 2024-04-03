@@ -45,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     // if (mounted) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      ref.read(profileProvider).initialize(context, failSilently: true);
+      // ref.read(profileProvider).initialize(context, failSilently: true);
 
       final value = await localStorage.getItem(userDataBoxKey, seenHowToKey,
           defaultValue: false);

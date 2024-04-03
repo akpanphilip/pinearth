@@ -3,7 +3,7 @@ import 'user_model.dart';
 
 class PropertyModel {
   final int id;
-  final UserModel owner;
+  final UserModel? owner;
   final AgentModel? agent;
   final AgentModel? developer;
   final AgentModel? landlord;
@@ -40,7 +40,7 @@ class PropertyModel {
 
   PropertyModel({
     required this.id,
-    required this.owner,
+    this.owner,
     this.agent,
     this.title,
     this.desc,
@@ -88,12 +88,12 @@ class PropertyModel {
     } else if (json["hotel"] != null) {
       agent = AgentModel.fromJson(json["hotel"]);
     } else if (json["short_let"] != null) {
-      agent = AgentModel.fromJson(json["hotel"]);
+      agent = AgentModel.fromJson(json["short_let"]);
     }
 
     return PropertyModel(
       id: json["id"],
-      owner: UserModel.fromJson(json["owner"]),
+      owner: (json["owner"] == null) ? null : UserModel.fromJson(json["owner"]),
       agent: agent,
       developer: (json["developer"] == null)
           ? null
@@ -126,20 +126,35 @@ class PropertyModel {
       role: json["role"],
       available: json["available"],
       createdAt: DateTime.parse(json["created_at"]),
-      houseView: List<HouseView>.from(
-          json["house_view"].map((x) => HouseView.fromJson(x))),
-      livingRoom: List<LivingRoom>.from(
-          json["living_room"].map((x) => LivingRoom.fromJson(x))),
-      bedRoom:
-          List<BedRoom>.from(json["bed_room"].map((x) => BedRoom.fromJson(x))),
-      toilet: List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
-      kitchen:
-          List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
-      documents: List<Document>.from(
-          json["documents"].map((x) => Document.fromJson(x))),
-      housePlan: List<HousePlan>.from(
-          json["house_plan"].map((x) => HousePlan.fromJson(x))),
-      size: List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
+      houseView: (json["house_view"]) == null
+          ? []
+          : List<HouseView>.from(
+              json["house_view"].map((x) => HouseView.fromJson(x))),
+      livingRoom: json["living_room"] == null
+          ? []
+          : List<LivingRoom>.from(
+              json["living_room"].map((x) => LivingRoom.fromJson(x))),
+      bedRoom: json["bed_room"] == null
+          ? []
+          : List<BedRoom>.from(
+              json["bed_room"].map((x) => BedRoom.fromJson(x))),
+      toilet: json["toilet"] == null
+          ? []
+          : List<Toilet>.from(json["toilet"].map((x) => Toilet.fromJson(x))),
+      kitchen: json["kitchen"] == null
+          ? []
+          : List<Kitchen>.from(json["kitchen"].map((x) => Kitchen.fromJson(x))),
+      documents: json["documents"] == null
+          ? []
+          : List<Document>.from(
+              json["documents"].map((x) => Document.fromJson(x))),
+      housePlan: json["house_plan"] == null
+          ? []
+          : List<HousePlan>.from(
+              json["house_plan"].map((x) => HousePlan.fromJson(x))),
+      size: json["size"] == null
+          ? []
+          : List<Size>.from(json["size"].map((x) => Size.fromJson(x))),
       reviews: (json["reviews"] == null)
           ? null
           : List<ReviewModel>.from(
@@ -149,7 +164,7 @@ class PropertyModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "owner": owner.toJson(),
+        "owner": owner?.toJson(),
         "title": title,
         "desc": desc,
         "property_type": propertyType,

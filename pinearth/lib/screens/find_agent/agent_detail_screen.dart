@@ -39,7 +39,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
   void loadAgentProperty() async {
     final res = await getIt<IAgentRepo>().getAgentPropertyes(
         widget.agent.id.toString(),
-        (widget.property?.owner.role == developerAgentType) ? true : false);
+        (widget.property?.owner!.role == developerAgentType) ? true : false);
     res.fold((l) {
       print(l.message);
       agentProperties.toError(l.message);
@@ -117,7 +117,7 @@ class _AgentDetailScreenState extends ConsumerState<AgentDetailScreen> {
 
                                 if (widget.property != null) {
                                   name =
-                                      "${widget.property?.owner.lastName} ${widget.property?.owner.firstName}";
+                                      "${widget.property?.owner!.lastName} ${widget.property?.owner!.firstName}";
                                 }
 
                                 return Text(

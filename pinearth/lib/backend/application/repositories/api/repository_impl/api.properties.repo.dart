@@ -25,9 +25,11 @@ class ApiPropertyRepo implements IPropertyRepo {
           return PropertyModel.fromJson(e);
         }).toList());
       }
-      return Left(RepoFailure(res.message ?? "could not complete request try again"));
+      return Left(
+          RepoFailure(res.message ?? "could not complete request try again"));
     } catch (error) {
       // rethrow;
+      print("error is $error stack trace is ${error}");
       return Left(RepoFailure("Error: $error"));
     }
   }

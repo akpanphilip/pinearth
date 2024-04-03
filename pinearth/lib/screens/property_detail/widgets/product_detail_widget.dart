@@ -30,7 +30,7 @@ class PropertyDetailWidget extends StatelessWidget {
                       const Icon(Icons.info_outlined),
                       const SizedBox(width: 10),
                       Text(
-                        "${property.owner.firstName} ${property.owner.lastName}",
+                        "${property.owner!.firstName} ${property.owner!.lastName}",
                         style: GoogleFonts.nunito(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -40,12 +40,12 @@ class PropertyDetailWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (property.owner.profile?.phoneNo != null &&
-                    property.owner.profile?.phoneNo?.trim() != "")
+                if (property.owner!.profile?.phoneNo != null &&
+                    property.owner!.profile?.phoneNo?.trim() != "")
                   GestureDetector(
                       onTap: () {
                         launchUrl(Uri.parse(
-                            "tel:${property.owner.profile?.phoneNo}"));
+                            "tel:${property.owner!.profile?.phoneNo}"));
                       },
                       child: SvgPicture.asset("call_seller_icon".svg))
               ],

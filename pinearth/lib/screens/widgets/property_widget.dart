@@ -316,7 +316,7 @@ class PropertyWidget extends ConsumerWidget {
                           21.toColumnSpace(),
                           Row(
                             children: [
-                              (property.owner.profile?.uploadId != null)
+                              (property.owner!.profile?.uploadId != null)
                                   ? InkWell(
                                       onTap: () {
                                         // context.router;
@@ -334,7 +334,7 @@ class PropertyWidget extends ConsumerWidget {
                                         backgroundImage:
                                             CachedNetworkImageProvider(
                                                 property
-                                                    .owner.profile!.uploadId!,
+                                                    .owner!.profile!.uploadId!,
                                                 maxWidth: 30,
                                                 maxHeight: 30),
                                       ),
@@ -349,13 +349,13 @@ class PropertyWidget extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${property.owner.lastName} ${property.owner.firstName}",
+                                      "${property.owner!.lastName} ${property.owner!.firstName}",
                                       style: GoogleFonts.nunito(
                                           fontSize: 12.toFontSize(),
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      "${property.owner.role}",
+                                      "${property.owner!.role}",
                                       style: GoogleFonts.nunito(
                                           fontSize: 10.toFontSize(),
                                           fontWeight: FontWeight.w600,

@@ -33,6 +33,7 @@ class PropertyListProvider extends ChangeNotifier {
       notifyListeners();
       final res = await propertyRepo.properties();
       res.fold((l) {
+        print("error ocuurredd ------------ ${l.message}");
         propertyListState.toError(l.message);
         notifyListeners();
       }, (r) {

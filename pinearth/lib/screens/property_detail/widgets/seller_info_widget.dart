@@ -67,7 +67,7 @@ class SelletInfoWidget extends StatelessWidget {
 
                           if (property != null) {
                             name =
-                            "${property.owner.lastName} ${property.owner
+                            "${property.owner!.lastName} ${property.owner!
                                 .firstName}";
                           }
 

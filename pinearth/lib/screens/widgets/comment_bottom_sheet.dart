@@ -181,7 +181,7 @@ class CommentBox extends ConsumerWidget {
 
     final userProvider = ref.watch(profileProvider);
     final isNotOwner =
-        (commentsProvider.comments[index].userModel!.id != property.owner.id);
+        (commentsProvider.comments[index].userModel!.id != property.owner!.id);
 
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (isNotOwner) avatar(),
